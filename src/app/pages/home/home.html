@@ -1,0 +1,26 @@
+<!-- <app-navbar></app-navbar> -->
+
+<main class="home-container">
+  
+  <section class="hero-section">
+    <div class="hero-overlay">
+      <h1 class="hero-title">INSPÍRATE. COCINA. COMPARTE.<br>¡NUNCA TE FALTARÁN IDEAS!</h1>
+      <button class="hero-btn">BUSCA LAS MEJORES RECETAS</button>
+    </div>
+  </section>
+
+  <section class="recipes-section">
+    <h2 class="section-title">Recetas populares</h2>
+    
+    <div class="recipes-grid">
+  @for (recipe of recipes; track recipe.id) {
+    <app-recipe-card [recipe]="recipe"></app-recipe-card>
+  } @empty {
+    <p>Aún no hay recetas publicadas. ¡Sé el primero en crear una!</p>
+  }
+</div>
+  </section>
+
+</main>
+
+<!-- <app-footer></app-footer> -->

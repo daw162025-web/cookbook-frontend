@@ -1,0 +1,29 @@
+<nav class="navbar">
+  <div class="navbar-logo">
+    <span class="logo-icon">🧑‍🍳</span> 
+    <span class="logo-text">Cookbook</span>
+  </div>
+
+  <button class="hamburger-btn" (click)="toggleMenu()">
+    ☰
+  </button>
+
+  <div class="navbar-menu" [class.open]="isMenuOpen">
+    
+    <ul class="navbar-links">
+      <li><a href="#" class="active">Explorar</a></li>
+      <li><a href="#">Categorías</a></li>
+    </ul>
+
+    <div class="navbar-search">
+      <span class="search-icon">🔍</span>
+      <input type="text" placeholder="Buscar recetas">
+    </div>
+
+    <div class="navbar-auth">
+      <button class="btn-login">Iniciar sesión</button>
+      <button class="btn-register">Registrarse</button>
+    </div>
+
+  </div>
+</nav>

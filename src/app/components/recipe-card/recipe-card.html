@@ -1,0 +1,22 @@
+<article class="recipe-card">
+  <div class="card-image-container">
+    <img 
+      [src]="recipe.image_url" 
+      [alt]="recipe.title" 
+      class="card-image">
+  </div>
+
+  <div class="card-content">
+    
+    <div class="card-header">
+      <h3 class="card-title">{{ recipe.title }}</h3>
+      
+      <div class="card-rating">
+        <span class="star">⭐</span>
+        <span class="score">4.9</span>
+      </div>
+    </div>
+
+    <button class="btn-view-more">Ver más</button>
+  </div>
+</article>
