@@ -1,26 +1,36 @@
-<!-- <app-navbar></app-navbar> -->
+<main class="flex-grow-1 px-4 px-lg-5">
 
-<main class="home-container">
-  
-  <section class="hero-section">
-    <div class="hero-overlay">
-      <h1 class="hero-title">INSPÍRATE. COCINA. COMPARTE.<br>¡NUNCA TE FALTARÁN IDEAS!</h1>
-      <button class="hero-btn">BUSCA LAS MEJORES RECETAS</button>
-    </div>
-  </section>
+        <!-- Hero Section -->
+        <section class="hero-section mt-2">
+            <!-- Imagen de fondo -->
+            <img src="https://images.unsplash.com/photo-1556910103-1c02745aae4d?q=80&w=2070&auto=format&fit=crop"
+                alt="Cooking background" class="hero-bg">
+            <div class="hero-overlay"></div>
 
-  <section class="recipes-section">
-    <h2 class="section-title">Recetas populares</h2>
-    
-    <div class="recipes-grid">
-  @for (recipe of recipes; track recipe.id) {
-    <app-recipe-card [recipe]="recipe"></app-recipe-card>
-  } @empty {
-    <p>Aún no hay recetas publicadas. ¡Sé el primero en crear una!</p>
-  }
-</div>
-  </section>
+            <!-- Contenido del Hero -->
+            <div class="hero-content">
+                <h1 class="hero-title">
+                    INSPÍRATE. COCINA. COMPARTE.<br>
+                    ¡NUNCA TE FALTARÁN IDEAS!
+                </h1>
+                <button class="btn btn-hero">BUSCA LAS MEJORES RECETAS</button>
+            </div>
+        </section>
 
-</main>
+        <!-- Sección Recetas Populares -->
+        <section class="container-fluid" style="max-width: 1200px; margin: 0 auto;">
+          <h2 class="section-title">Recetas populares</h2>
 
-<!-- <app-footer></app-footer> -->
+          <div class="row g-4 g-xl-5 pb-5">
+            @for (recipe of recipes; track recipe.id) {
+              <div class="col-12 col-md-6 col-lg-4">
+                <app-recipe-card [recipe]="recipe"></app-recipe-card>
+              </div>
+            } @empty {
+              <div class="col-12 text-center">
+                <p>Aún no hay recetas publicadas. ¡Sé el primero en crear una!</p>
+              </div>
+            }
+          </div>
+        </section>
+    </main>

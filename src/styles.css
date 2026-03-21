@@ -1,1 +1,1679 @@
 /* You can add global styles to this file, and also import other style files */
+:root {
+    /* Paleta de Colores Principales */
+    --brand-color: #ff6a4a;
+    --brand-color-hover: #e05e42;
+    --nav-green-bg: #a2d987;
+    --nav-green-text: #2a451e;
+    --bg-light: #fbfcfa;
+    --text-dark: #222;
+    --star-color: #ffb13b;
+    --border-color: rgba(0, 0, 0, 0.05);
+
+    /* Colores Específicos Categorías */
+    --cat-active-bg: #f89878;
+
+    /* Colores Específicos Home */
+    --btn-login-bg: #e6f9fc;
+    --btn-login-text: #00bcd4;
+    --btn-register-bg: #00bcd4;
+    --btn-hero-bg: #fca586;
+    --btn-hero-text: #222;
+    --btn-yellow-bg: #fdc830;
+    --btn-yellow-text: #fff;
+}
+
+body {
+    font-family: 'Nunito', sans-serif;
+    background-color: #fff;
+    color: #444;
+}
+
+/* =========================================
+   1. UTILIDADES GENERALES
+   ========================================= */
+.fw-extrabold {
+    font-weight: 800;
+}
+
+.fw-black {
+    font-weight: 900;
+}
+
+.text-brand {
+    color: var(--brand-color);
+}
+
+.text-dark-custom {
+    color: var(--text-dark);
+}
+
+.section-title {
+    text-align: center;
+    font-size: 32px;
+    font-weight: 800;
+    color: var(--text-dark);
+    margin-top: 4rem;
+    margin-bottom: 2.5rem;
+}
+
+/* =========================================
+   2. NAVEGACIÓN (NAVBAR)
+   ========================================= */
+.custom-navbar {
+    padding: 1.25rem 0;
+    max-width: 1440px;
+    margin: 0 auto;
+}
+
+/* Enlaces del Navbar (Píldoras) */
+.nav-pill-active {
+    background-color: var(--nav-green-bg);
+    color: var(--nav-green-text) !important;
+    border-radius: 12px;
+    padding: 0.5rem 1.25rem;
+    font-weight: 800;
+    font-size: 15px;
+}
+
+.nav-pill-light {
+    color: #4a4a4a;
+    border-radius: 12px;
+    padding: 0.5rem 1.25rem;
+    font-weight: 800;
+    font-size: 15px;
+    transition: background-color 0.2s;
+    background-color: transparent;
+    /* Por defecto transparente en menú */
+}
+
+/* En la Home original le pusimos fondo gris, lo unificamos a hover para que sirva en ambas */
+.nav-pill-light:hover {
+    background-color: #f5f6f8;
+    color: #4a4a4a;
+}
+
+/* Buscador */
+.search-container {
+    position: relative;
+}
+
+.search-icon {
+    position: absolute;
+    left: 1rem;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #adb5bd;
+}
+
+.search-input {
+    padding-left: 2.5rem;
+    border-radius: 12px;
+    background-color: #f5f6f8;
+    border: none;
+    font-weight: 600;
+    font-size: 15px;
+    width: 280px;
+    /* Ancho adecuado para ambas páginas */
+}
+
+.search-input:focus {
+    background-color: #fff;
+    box-shadow: 0 0 0 0.25rem rgba(255, 106, 74, 0.2);
+    border: 1px solid rgba(255, 106, 74, 0.3);
+    outline: none;
+}
+
+/* Botones Navbar Home */
+.btn-login {
+    background-color: var(--btn-login-bg);
+    color: var(--btn-login-text);
+    border-radius: 12px;
+    font-weight: 800;
+    font-size: 14px;
+    padding: 0.5rem 1.25rem;
+    border: none;
+    transition: opacity 0.2s;
+}
+
+.btn-login:hover {
+    opacity: 0.8;
+    color: var(--btn-login-text);
+}
+
+.btn-register {
+    background-color: var(--btn-register-bg);
+    color: white;
+    border-radius: 12px;
+    font-weight: 800;
+    font-size: 14px;
+    padding: 0.5rem 1.25rem;
+    border: none;
+    transition: background-color 0.2s;
+}
+
+.btn-register:hover {
+    background-color: #00a4b9;
+    color: white;
+}
+
+/* Botón Sube tu Receta (Categorías) */
+.btn-upload {
+    background-color: #d8f5fa;
+    /* Color específico de ese botón */
+    color: #333;
+    border-radius: 12px;
+    font-weight: 700;
+    font-size: 15px;
+    padding: 0.5rem 1.25rem;
+    border: none;
+    transition: background-color 0.2s;
+}
+
+.btn-upload:hover {
+    background-color: #c5eaf0;
+}
+
+.btn-upload i {
+    color: #6c757d;
+}
+
+/* =========================================
+   3. HERO SECTION (HOME)
+   ========================================= */
+.hero-section {
+    position: relative;
+    max-width: 1440px;
+    margin: 0 auto;
+    border-radius: 32px;
+    overflow: hidden;
+    height: 480px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+
+.hero-bg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: 1;
+}
+
+.hero-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.6));
+    z-index: 2;
+}
+
+.hero-content {
+    position: relative;
+    z-index: 3;
+    padding: 0 20px;
+}
+
+.hero-title {
+    color: white;
+    font-size: 42px;
+    font-weight: 800;
+    letter-spacing: 1px;
+    margin-bottom: 2rem;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+    line-height: 1.3;
+}
+
+.btn-hero {
+    background-color: var(--btn-hero-bg);
+    color: var(--btn-hero-text);
+    font-weight: 800;
+    font-size: 16px;
+    padding: 0.8rem 2rem;
+    border-radius: 30px;
+    border: none;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    transition: transform 0.2s, background-color 0.2s;
+}
+
+.btn-hero:hover {
+    transform: scale(1.05);
+    background-color: #fc8d68;
+}
+
+/* =========================================
+   4. SIDEBAR (CATEGORÍAS)
+   ========================================= */
+.sidebar {
+    background-color: var(--bg-light);
+    border-radius: 24px;
+    border: 1px solid var(--border-color);
+    padding: 1rem 0;
+}
+
+.cat-item {
+    display: block;
+    padding: 0.75rem 1.5rem;
+    margin: 0.25rem 0.75rem;
+    border-radius: 14px;
+    color: #555;
+    font-weight: 700;
+    font-size: 15px;
+    text-decoration: none;
+    transition: background-color 0.2s;
+    white-space: nowrap;
+    /* Evitar que el texto se rompa en horizontal */
+}
+
+.cat-item:hover {
+    background-color: #e9ecef;
+    color: #333;
+}
+
+.cat-item.active {
+    background-color: var(--cat-active-bg);
+    color: white;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.cat-item.active:hover {
+    background-color: #eb8c6c;
+}
+
+/* Scroll Horizontal para móvil */
+.sidebar-scroll {
+    display: flex;
+    flex-direction: column;
+    overflow-x: auto;
+    padding-bottom: 12px;
+    /* Espacio vital para que la barra no toque el texto */
+    scroll-behavior: smooth;
+    -webkit-overflow-scrolling: touch;
+
+    /* Configuración para Firefox */
+    scrollbar-width: thin;
+    scrollbar-color: #ccc transparent;
+}
+
+/* 2. Tamaño de la barra (Fina y pequeña) */
+.sidebar-scroll::-webkit-scrollbar {
+    height: 4px;
+    /* Grosor muy sutil */
+}
+
+.sidebar-scroll::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.sidebar-scroll::-webkit-scrollbar-thumb {
+    background: #ccc;
+    border-radius: 10px;
+}
+
+.sidebar-scroll::-webkit-scrollbar-thumb:hover {
+    background: var(--brand-color);
+}
+
+/* =========================================
+   5. TARJETAS DE RECETAS (CARDS)
+   ========================================= */
+/* Ajuste de margen superior para la vista de categorías */
+.recipe-grid {
+    margin-top: 5.5rem;
+}
+
+.recipe-card {
+    background-color: #fff;
+    /* En home es blanco, en categorías ligeramente gris, usamos blanco como base limpia */
+    border-radius: 24px;
+    border: 1px solid var(--border-color);
+    padding: 1rem;
+    transition: transform 0.3s, box-shadow 0.3s;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.02);
+    /* Sombra sutil por defecto */
+}
+
+/* Variante específica si se quiere el fondo exacto de categorías */
+.recipe-card.bg-light-variant {
+    background-color: var(--bg-light);
+}
+
+.recipe-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+}
+
+.recipe-img {
+    width: 100%;
+    height: 220px;
+    /* Altura unificada, queda bien en ambas */
+    object-fit: cover;
+    border-radius: 16px;
+    margin-bottom: 1rem;
+}
+
+.recipe-main-image {
+    object-fit: cover;
+}
+
+/* Cabecera / Contenido de la tarjeta */
+.card-header-custom {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 1rem;
+    padding: 0 0.5rem;
+}
+
+.recipe-title {
+    font-weight: 700;
+    color: var(--text-dark);
+    font-size: 19px;
+    line-height: 1.2;
+    margin-bottom: 0;
+    color: #333;
+}
+
+/* Para la vista de categorías donde el título empuja el footer */
+.recipe-title.push-down {
+    margin-bottom: auto;
+    padding: 0 0.25rem;
+    font-size: 17px;
+}
+
+/* Footer de la tarjeta (Categorías: estrellas y autor) */
+.recipe-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 0.75rem;
+    padding: 0 0.25rem;
+    color: #666;
+}
+
+.recipe-rating {
+    font-weight: 800;
+    font-size: 13px;
+    color: #555;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    white-space: nowrap;
+}
+
+.recipe-rating i {
+   color: #fbbf24;
+    font-size: 12px;
+}
+
+.recipe-author {
+    font-size: 12px;
+    font-weight: 700;
+    color: #adb5bd;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+/* Botón "Ver más" de la Home */
+.btn-ver-mas {
+    background-color: var(--btn-yellow-bg);
+    color: var(--btn-yellow-text);
+    font-weight: 800;
+    font-size: 13px;
+    padding: 0.5rem 1.5rem;
+    border-radius: 20px;
+    border: none;
+    margin-top: auto;
+    align-self: flex-start;
+    margin-left: 0.5rem;
+    transition: background-color 0.2s;
+}
+
+.btn-ver-mas:hover {
+    background-color: #eab420;
+    color: white;
+}
+
+/* =========================================
+   6. FOOTER GENERAL
+   ========================================= */
+.custom-footer {
+    background-color: var(--bg-light);
+    border-radius: 34px;
+    border: 1px solid rgba(0, 0, 0, 0.03);
+    padding: 50px 40px;
+    margin: 4rem auto 2rem auto;
+    max-width: 1440px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.02);
+}
+
+.footer-links a {
+    color: var(--text-dark);
+    font-size: 13px;
+    font-weight: 800;
+    text-transform: uppercase;
+    text-decoration: none;
+    letter-spacing: 0.5px;
+    transition: color 0.2s;
+}
+
+.footer-links a:hover {
+    color: var(--brand-color);
+}
+
+.footer-divider {
+    border-top: 1px solid #e9ecef;
+    margin: 2rem auto;
+    max-width: 1000px;
+}
+
+.social-icons a {
+    color: var(--text-dark);
+    font-size: 19px;
+    transition: color 0.2s;
+}
+
+.social-icons a:hover {
+    color: var(--brand-color);
+}
+
+.copyright {
+    font-size: 11px;
+    font-weight: 700;
+    color: #adb5bd;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    margin-top: 0.5rem;
+}
+
+/* =========================================
+   7. MEDIA QUERIES (RESPONSIVE)
+   ========================================= */
+
+@media (max-width: 991px) {
+    .recipe-grid {
+        margin-top: 2rem;
+    }
+
+    .sidebar-col {
+        margin-bottom: 2rem;
+        max-width: 100% !important;
+        padding-right: 0;
+        /* Permitir que ocupe todo el ancho */
+    }
+
+    .sidebar {
+        padding: 0;
+        border-radius: 16px;
+        background-color: transparent !important;
+        border: none !important;
+    }
+
+    .sidebar-scroll {
+        display: flex !important;
+        flex-direction: row !important;
+        /* Fuerza la línea horizontal */
+        overflow-x: auto !important;
+        /* Habilita el scroll lateral */
+        gap: 10px;
+        padding: 5px 0 15px 0;
+        /* Espacio para que no se corte la sombra */
+        -webkit-overflow-scrolling: touch;
+        /* Scroll suave en iPhone */
+    }
+
+    .sidebar-scroll::-webkit-scrollbar {
+        height: 6px;
+        display: block;
+        /* Aseguramos que sea visible */
+    }
+
+    .cat-item {
+        margin: 0 !important;
+        flex: 0 0 auto;
+        /* Importante: evita que las palabras se encojan */
+        background-color: #f5f6f8;
+        /* Un fondo sutil para que parezcan botones */
+        border: 1px solid var(--border-color);
+        padding: 10px 20px;
+    }
+}
+
+@media (max-width: 768px) {
+    .search-input {
+        width: 100%;
+    }
+
+    .hero-section {
+        height: 350px;
+        border-radius: 20px;
+    }
+
+    .hero-title {
+        font-size: 28px;
+    }
+
+    .nav-actions-mobile {
+        flex-direction: column;
+        width: 100%;
+        gap: 10px;
+    }
+
+    .nav-actions-mobile .btn {
+        width: 100%;
+    }
+}
+
+@media (max-width: 576px) {
+    .recipe-img {
+        height: 250px;
+        /* Un poco más alta en móvil para que luzca la comida */
+    }
+
+    .recipe-title {
+        font-size: 20px;
+        /* Un pelín más grande para facilitar la lectura */
+    }
+
+    .recipe-grid {
+        margin-top: 1rem;
+        /* Quitamos el hueco grande de arriba en móvil */
+    }
+
+    .custom-footer {
+        padding: 30px 20px;
+    }
+
+    .footer-links {
+        flex-direction: column;
+        align-items: center;
+        gap: 15px !important;
+    }
+}
+
+/* =========================================
+   8. FORMULARIO SUBIR RECETA
+   ========================================= */
+.page-header {
+    background-color: var(--bg-light);
+    border-radius: 20px;
+    padding: 2rem;
+    text-align: center;
+    margin-bottom: 3rem;
+}
+
+.page-title {
+    font-size: 32px;
+    font-weight: 800;
+    color: var(--text-dark);
+    margin: 0;
+}
+
+.form-section-title {
+    font-size: 22px;
+    font-weight: 800;
+    color: var(--text-dark);
+    margin-bottom: 1.5rem;
+    margin-top: 3rem;
+}
+
+.form-label {
+    font-size: 13px;
+    font-weight: 700;
+    color: #666;
+    margin-bottom: 0.5rem;
+}
+
+.form-control-custom {
+    background-color: #f7f8fa;
+    border: 1px solid #ebedf0;
+    border-radius: 12px;
+    padding: 0.75rem 1rem;
+    font-size: 15px;
+    font-weight: 600;
+    color: #333;
+    width: 100%;
+    transition: all 0.2s;
+}
+
+.form-control-custom:focus {
+    outline: none;
+    background-color: #fff;
+    border-color: #d1d5db;
+    box-shadow: 0 0 0 4px rgba(0, 0, 0, 0.02);
+}
+
+/* Campos unidos visualmente (como Ingredientes) */
+.input-group-custom {
+    display: flex;
+    border: 1px solid #ebedf0;
+    border-radius: 12px;
+    overflow: hidden;
+    background-color: #fff;
+}
+
+.input-group-custom input {
+    border: none;
+    border-radius: 0;
+    background-color: transparent;
+    flex: 1;
+    min-width: 0;
+    /* Permite que flexbox asigne anchos correctamente */
+}
+
+.input-group-custom input:focus {
+    background-color: #f9f9fa;
+}
+
+.input-group-custom .separator {
+    width: 1px;
+    background-color: #ebedf0;
+    margin: 0.25rem 0;
+    /* Deja un hueco arriba y abajo */
+}
+
+/* Flex ratios específicos para ingredientes */
+.col-cant {
+    flex: 0 0 20%;
+}
+
+.col-unidad {
+    flex: 0 0 25%;
+}
+
+.col-nombre {
+    flex: 1;
+}
+
+/* Campos de Pasos */
+.step-group {
+    display: flex;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+
+.step-label {
+    background-color: #f5f6f8;
+    color: #666;
+    font-weight: 800;
+    font-size: 13px;
+    padding: 0.75rem 1rem;
+    border: 1px solid #ebedf0;
+    border-right: none;
+    border-radius: 12px 0 0 12px;
+    min-width: 80px;
+    text-align: center;
+}
+
+.step-input {
+    border: 1px solid #ebedf0;
+    border-radius: 0 12px 12px 0;
+    padding: 0.75rem 1rem;
+    flex: 1;
+    font-size: 15px;
+}
+
+.step-input:focus {
+    outline: none;
+    background-color: #f9f9fa;
+}
+
+/* Grupo de Imágenes */
+.img-group {
+    display: flex;
+    align-items: center;
+}
+
+.img-label {
+    background-color: #f5f6f8;
+    color: #666;
+    font-weight: 800;
+    font-size: 13px;
+    padding: 0.75rem 1rem;
+    border: 1px solid #ebedf0;
+    border-right: none;
+    border-radius: 12px 0 0 12px;
+    min-width: 100px;
+    text-align: center;
+}
+
+.img-input {
+    border: 1px solid #ebedf0;
+    border-radius: 0 12px 12px 0;
+    padding: 0.75rem 1rem;
+    flex: 1;
+    font-size: 15px;
+}
+
+/* Botones de añadir */
+.btn-add-more {
+    background-color: #dcedc8;
+    /* Verde clarito del diseño */
+    color: #4a6b29;
+    /* Verde oscuro texto */
+    font-weight: 800;
+    font-size: 13px;
+    padding: 0.6rem 1.25rem;
+    border-radius: 8px;
+    border: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-top: 0.5rem;
+    transition: background 0.2s;
+}
+
+.btn-add-more:hover {
+    background-color: #cddcb8;
+}
+
+/* Botones de acción final (Submit / Cancel) */
+.form-actions {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    margin-top: 4rem;
+}
+
+.btn-cancel {
+    background-color: #f5f6f8;
+    color: #555;
+    font-weight: 800;
+    font-size: 14px;
+    padding: 0.6rem 2rem;
+    border-radius: 12px;
+    border: none;
+    transition: background 0.2s;
+}
+
+.btn-cancel:hover {
+    background-color: #e5e7eb;
+}
+
+.btn-submit {
+    background-color: #d8f5fa;
+    /* Mismo cyan claro del navbar */
+    color: #00bcd4;
+    font-weight: 800;
+    font-size: 14px;
+    padding: 0.6rem 2rem;
+    border-radius: 12px;
+    border: none;
+    transition: opacity 0.2s;
+}
+
+.btn-submit:hover {
+    opacity: 0.8;
+}
+
+/* Ajustes Mobile Forms */
+@media (max-width: 768px) {
+    .input-group-custom {
+        flex-direction: column;
+        border: none;
+        background: transparent;
+        gap: 10px;
+    }
+
+    .input-group-custom input {
+        border: 1px solid #ebedf0;
+        border-radius: 12px;
+        width: 100%;
+    }
+
+    .input-group-custom .separator {
+        display: none;
+    }
+
+    .col-cant,
+    .col-unidad,
+    .col-nombre {
+        flex: none;
+        width: 100%;
+    }
+}
+
+/* =========================================
+   9. VISTA DE RECETA DETALLE
+   ========================================= */
+.recipe-header-box {
+    background-color: var(--bg-light);
+    border-radius: 20px;
+    padding: 2.5rem 2rem;
+    text-align: center;
+    margin-bottom: 1.5rem;
+}
+
+.recipe-main-title {
+    font-size: 36px;
+    font-weight: 800;
+    color: var(--text-dark);
+    margin-bottom: 1rem;
+}
+
+.recipe-stats {
+    display: flex;
+    justify-content: center;
+    gap: 1.5rem;
+    color: #666;
+    font-size: 13px;
+    font-weight: 700;
+}
+
+.recipe-stats span i {
+    color: var(--star-color);
+}
+
+.recipe-meta-box {
+    background-color: var(--bg-light);
+    border-radius: 16px;
+    padding: 1.25rem 2rem;
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 1.5rem;
+    font-size: 13px;
+    font-weight: 700;
+    color: #555;
+    flex-wrap: wrap;
+    /* Para móviles */
+    gap: 15px;
+}
+
+.recipe-desc-box {
+    background-color: var(--bg-light);
+    border-radius: 16px;
+    padding: 1.5rem 2rem;
+    font-size: 14px;
+    color: #555;
+    line-height: 1.6;
+    margin-bottom: 3rem;
+}
+
+.recipe-section-title {
+    font-size: 24px;
+    font-weight: 800;
+    color: var(--text-dark);
+    margin-bottom: 1.5rem;
+}
+
+.ingredients-list {
+    list-style-type: disc;
+    padding-left: 1.25rem;
+    margin-bottom: 3rem;
+}
+
+.ingredients-list li {
+    font-size: 15px;
+    color: #222;
+    margin-bottom: 0.5rem;
+}
+
+.steps-list {
+    padding-left: 1.25rem;
+    margin-bottom: 4rem;
+}
+
+.steps-list li {
+    font-size: 15px;
+    color: #222;
+    margin-bottom: 0.75rem;
+    line-height: 1.6;
+}
+
+/* Comentarios */
+.comments-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+}
+
+.btn-add-comment {
+    background-color: var(--btn-yellow-bg);
+    color: var(--btn-yellow-text);
+    font-weight: 800;
+    font-size: 13px;
+    padding: 0.6rem 1.5rem;
+    border-radius: 20px;
+    border: none;
+    transition: background-color 0.2s;
+}
+
+.btn-add-comment:hover {
+    background-color: #eab420;
+    color: white;
+}
+
+.comment-card {
+    background-color: #f7f8fa;
+    /* Gris muy clarito */
+    border-radius: 16px;
+    padding: 1.5rem;
+    margin-bottom: 1rem;
+}
+
+.comment-card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+
+.comment-author {
+    font-weight: 800;
+    font-size: 13px;
+    color: var(--text-dark);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.comment-author .stars {
+    color: #444;
+    /* Estrellas oscuras en comentarios */
+    font-size: 10px;
+}
+
+.comment-date {
+    font-size: 10px;
+    font-weight: 700;
+    color: #adb5bd;
+}
+
+.comment-text {
+    font-size: 14px;
+    color: #555;
+    margin-bottom: 0;
+}
+
+.comment-actions {
+    text-align: right;
+    margin-top: -15px;
+    /* Sube un poco el botón */
+}
+
+.btn-like {
+    color: #adb5bd;
+    background: none;
+    border: none;
+    padding: 0;
+    font-size: 14px;
+    transition: color 0.2s;
+}
+
+.btn-like:hover {
+    color: #ff6b6b;
+}
+
+.load-more {
+    text-align: center;
+    margin-top: 2rem;
+}
+
+.load-more a {
+    color: #555;
+    font-weight: 700;
+    font-size: 13px;
+    text-decoration: none;
+    transition: color 0.2s;
+}
+
+.load-more a:hover {
+    color: var(--brand-color);
+}
+
+/* Columna Derecha: Imagen y Detalles */
+.recipe-image-container {
+    position: relative;
+    border-radius: 32px;
+    overflow: hidden;
+    margin-bottom: 1rem;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+}
+
+.recipe-main-image {
+    width: 100%;
+    height: 550px;
+    /* Altura generosa para imagen principal */
+    object-fit: cover;
+    display: block;
+}
+
+.img-nav-btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(255, 255, 255, 0.6);
+    backdrop-filter: blur(4px);
+    /* Efecto cristal */
+    border: none;
+    width: 44px;
+    height: 44px;
+    border-radius: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #333;
+    font-size: 18px;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.img-nav-btn:hover {
+    background: rgba(255, 255, 255, 0.9);
+}
+
+.img-nav-left {
+    left: 20px;
+}
+
+.img-nav-right {
+    right: 20px;
+}
+
+.recipe-author-box {
+    background-color: var(--bg-light);
+    border-radius: 12px;
+    padding: 1rem;
+    text-align: center;
+    font-size: 12px;
+    font-weight: 700;
+    color: #555;
+}
+
+/* Ajustes Responsive Receta */
+@media (max-width: 991px) {
+    .recipe-main-title {
+        font-size: 28px;
+    }
+
+    .recipe-main-image {
+        height: 400px;
+    }
+}
+
+@media (max-width: 576px) {
+    .recipe-meta-box {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        gap: 8px;
+    }
+}
+
+/* =========================================
+   10. PANTALLA DE LOGIN
+   ========================================= */
+.login-page-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.login-container {
+    display: flex;
+    width: 100%;
+    max-width: 1000px;
+    min-height: 600px;
+    height: auto;
+    /* Reducimos el tamaño máximo y la altura para que no sea tan gigante */
+    background-color: #fff;
+    border-radius: 32px;
+    overflow: hidden;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.04);
+}
+
+/* Mitad Izquierda: Formulario */
+.login-form-area {
+    flex: 1;
+    padding: 3rem 4rem;
+    display: flex;
+    flex-direction: column;
+}
+
+.login-logo-box {
+    background-color: var(--bg-light);
+    border-radius: 16px;
+    padding: 0.75rem;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 2rem;
+    width: auto;
+    align-self: flex-start;
+}
+
+/* En la imagen el logo parece centrado arriba en una caja gris clara que ocupa todo el ancho */
+.login-logo-box.full-width {
+    width: 100%;
+    align-self: center;
+}
+
+.login-form-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    max-width: 450px;
+    margin: 0 auto;
+    width: 100%;
+}
+
+.login-title {
+    font-size: 28px;
+    font-weight: 800;
+    color: var(--text-dark);
+    margin-bottom: 2rem;
+    text-align: left;
+}
+
+.login-form-group {
+    margin-bottom: 1.5rem;
+}
+
+.login-label {
+    display: block;
+    font-size: 11px;
+    font-weight: 700;
+    color: #888;
+    margin-bottom: 0.5rem;
+}
+
+.login-input {
+    width: 100%;
+    background-color: #f7f8fa;
+    border: 1px solid transparent;
+    border-radius: 12px;
+    padding: 0.75rem 1rem;
+    font-size: 15px;
+    font-weight: 600;
+    color: #333;
+    transition: all 0.2s;
+}
+
+.login-input:focus {
+    outline: none;
+    background-color: #fff;
+    border-color: #d1d5db;
+    box-shadow: 0 0 0 4px rgba(0, 0, 0, 0.02);
+}
+
+.btn-login-submit {
+    width: 100%;
+    background-color: #d8f5fa;
+    color: #00bcd4;
+    font-weight: 800;
+    font-size: 15px;
+    padding: 1rem;
+    border-radius: 12px;
+    border: none;
+    margin-top: 2rem;
+    transition: opacity 0.2s;
+}
+
+.btn-login-submit:hover {
+    opacity: 0.8;
+}
+
+.login-footer-text {
+    text-align: center;
+    margin-top: 2rem;
+    font-size: 13px;
+    font-weight: 700;
+    color: #666;
+}
+
+.login-footer-text a {
+    color: var(--text-dark);
+    text-decoration: underline;
+    text-underline-offset: 4px;
+}
+
+.login-footer-text a:hover {
+    color: var(--brand-color);
+}
+
+/* Mitad Derecha: Imagen */
+.login-image-area {
+    flex: 1;
+    background-color: #fff;
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.login-image-area img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* Responsive Login */
+@media (max-width: 991px) {
+    .login-container {
+        flex-direction: column;
+        height: auto;
+        min-height: 80vh;
+    }
+
+    .login-image-area {
+        display: none;
+        /* Ocultamos la imagen decorativa en móvil */
+    }
+
+    .login-form-area {
+        padding: 3rem 2rem;
+    }
+}
+
+/* =========================================
+   11. DASHBOARD DE ADMINISTRACIÓN
+   ========================================= */
+.dashboard-wrapper {
+    display: flex;
+    min-height: 100vh;
+    background-color: #f7f9fc;
+    /* Fondo general azulado/grisáceo */
+}
+
+/* Sidebar del Dashboard */
+.sidebar-dash {
+    width: 260px;
+    background-color: #fff;
+    padding: 1.5rem 0;
+    display: flex;
+    flex-direction: column;
+    border-right: 1px solid #ebedf0;
+    transition: transform 0.3s ease;
+    z-index: 1040;
+}
+
+.sidebar-dash-brand {
+    padding: 0 1.5rem;
+    margin-bottom: 3rem;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    text-decoration: none;
+}
+
+.sidebar-dash-menu {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.sidebar-dash-link {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 1rem 1.5rem;
+    color: #888;
+    text-decoration: none;
+    font-weight: 700;
+    font-size: 15px;
+    transition: all 0.2s;
+    border-left: 4px solid transparent;
+}
+
+.sidebar-dash-link i {
+    font-size: 18px;
+    width: 24px;
+    /* Para alinear iconos */
+    text-align: center;
+}
+
+.sidebar-dash-link:hover,
+.sidebar-dash-link.active {
+    background-color: #fff4f2;
+    /* Fondo rojito muy suave */
+    color: #ff6b6b;
+    /* Rojo/Coral del diseño */
+    border-left-color: #ff6b6b;
+}
+
+/* Contenido Principal Dashboard */
+.dash-main-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    overflow-x: hidden;
+}
+
+/* Header del Dashboard */
+.dash-header {
+    background-color: #fff;
+    padding: 1rem 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 1px solid #ebedf0;
+}
+
+.dash-page-title {
+    font-size: 20px;
+    font-weight: 800;
+    color: #2c3e50;
+    /* Azul oscuro */
+    margin: 0;
+}
+
+.dash-header-actions {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+}
+
+.dash-search-box {
+    position: relative;
+    width: 250px;
+}
+
+.dash-search-box i {
+    position: absolute;
+    left: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #aaa;
+    font-size: 14px;
+}
+
+.dash-search-box input {
+    width: 100%;
+    background-color: #f5f6f8;
+    border: none;
+    border-radius: 8px;
+    padding: 0.5rem 1rem 0.5rem 2.25rem;
+    font-size: 14px;
+}
+
+.dash-icon-btn {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color: #f5f6f8;
+    color: #666;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    position: relative;
+    font-size: 16px;
+}
+
+.dash-icon-btn.has-notif::after {
+    content: '';
+    position: absolute;
+    top: 10px;
+    right: 12px;
+    width: 6px;
+    height: 6px;
+    background-color: #ff6b6b;
+    border-radius: 50%;
+}
+
+.dash-icon-btn.settings {
+    color: #5c82f0;
+    background-color: #f0f4ff;
+}
+
+.dash-icon-btn.notif {
+    color: #ff6b6b;
+    background-color: #fff0f0;
+}
+
+.dash-user-avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+/* Cuerpo del Dashboard */
+.dash-body {
+    padding: 2rem;
+    flex: 1;
+}
+
+.dash-card {
+    background-color: #fff;
+    border-radius: 16px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03);
+    padding: 1.5rem;
+    overflow-x: auto;
+    /* Para tablas en móvil */
+}
+
+.dash-card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2rem;
+    flex-wrap: wrap;
+    gap: 15px;
+}
+
+.dash-card-title {
+    font-size: 18px;
+    font-weight: 800;
+    color: #2c3e50;
+    margin: 0;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.dash-card-title::before {
+    content: '';
+    display: block;
+    width: 4px;
+    height: 18px;
+    background-color: #5c82f0;
+    /* Rayita azul */
+    border-radius: 2px;
+}
+
+.dash-toolbar {
+    display: flex;
+    gap: 10px;
+}
+
+.dash-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 0.5rem 1rem;
+    font-size: 13px;
+    font-weight: 700;
+    border-radius: 8px;
+    border: 1px solid #ebedf0;
+    background-color: #fff;
+    color: #555;
+    text-decoration: none;
+}
+
+.dash-btn-primary {
+    background-color: #9cdb9e;
+    /* Verde del diseño */
+    color: white;
+    border: none;
+}
+
+.dash-btn-primary:hover {
+    background-color: #8ac98c;
+    color: white;
+}
+
+/* Tabla Dashboard */
+.dash-table {
+    width: 100%;
+    border-collapse: collapse;
+    min-width: 800px;
+    /* Evita que se aplaste demasiado en pantallas pequeñas */
+}
+
+.dash-table th {
+    font-size: 13px;
+    font-weight: 800;
+    color: #333;
+    padding: 1rem;
+    text-align: left;
+    border-bottom: 1px solid #ebedf0;
+}
+
+.dash-table td {
+    padding: 1rem;
+    vertical-align: middle;
+    font-size: 13px;
+    color: #666;
+    border-bottom: 1px solid #f9fafb;
+}
+
+/* Elementos de la tabla */
+.dash-item-img {
+    width: 48px;
+    height: 48px;
+    border-radius: 12px;
+    object-fit: cover;
+}
+
+.dash-status {
+    font-weight: 700;
+}
+
+.dash-status.revisada {
+    color: #2ecc71;
+}
+
+/* Verde */
+.dash-status.por-revisar {
+    color: #ff6b6b;
+}
+
+/* Rojo */
+
+.dash-action-btn {
+    background: none;
+    border: none;
+    color: #aaa;
+    cursor: pointer;
+    font-size: 18px;
+}
+
+/* Checkboxes personalizados */
+.dash-checkbox {
+    width: 16px;
+    height: 16px;
+    border-radius: 4px;
+    border: 1px solid #ddd;
+    margin: 0;
+    cursor: pointer;
+}
+
+/* Paginación final */
+.dash-pagination-wrapper {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 1.5rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid #ebedf0;
+}
+
+.dash-page-info {
+    font-size: 13px;
+    font-weight: 700;
+    color: #333;
+    background-color: #f5f6f8;
+    padding: 0.4rem 0.8rem;
+    border-radius: 6px;
+}
+
+.dash-pagination {
+    display: flex;
+    gap: 5px;
+    align-items: center;
+}
+
+.dash-page-link {
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 8px;
+    font-size: 13px;
+    font-weight: 700;
+    color: #aaa;
+    text-decoration: none;
+}
+
+.dash-page-link:hover {
+    background-color: #f5f6f8;
+    color: #555;
+}
+
+.dash-page-link.active {
+    background-color: #f5f6f8;
+    color: #333;
+}
+
+/* Hamburguesa móvil para sidebar Dashboard */
+.dash-sidebar-toggle {
+    display: none;
+    background: none;
+    border: none;
+    font-size: 24px;
+    color: #333;
+    cursor: pointer;
+}
+
+/* Responsive Dashboard */
+@media (max-width: 991px) {
+    .sidebar-dash {
+        position: fixed;
+        left: -260px;
+        /* Oculto por defecto */
+        height: 100vh;
+        box-shadow: 4px 0 10px rgba(0, 0, 0, 0.05);
+    }
+
+    .sidebar-dash.show {
+        left: 0;
+        transform: translateX(0);
+    }
+
+    .dash-sidebar-toggle {
+        display: block;
+    }
+
+    .dash-header-actions .dash-search-box {
+        display: none;
+        /* Ocultamos buscador en móvil header */
+    }
+}
+
+@media (max-width: 576px) {
+    .dash-card-header {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .dash-toolbar {
+        width: 100%;
+        overflow-x: auto;
+        padding-bottom: 5px;
+    }
+}

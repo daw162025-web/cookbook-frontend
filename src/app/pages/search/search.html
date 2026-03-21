@@ -1,0 +1,31 @@
+<main class="container-fluid flex-grow-1 px-4 px-lg-5" style="max-width: 1440px; margin: 0 auto;">
+    <div class="row pt-4 pb-5 g-4">
+        <div class="col-12">
+            <h1 class="fw-extrabold text-dark-custom mb-4" style="font-size: 34px;">
+                Resultados para: "{{ searchQuery }}"
+            </h1>
+            
+            @if (isLoading) {
+                <div class="text-center py-5">
+                    <div class="spinner-border text-primary" role="status">
+                        <span class="visually-hidden">Cargando...</span>
+                    </div>
+                </div>
+            } @else {
+                <div class="row g-4 recipe-grid">
+                    @for (recipe of recipes; track recipe.id) {
+                        <div class="col-12 col-md-4 col-xl-3">
+                            <app-recipe-card [recipe]="recipe"></app-recipe-card>
+                        </div>
+                    } @empty {
+                        <div class="col-12 py-5 text-center">
+                            <h3 class="text-muted">No encontramos recetas que coincidan con tu búsqueda.</h3>
+                            <p class="mt-3">Intenta buscar con otros términos o ingredientes.</p>
+                            <button class="btn nav-pill-active mt-3" routerLink="/">Volver a Inicio</button>
+                        </div>
+                    }
+                </div>
+            }
+        </div>
+    </div>
+</main>

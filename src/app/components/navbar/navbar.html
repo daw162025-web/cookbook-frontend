@@ -1,29 +1,98 @@
-<nav class="navbar">
-  <div class="navbar-logo">
-    <span class="logo-icon">🧑‍🍳</span> 
-    <span class="logo-text">Cookbook</span>
-  </div>
+<header class="container-fluid custom-navbar px-4 px-lg-5">
+  <nav class="navbar navbar-expand-xl navbar-light px-0">
+    <div class="container-fluid px-0">
 
-  <button class="hamburger-btn" (click)="toggleMenu()">
-    ☰
-  </button>
+      <a class="navbar-brand d-flex align-items-center gap-2" routerLink="/" (click)="closeMenu()">
+        <svg style="width: 32px; height: 32px;" class="text-brand" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M6 13.87A4 4 0 0 1 7.41 6a5.11 5.11 0 0 1 1.05-1.54 5 5 0 0 1 7.08 0A5.11 5.11 0 0 1 16.59 6 4 4 0 0 1 18 13.87V21H6Z"></path>
+          <line x1="6" y1="17" x2="18" y2="17"></line>
+        </svg>
+        <span class="fs-4 fw-bold text-brand mb-0">Cookbook</span>
+      </a>
 
-  <div class="navbar-menu" [class.open]="isMenuOpen">
-    
-    <ul class="navbar-links">
-      <li><a href="#" class="active">Explorar</a></li>
-      <li><a href="#">Categorías</a></li>
-    </ul>
+      <button class="navbar-toggler border-0 shadow-none" type="button" (click)="toggleMenu()">
+        <span class="navbar-toggler-icon"></span>
+      </button>
 
-    <div class="navbar-search">
-      <span class="search-icon">🔍</span>
-      <input type="text" placeholder="Buscar recetas">
+      <div class="collapse navbar-collapse" [class.show]="isMenuOpen" id="navbarContent">
+
+        <ul class="navbar-nav mx-xl-4 me-auto mb-2 mb-xl-0 d-flex gap-2 gap-xl-1 align-items-xl-center mt-3 mt-xl-0">
+          <li class="nav-item">
+            <a class="nav-link text-center text-xl-start" 
+               routerLink="/" 
+               routerLinkActive="nav-pill-green active" 
+               [routerLinkActiveOptions]="{exact: true}"
+               (click)="closeMenu()">Explorar</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link nav-pill-light d-block text-center text-xl-start" 
+               routerLink="/categories" 
+               routerLinkActive="nav-pill-green active"
+               (click)="closeMenu()">Categorías</a>
+          </li>
+
+          <ng-container *ngIf="authService.isLoggedIn$ | async">
+            <li class="nav-item">
+                <a class="nav-link nav-pill-light d-block text-center text-xl-start" routerLink="/my-recipes" routerLinkActive="nav-pill-green active" (click)="closeMenu()">Mis recetas</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link nav-pill-light d-block text-center text-xl-start" routerLink="/favorites" routerLinkActive="nav-pill-green active" (click)="closeMenu()">Mis favoritos</a>
+            </li>
+          </ng-container>
+        </ul>
+
+        <div class="d-flex flex-column flex-xl-row align-items-xl-center gap-3 gap-xl-4 mt-3 mt-xl-0 ms-xl-auto">
+          <div class="search-container w-100">
+            <i class="fa-solid fa-magnifying-glass search-icon"></i>
+            <input type="text" class="form-control search-input py-2" placeholder="Buscar recetas"
+                   [formControl]="searchControl" (keyup.enter)="onSearch()">
+          </div>
+
+          <ng-container *ngIf="authService.isLoggedIn$ | async; else guestLinks">
+            <!-- Botón Sube tu receta -->
+            <button class="btn btn-upload d-flex align-items-center justify-content-center gap-2 text-nowrap" routerLink="/create-recipe" (click)="closeMenu()">
+                <i class="fa-solid fa-plus"></i> Sube tu receta
+            </button>
+
+            <!-- Perfil Dropdown -->
+            <div class="dropdown d-flex justify-content-center mt-2 mt-xl-0 ms-xl-2 position-relative">
+                <a href="javascript:void(0)" class="d-flex align-items-center text-decoration-none text-muted gap-2"
+                    (click)="toggleUserDropdown($event)">
+                    <!-- Generamos avatar con iniciales o pravatar -->
+                    <img [src]="'https://ui-avatars.com/api/?name=' + ((authService.currentUser$ | async)?.name || 'U') + '&background=00bcd4&color=fff'" alt="Avatar" width="38"
+                        height="38" class="rounded-circle shadow-sm">
+                    <!-- Icono dropdown (Chevron) a la derecha de la imagen -->
+                    <i class="fa-solid fa-chevron-down small"></i>
+                </a>
+                
+                <!-- Menú Desplegable -->
+                <ul class="dropdown-menu dropdown-menu-end shadow-sm border-0 mt-2" [class.show]="isUserDropdownOpen" style="position: absolute; right: 0; min-width: 150px;">
+                    <li>
+                      <div class="dropdown-header fw-bold">{{ (authService.currentUser$ | async)?.name }}</div>
+                    </li>
+                    <li><hr class="dropdown-divider"></li>
+                    <ng-container *ngIf="(authService.currentUser$ | async)?.role === 'admin'">
+                        <li><a class="dropdown-item" routerLink="/admin" (click)="closeMenu()"><i class="fa-solid fa-shield-halved me-2"></i> Panel de Admin</a></li>
+                        <li><hr class="dropdown-divider"></li>
+                    </ng-container>
+                    <li><a class="dropdown-item" routerLink="/my-recipes" (click)="closeMenu()"><i class="fa-solid fa-list-check me-2"></i> Mis recetas</a></li>
+                    <li><hr class="dropdown-divider"></li>
+                    <li><a class="dropdown-item" routerLink="/profile" (click)="closeMenu()"><i class="fa-regular fa-user me-2"></i> Mi perfil</a></li>
+                    <li><hr class="dropdown-divider"></li>
+                    <li><a class="dropdown-item text-danger" href="javascript:void(0)" (click)="logout()"><i class="fa-solid fa-arrow-right-from-bracket me-2"></i> Cerrar sesión</a></li>
+                </ul>
+            </div>
+
+          </ng-container>
+
+          <ng-template #guestLinks>
+            <div class="d-flex nav-actions-mobile gap-3">
+              <button class="btn btn-login text-nowrap" routerLink="/login" (click)="closeMenu()">Iniciar sesión</button>
+              <button class="btn btn-register text-nowrap" routerLink="/register" (click)="closeMenu()">Registrarse</button>
+            </div>
+          </ng-template>
+        </div>
+      </div>
     </div>
-
-    <div class="navbar-auth">
-      <button class="btn-login">Iniciar sesión</button>
-      <button class="btn-register">Registrarse</button>
-    </div>
-
-  </div>
-</nav>
+  </nav>
+</header>

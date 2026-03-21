@@ -1,1 +1,42 @@
-<p>footer works!</p>
+<footer class="custom-footer mx-4 mx-lg-5 mb-5 mt-4">
+        <div class="d-flex flex-column flex-md-row align-items-center justify-content-between mb-4">
+
+            <!-- Logo Footer -->
+            <div class="d-flex align-items-center gap-2 mb-4 mb-md-0">
+                <svg style="width: 30px; height: 30px;" class="text-brand" viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path
+                        d="M6 13.87A4 4 0 0 1 7.41 6a5.11 5.11 0 0 1 1.05-1.54 5 5 0 0 1 7.08 0A5.11 5.11 0 0 1 16.59 6 4 4 0 0 1 18 13.87V21H6Z">
+                    </path>
+                    <line x1="6" y1="17" x2="18" y2="17"></line>
+                </svg>
+                <span class="fs-4 fw-bold text-brand mb-0">Cookbook</span>
+            </div>
+
+            <!-- Links Footer -->
+            <div class="footer-links d-flex flex-wrap justify-content-center gap-4 gap-lg-5">
+                <a routerLink="/">Explorar</a>
+                <a routerLink="/categories">Categorías</a>
+                <a href="javascript:void(0)">Contáctanos</a>
+                <ng-container *ngIf="authService.isLoggedIn$ | async">
+                    <a routerLink="/my-recipes">Mis recetas</a>
+                    <a routerLink="/favorites">Mis favoritos</a>
+                </ng-container>
+                <a href="javascript:void(0)">Política de privacidad</a>
+                <a href="javascript:void(0)">Términos y condiciones</a>
+            </div>
+        </div>
+
+        <div class="footer-divider"></div>
+
+        <!-- Redes Sociales y Copyright -->
+        <div class="d-flex flex-column align-items-center">
+            <div class="social-icons d-flex gap-4 mb-3">
+                <a href="#"><i class="fa-brands fa-tiktok"></i></a>
+                <a href="#"><i class="fa-brands fa-facebook-f"></i></a>
+                <a href="#"><i class="fa-brands fa-instagram"></i></a>
+                <a href="#"><i class="fa-brands fa-youtube"></i></a>
+            </div>
+            <p class="copyright mb-0">COPYRIGHT &copy; 2026 COOKS DELIGHT.</p>
+        </div>
+    </footer>

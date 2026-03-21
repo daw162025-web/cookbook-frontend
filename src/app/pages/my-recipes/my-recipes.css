@@ -1,0 +1,59 @@
+.page-header {
+    background-color: var(--bg-light);
+    border-radius: 20px;
+    padding: 2.5rem;
+    text-align: left;
+    border: 1px solid var(--border-color);
+}
+
+.page-title {
+    font-size: 32px;
+    font-weight: 800;
+    color: var(--text-dark);
+    margin-bottom: 0.5rem;
+}
+
+.table th {
+    border-top: none;
+    border-bottom: 2px solid #f8f9fa;
+    padding: 1rem;
+}
+
+.table td {
+    padding: 1.25rem 1rem;
+    border-bottom: 1px solid #f8f9fa;
+}
+
+.table-hover tbody tr:hover {
+    background-color: rgba(255, 106, 74, 0.02);
+}
+
+.badge {
+    padding: 0.5rem 0.75rem;
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: capitalize;
+}
+
+.btn-light {
+    background-color: #f8f9fa;
+    border: 1px solid #eee;
+    color: #666;
+}
+
+.btn-light:hover {
+    background-color: #eee;
+}
+
+.btn-sm {
+    width: 34px;
+    height: 34px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+}
+
+.text-brand {
+    color: var(--brand-color);
+}

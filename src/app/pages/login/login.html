@@ -1,0 +1,63 @@
+<div class="login-page-wrapper">
+    <div class="login-container">
+
+        <!-- Mitad Izquierda: Formulario de Login -->
+        <div class="login-form-area">
+
+            <!-- Logo -->
+            <!-- <div class="login-logo-box full-width">
+                <a class="d-flex align-items-center gap-2 text-decoration-none" routerLink="/">
+                    <svg style="width: 32px; height: 32px;" class="text-brand" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path
+                            d="M6 13.87A4 4 0 0 1 7.41 6a5.11 5.11 0 0 1 1.05-1.54 5 5 0 0 1 7.08 0A5.11 5.11 0 0 1 16.59 6 4 4 0 0 1 18 13.87V21H6Z">
+                        </path>
+                        <line x1="6" y1="17" x2="18" y2="17"></line>
+                    </svg>
+                    <span class="fs-4 fw-bold text-brand mb-0">Cookbook</span>
+                </a>
+            </div> -->
+
+            <!-- Contenido Principal del Formulario -->
+            <div class="login-form-content">
+                <h1 class="login-title">Bienvenido de nuevo</h1>
+
+                <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+                    <div class="login-form-group">
+                        <label class="login-label">Email</label>
+                        <input type="email" class="login-input" formControlName="email">
+                        <div class="text-danger small mt-1" *ngIf="loginForm.get('email')?.invalid && loginForm.get('email')?.touched">
+                            <span *ngIf="loginForm.get('email')?.errors?.['required']">El correo es obligatorio.</span>
+                            <span *ngIf="loginForm.get('email')?.errors?.['email']">Introduce un correo válido.</span>
+                        </div>
+                    </div>
+
+                    <div class="login-form-group">
+                        <label class="login-label">Contraseña</label>
+                        <input type="password" class="login-input" formControlName="password">
+                        <div class="text-danger small mt-1" *ngIf="loginForm.get('password')?.invalid && loginForm.get('password')?.touched">
+                            <span *ngIf="loginForm.get('password')?.errors?.['required']">La contraseña es obligatoria.</span>
+                        </div>
+                    </div>
+
+                    <div *ngIf="errorMessage" class="alert alert-danger" role="alert">
+                        {{ errorMessage }}
+                    </div>
+
+                    <button type="submit" class="btn-login-submit">Iniciar sesión</button>
+                </form>
+
+                <p class="login-footer-text">
+                    ¿No tienes una cuenta? <a routerLink="/register">Regístrate</a>
+                </p>
+            </div>
+
+        </div>
+
+        <!-- Mitad Derecha: Patrón de Cocina (Imagen) -->
+        <div class="login-image-area">
+            <img src="/assets/portada.png" alt="Cooking Illustration">
+        </div>
+
+    </div>
+</div>

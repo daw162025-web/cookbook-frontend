@@ -1,19 +1,82 @@
-import { Component } from '@angular/core';
+import { Component, inject, OnInit, HostListener } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { RouterModule, Router } from '@angular/router';
+import { FormControl, ReactiveFormsModule } from '@angular/forms';
+import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-navbar',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, RouterModule, ReactiveFormsModule], 
   templateUrl: './navbar.html',
   styleUrl: './navbar.css',
 })
-export class Navbar {
-  // Variable que controla si el menú móvil está abierto
+export class Navbar implements OnInit {
   isMenuOpen = false;
+  isUserDropdownOpen = false;
+  searchControl = new FormControl('');
+  private router = inject(Router);
+  public authService = inject(AuthService);
 
-  // Función para abrir/cerrar el menú al tocar el botón
+  @HostListener('document:click', ['$event'])
+  onDocumentClick(event: Event) {
+    // Si se hace click en otro sitio del documento, cerramos el dropdown
+    this.isUserDropdownOpen = false;
+  }
+
+  ngOnInit() {
+    this.searchControl.valueChanges.pipe(
+      debounceTime(400),
+      distinctUntilChanged()
+    ).subscribe(query => {
+      if (query !== null) {
+        if (query.trim() !== '') {
+          this.router.navigate(['/search'], { queryParams: { q: query.trim() } });
+        } else if (this.router.url.startsWith('/search')) {
+          this.router.navigate(['/search'], { queryParams: { q: '' } });
+        }
+      }
+    });
+  }
+
   toggleMenu() {
     this.isMenuOpen = !this.isMenuOpen;
   }
-}
+
+  // Función útil para cerrar el menú al hacer clic en un enlace en móvil
+  closeMenu() {
+    this.isMenuOpen = false;
+    this.isUserDropdownOpen = false;
+  }
+
+  toggleUserDropdown(event: Event) {
+    event.stopPropagation(); // Evitamos que el document:click de arriba reciba este evento
+    this.isUserDropdownOpen = !this.isUserDropdownOpen;
+  }
+
+  onSearch() {
+    const query = this.searchControl.value;
+    if (query && query.trim() !== '') {
+      this.router.navigate(['/search'], { queryParams: { q: query.trim() } });
+      this.closeMenu();
+    }
+  }
+
+  logout() {
+    if (window.confirm('¿Seguro que quieres cerrar sesión?')) {
+      this.authService.logout().subscribe({
+        next: () => {
+          this.router.navigate(['/login']);
+          this.closeMenu();
+        },
+        error: () => {
+          // Fallback en caso de error, limpiar local
+          this.authService.clearAuth();
+          this.router.navigate(['/login']);
+          this.closeMenu();
+        }
+      });
+    }
+  }
+}

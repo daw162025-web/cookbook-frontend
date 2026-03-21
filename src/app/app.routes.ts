@@ -1,6 +1,21 @@
 import { Routes } from '@angular/router';
 import { HomeComponent } from './pages/home/home';
+import { CategoriesComponent } from './pages/categories/categories';
+import { SearchComponent } from './pages/search/search';
+import { LoginComponent } from './pages/login/login';
+import { RegisterComponent } from './pages/register/register';
+import { RecipeDetailComponent } from './pages/recipe-detail/recipe-detail';
+import { CreateRecipeComponent } from './pages/create-recipe/create-recipe';
+import { MyRecipesComponent } from './pages/my-recipes/my-recipes';
 
 export const routes: Routes = [
   { path: '', component: HomeComponent }, 
+  { path: 'categories', component: CategoriesComponent }, 
+  { path: 'search', component: SearchComponent }, 
+  { path: 'login', component: LoginComponent },
+  { path: 'register', component: RegisterComponent },
+  { path: 'recipe/:id', component: RecipeDetailComponent },
+  { path: 'create-recipe', component: CreateRecipeComponent },
+  { path: 'my-recipes', component: MyRecipesComponent },
+  { path: '**', redirectTo: '' } 
 ];

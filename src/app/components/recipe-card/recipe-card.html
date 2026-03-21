@@ -1,22 +1,16 @@
-<article class="recipe-card">
-  <div class="card-image-container">
-    <img 
-      [src]="recipe.image_url" 
-      [alt]="recipe.title" 
-      class="card-image">
-  </div>
-
-  <div class="card-content">
-    
-    <div class="card-header">
-      <h3 class="card-title">{{ recipe.title }}</h3>
-      
-      <div class="card-rating">
-        <span class="star">⭐</span>
-        <span class="score">4.9</span>
-      </div>
+<article class="recipe-card" [class.bg-light-variant]="true">
+  <img [src]="recipe.image_url?.[0]" [alt]="recipe.title" class="recipe-img">
+  <h3 class="recipe-title push-down">{{ recipe.title }}</h3>
+  
+  <div class="recipe-footer mt-auto">
+    <div class="d-flex align-items-center gap-3">
+      <span class="recipe-rating">
+        <i class="fa-solid fa-star"></i> {{ recipe.avg_rating || recipe.rating || '0.0' }}
+      </span>
+      <span class="recipe-author" *ngIf="recipe.user?.name">
+        Por: {{ recipe.user?.name }}
+      </span>
     </div>
-
-    <button class="btn-view-more">Ver más</button>
+    <button class="btn btn-ver-mas mb-0 mt-0" [routerLink]="['/recipe', recipe.id]" *ngIf="recipe.id">Ver más</button>
   </div>
 </article>

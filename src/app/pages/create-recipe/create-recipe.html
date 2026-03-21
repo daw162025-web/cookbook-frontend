@@ -1,0 +1,167 @@
+    <!-- Main Content: Formulario -->
+    <main class="container flex-grow-1 px-4 px-lg-5 pt-3 mb-5" style="max-width: 1200px;">
+
+        <!-- Cabecera de Página -->
+        <div class="page-header">
+            <h1 class="page-title">Sube tu propia receta</h1>
+        </div>
+
+        <!-- Formulario reactivo -->
+        <form [formGroup]="recipeForm" (ngSubmit)="onSubmit()">
+
+            <!-- SECCIÓN 1: Detalles de la receta -->
+            <section>
+                <h2 class="form-section-title">Detalles de la receta</h2>
+
+                <div class="mb-4">
+                    <label class="form-label">Título</label>
+                    <input type="text" class="form-control-custom" formControlName="title" placeholder="Ej: Tortilla de patata rellena">
+                </div>
+
+                <div class="mb-4">
+                    <label class="form-label">Descripción</label>
+                    <input type="text" class="form-control-custom" formControlName="description" placeholder="Breve descripción de la receta">
+                </div>
+
+                <div class="mb-4">
+                    <label class="form-label">Categoría</label>
+                    <select class="form-select form-control-custom" formControlName="category_id">
+                        <option value="" disabled selected>Selecciona una categoría</option>
+                        <option *ngFor="let cat of availableCategories" [value]="cat.id">{{ cat.name }}</option>
+                    </select>
+                </div>
+
+                <div class="row g-4">
+                    <div class="col-md-4">
+                        <label class="form-label">Dificultad</label>
+                        <select class="form-select form-control-custom" formControlName="difficulty">
+                            <option value="" disabled selected>Selecciona</option>
+                            <option value="easy">Fácil</option>
+                            <option value="medium">Media</option>
+                            <option value="hard">Difícil</option>
+                        </select>
+                    </div>
+                    <div class="col-md-4">
+                        <label class="form-label">Tiempo de preparación</label>
+                        <input type="text" class="form-control-custom" formControlName="prepTime" placeholder="Ej: 10 Min">
+                    </div>
+                    <div class="col-md-4">
+                        <label class="form-label">Tiempo total</label>
+                        <input type="text" class="form-control-custom" formControlName="totalTime" placeholder="Ej: 30 Min">
+                    </div>
+                </div>
+            </section>
+
+            <!-- SECCIÓN 2: Ingredientes -->
+            <section>
+                <h2 class="form-section-title">Ingredientes</h2>
+
+                <!-- Headers de las columnas -->
+                <div class="row mb-2 d-none d-md-flex px-1 text-muted fw-bold">
+                    <div class="col-md-4"><label class="form-label mb-0 ms-2">Cantidad o Medida</label></div>
+                    <div class="col-md-7"><label class="form-label mb-0 ms-2">Ingrediente</label></div>
+                    <div class="col-md-1"></div> <!-- Espacio extra botón eliminar -->
+                </div>
+
+                <!-- Lista de Ingredientes Dinámica -->
+                <div class="d-flex flex-column gap-3" formArrayName="ingredients">
+                    
+                    <div *ngFor="let ingredient of ingredients.controls; let i = index; let last = last; trackBy: trackByIndex" [formGroupName]="i" class="row gx-3 gy-2 align-items-center">
+                        <div class="col-12 col-md-4">
+                            <!-- Si son 4 huevos, pondrá "4" -->
+                            <input type="text" class="form-control-custom w-100" formControlName="cantidad" placeholder="Ej: 4, 100g, 1 taza">
+                        </div>
+                        <div class="col-12 col-md-8 position-relative">
+                            <!-- Si son 4 huevos, aquí pondrá "Huevos" -->
+                            <input type="text" class="form-control-custom w-100 pe-5" formControlName="nombre" placeholder="Ej: Huevos grandes, Azúcar..." list="ingredientsList" autocomplete="off">
+
+                            <button *ngIf="ingredients.length > 1" type="button" class="btn border-0 text-danger position-absolute end-0 top-50 translate-middle-y me-1" (click)="removeIngredient(i)">
+                                <i class="fa-solid fa-xmark"></i>
+                            </button>
+                        </div>
+
+                        <!-- Botón añadir más sólo en la última fila -->
+                        <div *ngIf="last" class="col-12 text-end text-md-start mt-1">
+                            <button type="button" class="btn-add-more" (click)="addIngredient()">
+                                <i class="fa-solid fa-plus text-muted" style="font-size: 11px;"></i> Añade más ingredientes
+                            </button>
+                        </div>
+                    </div>
+
+                </div>
+
+                <!-- Datalist dinámico cargado desde Laravel -->
+                <datalist id="ingredientsList">
+                    <option *ngFor="let item of availableIngredients" [value]="item.name"></option>
+                </datalist>
+
+            </section>
+
+            <!-- SECCIÓN 3: Pasos a seguir -->
+            <section>
+                <h2 class="form-section-title">Pasos a seguir</h2>
+
+                <div class="d-flex flex-column gap-3" formArrayName="steps">
+                    
+                    <div *ngFor="let step of steps.controls; let i = index; let last = last; trackBy: trackByIndex" class="d-flex flex-column flex-xl-row gap-3 align-items-xl-center">
+                        <div class="step-group flex-grow-1 position-relative mb-0">
+                            <div class="step-label">Paso {{ i + 1 }}</div>
+                            <input type="text" class="form-control-custom step-input pe-5" [formControlName]="i" placeholder="Describe este paso">
+                            
+                            <button *ngIf="steps.length > 1" type="button" class="btn border-0 text-danger position-absolute end-0 top-50 translate-middle-y me-1" (click)="removeStep(i)">
+                                <i class="fa-solid fa-xmark"></i>
+                            </button>
+                        </div>
+
+                        <!-- Botón añadir más sólo en la última fila -->
+                        <div *ngIf="last" class="text-end text-xl-start" style="min-width: 150px;">
+                            <button type="button" class="btn-add-more" (click)="addStep()">
+                                <i class="fa-solid fa-plus text-muted" style="font-size: 11px;"></i> Añade más pasos
+                            </button>
+                        </div>
+                    </div>
+
+                </div>
+            </section>
+
+            <!-- SECCIÓN 4: Imágenes -->
+            <section>
+                <h2 class="form-section-title">Imágenes</h2>
+
+                <div class="d-flex flex-column gap-3" formArrayName="images">
+                    
+                    <div *ngFor="let image of images.controls; let i = index; let last = last; trackBy: trackByIndex" class="d-flex flex-column flex-xl-row gap-3 align-items-xl-center">
+                        <div class="step-group flex-grow-1 position-relative mb-0 d-flex align-items-center bg-white px-3 border rounded">
+                            <div class="step-label mb-0 me-3" style="min-width: 80px;">Foto {{ i + 1 }}</div>
+                            <input type="file" accept="image/*" class="form-control border-0 shadow-none bg-transparent flex-grow-1" (change)="onFileChange($event, i)">
+                            
+                            <button *ngIf="images.length > 1" type="button" class="btn border-0 text-danger ms-2 p-0" (click)="removeImage(i)">
+                                <i class="fa-solid fa-xmark"></i>
+                            </button>
+                        </div>
+
+                        <!-- Botón añadir más sólo en la última fila -->
+                        <div *ngIf="last" class="text-end text-xl-start" style="min-width: 170px;">
+                            <button type="button" class="btn-add-more" (click)="addImage()">
+                                <i class="fa-solid fa-plus text-muted" style="font-size: 11px;"></i> Añadir imagen
+                            </button>
+                        </div>
+                    </div>
+
+                </div>
+            </section>
+
+            <!-- Botones Finales -->
+            <div class="form-actions">
+                <button type="button" class="btn-cancel" routerLink="/">Cancelar</button>
+                <button type="submit" class="btn-submit" [disabled]="!recipeForm.valid || isSubmitting" [class.opacity-50]="!recipeForm.valid || isSubmitting">
+                    <span *ngIf="isSubmitting">
+                        <span class="spinner-border spinner-border-sm me-2" role="status"></span>Subiendo...
+                    </span>
+                    <span *ngIf="!isSubmitting">Subir receta</span>
+                </button>
+            </div>
+
+        </form>
+
+    </main>

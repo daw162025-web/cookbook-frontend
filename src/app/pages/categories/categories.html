@@ -1,0 +1,38 @@
+<main class="container-fluid flex-grow-1 px-4 px-lg-5" style="max-width: 1440px; margin: 0 auto;">
+        <div class="row pt-4 pb-5 g-4">
+
+            <!-- Columna Izquierda: Sidebar -->
+            <div class="col-12 col-xl-3 sidebar-col" style="width: 100%; max-width: 300px;">
+                <h1 class="fw-extrabold text-dark-custom mb-4 d-none d-lg-block" style="font-size: 34px;">Categorias
+                </h1>
+
+                <div class="sidebar d-flex flex-column">
+                    <div class="sidebar-scroll">
+                    @for (category of categories; track category.id) {
+                        <a href="javascript:void(0)" 
+                        class="cat-item" 
+                        [class.active]="selectedCategoryId === category.id"
+                        (click)="selectCategory(category.id)">
+                        {{ category.name }}
+                        </a>
+                    }
+                    </div>
+                </div>
+            </div>
+
+            <!-- Columna Derecha: Grid Recetas -->
+            <div class="col-12 col-lg-9 ">
+                
+                <div class="row g-4 recipe-grid">
+                    @for (recipe of filteredRecipes; track recipe.id) {
+                        <div class="col-12 col-md-6 col-xxl-4">
+                            <app-recipe-card [recipe]="recipe"></app-recipe-card>
+                        </div>
+                    } @empty {
+                        <p class="text-center">No hay recetas en esta categoría todavía.</p>
+                    }
+                </div>
+            </div>
+
+        </div>
+    </main>

@@ -1,5 +1,5 @@
 import { Injectable, inject } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Recipe } from '../models/recipe';
 
@@ -8,9 +8,34 @@ import { Recipe } from '../models/recipe';
 })
 export class RecipeService {
   private http = inject(HttpClient);
-  private apiUrl = 'http://localhost:8000/api/recipes';
+  private apiUrl = 'http://localhost:8000/api';
 
-  getRecipes(): Observable<Recipe[]> {
-    return this.http.get<Recipe[]>(this.apiUrl);
+  getRecipes(search?: string): Observable<Recipe[]> {
+    let params = new HttpParams();
+    if (search) {
+      params = params.set('search', search);
+    }
+    return this.http.get<Recipe[]>(`${this.apiUrl}/recipes`, { params });
+  }
+
+  getMyRecipes(): Observable<Recipe[]> {
+    return this.http.get<Recipe[]>(`${this.apiUrl}/my-recipes`);
+  }
+
+  getRecipe(id: number): Observable<Recipe> {
+    return this.http.get<Recipe>(`${this.apiUrl}/recipes/${id}`);
+  }
+
+  createRecipe(formData: FormData): Observable<any> {
+    return this.http.post<any>(`${this.apiUrl}/recipes`, formData);
+  }
+
+  updateRecipe(id: number, formData: FormData): Observable<any> {
+    // Usamos POST porque en Laravel el manejo de multipart/form-data con PUT/PATCH es problemático
+    return this.http.post<any>(`${this.apiUrl}/recipes/${id}`, formData);
+  }
+
+  deleteRecipe(id: number): Observable<any> {
+    return this.http.delete<any>(`${this.apiUrl}/recipes/${id}`);
   }
 }
