@@ -1,6 +1,4 @@
-/* You can add global styles to this file, and also import other style files */
 :root {
-    /* Paleta de Colores Principales */
     --brand-color: #ff6a4a;
     --brand-color-hover: #e05e42;
     --nav-green-bg: #a2d987;
@@ -10,10 +8,8 @@
     --star-color: #ffb13b;
     --border-color: rgba(0, 0, 0, 0.05);
 
-    /* Colores Específicos Categorías */
     --cat-active-bg: #f89878;
 
-    /* Colores Específicos Home */
     --btn-login-bg: #e6f9fc;
     --btn-login-text: #00bcd4;
     --btn-register-bg: #00bcd4;
@@ -29,9 +25,6 @@ body {
     color: #444;
 }
 
-/* =========================================
-   1. UTILIDADES GENERALES
-   ========================================= */
 .fw-extrabold {
     font-weight: 800;
 }
@@ -57,22 +50,20 @@ body {
     margin-bottom: 2.5rem;
 }
 
-/* =========================================
-   2. NAVEGACIÓN (NAVBAR)
-   ========================================= */
+/*Navbar */
 .custom-navbar {
     padding: 1.25rem 0;
     max-width: 1440px;
     margin: 0 auto;
 }
 
-/* Enlaces del Navbar (Píldoras) */
+
 .nav-pill-active {
     background-color: var(--nav-green-bg);
     color: var(--nav-green-text) !important;
     border-radius: 12px;
     padding: 0.5rem 1.25rem;
-    font-weight: 800;
+    font-weight: 600;
     font-size: 15px;
 }
 
@@ -80,14 +71,12 @@ body {
     color: #4a4a4a;
     border-radius: 12px;
     padding: 0.5rem 1.25rem;
-    font-weight: 800;
     font-size: 15px;
     transition: background-color 0.2s;
     background-color: transparent;
-    /* Por defecto transparente en menú */
+   
 }
 
-/* En la Home original le pusimos fondo gris, lo unificamos a hover para que sirva en ambas */
 .nav-pill-light:hover {
     background-color: #f5f6f8;
     color: #4a4a4a;
@@ -114,7 +103,6 @@ body {
     font-weight: 600;
     font-size: 15px;
     width: 280px;
-    /* Ancho adecuado para ambas páginas */
 }
 
 .search-input:focus {
@@ -124,12 +112,12 @@ body {
     outline: none;
 }
 
-/* Botones Navbar Home */
+/* Botones Navbar */
 .btn-login {
     background-color: var(--btn-login-bg);
     color: var(--btn-login-text);
     border-radius: 12px;
-    font-weight: 800;
+    font-weight: 600;
     font-size: 14px;
     padding: 0.5rem 1.25rem;
     border: none;
@@ -157,10 +145,9 @@ body {
     color: white;
 }
 
-/* Botón Sube tu Receta (Categorías) */
+/* Botón Sube tu Receta */
 .btn-upload {
     background-color: #d8f5fa;
-    /* Color específico de ese botón */
     color: #333;
     border-radius: 12px;
     font-weight: 700;
@@ -178,9 +165,7 @@ body {
     color: #6c757d;
 }
 
-/* =========================================
-   3. HERO SECTION (HOME)
-   ========================================= */
+/* HOME*/
 .hero-section {
     position: relative;
     max-width: 1440px;
@@ -248,9 +233,7 @@ body {
     background-color: #fc8d68;
 }
 
-/* =========================================
-   4. SIDEBAR (CATEGORÍAS)
-   ========================================= */
+/* Categorias */
 .sidebar {
     background-color: var(--bg-light);
     border-radius: 24px;
@@ -269,7 +252,6 @@ body {
     text-decoration: none;
     transition: background-color 0.2s;
     white-space: nowrap;
-    /* Evitar que el texto se rompa en horizontal */
 }
 
 .cat-item:hover {
@@ -293,19 +275,15 @@ body {
     flex-direction: column;
     overflow-x: auto;
     padding-bottom: 12px;
-    /* Espacio vital para que la barra no toque el texto */
     scroll-behavior: smooth;
     -webkit-overflow-scrolling: touch;
-
-    /* Configuración para Firefox */
     scrollbar-width: thin;
     scrollbar-color: #ccc transparent;
 }
 
-/* 2. Tamaño de la barra (Fina y pequeña) */
 .sidebar-scroll::-webkit-scrollbar {
     height: 4px;
-    /* Grosor muy sutil */
+
 }
 
 .sidebar-scroll::-webkit-scrollbar-track {
@@ -321,17 +299,13 @@ body {
     background: var(--brand-color);
 }
 
-/* =========================================
-   5. TARJETAS DE RECETAS (CARDS)
-   ========================================= */
-/* Ajuste de margen superior para la vista de categorías */
+/*CARDS de recetas*/
 .recipe-grid {
     margin-top: 5.5rem;
 }
 
 .recipe-card {
     background-color: #fff;
-    /* En home es blanco, en categorías ligeramente gris, usamos blanco como base limpia */
     border-radius: 24px;
     border: 1px solid var(--border-color);
     padding: 1rem;
@@ -340,10 +314,8 @@ body {
     display: flex;
     flex-direction: column;
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.02);
-    /* Sombra sutil por defecto */
 }
 
-/* Variante específica si se quiere el fondo exacto de categorías */
 .recipe-card.bg-light-variant {
     background-color: var(--bg-light);
 }
@@ -356,7 +328,6 @@ body {
 .recipe-img {
     width: 100%;
     height: 220px;
-    /* Altura unificada, queda bien en ambas */
     object-fit: cover;
     border-radius: 16px;
     margin-bottom: 1rem;
@@ -384,14 +355,13 @@ body {
     color: #333;
 }
 
-/* Para la vista de categorías donde el título empuja el footer */
 .recipe-title.push-down {
     margin-bottom: auto;
     padding: 0 0.25rem;
     font-size: 17px;
 }
 
-/* Footer de la tarjeta (Categorías: estrellas y autor) */
+/* Footer de la tarjeta */
 .recipe-footer {
     display: flex;
     align-items: center;
@@ -424,7 +394,7 @@ body {
     letter-spacing: 0.5px;
 }
 
-/* Botón "Ver más" de la Home */
+/* Botón "Ver más" */
 .btn-ver-mas {
     background-color: var(--btn-yellow-bg);
     color: var(--btn-yellow-text);
@@ -444,9 +414,7 @@ body {
     color: white;
 }
 
-/* =========================================
-   6. FOOTER GENERAL
-   ========================================= */
+/* FOOTER */
 .custom-footer {
     background-color: var(--bg-light);
     border-radius: 34px;
@@ -496,9 +464,7 @@ body {
     margin-top: 0.5rem;
 }
 
-/* =========================================
-   7. MEDIA QUERIES (RESPONSIVE)
-   ========================================= */
+/* RESPONSIVE */
 
 @media (max-width: 991px) {
     .recipe-grid {
@@ -509,7 +475,6 @@ body {
         margin-bottom: 2rem;
         max-width: 100% !important;
         padding-right: 0;
-        /* Permitir que ocupe todo el ancho */
     }
 
     .sidebar {
@@ -522,28 +487,21 @@ body {
     .sidebar-scroll {
         display: flex !important;
         flex-direction: row !important;
-        /* Fuerza la línea horizontal */
         overflow-x: auto !important;
-        /* Habilita el scroll lateral */
         gap: 10px;
         padding: 5px 0 15px 0;
-        /* Espacio para que no se corte la sombra */
         -webkit-overflow-scrolling: touch;
-        /* Scroll suave en iPhone */
     }
 
     .sidebar-scroll::-webkit-scrollbar {
         height: 6px;
         display: block;
-        /* Aseguramos que sea visible */
     }
 
     .cat-item {
         margin: 0 !important;
         flex: 0 0 auto;
-        /* Importante: evita que las palabras se encojan */
         background-color: #f5f6f8;
-        /* Un fondo sutil para que parezcan botones */
         border: 1px solid var(--border-color);
         padding: 10px 20px;
     }
@@ -577,17 +535,14 @@ body {
 @media (max-width: 576px) {
     .recipe-img {
         height: 250px;
-        /* Un poco más alta en móvil para que luzca la comida */
     }
 
     .recipe-title {
         font-size: 20px;
-        /* Un pelín más grande para facilitar la lectura */
     }
 
     .recipe-grid {
         margin-top: 1rem;
-        /* Quitamos el hueco grande de arriba en móvil */
     }
 
     .custom-footer {
@@ -601,9 +556,7 @@ body {
     }
 }
 
-/* =========================================
-   8. FORMULARIO SUBIR RECETA
-   ========================================= */
+/* FORMULARIO SUBIR RECETA */
 .page-header {
     background-color: var(--bg-light);
     border-radius: 20px;
@@ -653,7 +606,6 @@ body {
     box-shadow: 0 0 0 4px rgba(0, 0, 0, 0.02);
 }
 
-/* Campos unidos visualmente (como Ingredientes) */
 .input-group-custom {
     display: flex;
     border: 1px solid #ebedf0;
@@ -668,7 +620,6 @@ body {
     background-color: transparent;
     flex: 1;
     min-width: 0;
-    /* Permite que flexbox asigne anchos correctamente */
 }
 
 .input-group-custom input:focus {
@@ -679,10 +630,8 @@ body {
     width: 1px;
     background-color: #ebedf0;
     margin: 0.25rem 0;
-    /* Deja un hueco arriba y abajo */
 }
 
-/* Flex ratios específicos para ingredientes */
 .col-cant {
     flex: 0 0 20%;
 }
@@ -695,7 +644,7 @@ body {
     flex: 1;
 }
 
-/* Campos de Pasos */
+
 .step-group {
     display: flex;
     align-items: center;
@@ -728,7 +677,7 @@ body {
     background-color: #f9f9fa;
 }
 
-/* Grupo de Imágenes */
+
 .img-group {
     display: flex;
     align-items: center;
@@ -755,12 +704,9 @@ body {
     font-size: 15px;
 }
 
-/* Botones de añadir */
 .btn-add-more {
     background-color: #dcedc8;
-    /* Verde clarito del diseño */
     color: #4a6b29;
-    /* Verde oscuro texto */
     font-weight: 800;
     font-size: 13px;
     padding: 0.6rem 1.25rem;
@@ -777,7 +723,6 @@ body {
     background-color: #cddcb8;
 }
 
-/* Botones de acción final (Submit / Cancel) */
 .form-actions {
     display: flex;
     justify-content: center;
@@ -802,7 +747,6 @@ body {
 
 .btn-submit {
     background-color: #d8f5fa;
-    /* Mismo cyan claro del navbar */
     color: #00bcd4;
     font-weight: 800;
     font-size: 14px;
@@ -816,7 +760,6 @@ body {
     opacity: 0.8;
 }
 
-/* Ajustes Mobile Forms */
 @media (max-width: 768px) {
     .input-group-custom {
         flex-direction: column;
@@ -843,9 +786,7 @@ body {
     }
 }
 
-/* =========================================
-   9. VISTA DE RECETA DETALLE
-   ========================================= */
+/* DETALLE DE RECETA */
 .recipe-header-box {
     background-color: var(--bg-light);
     border-radius: 20px;
@@ -885,7 +826,6 @@ body {
     font-weight: 700;
     color: #555;
     flex-wrap: wrap;
-    /* Para móviles */
     gap: 15px;
 }
 
@@ -980,7 +920,6 @@ body {
 
 .comment-author .stars {
     color: #444;
-    /* Estrellas oscuras en comentarios */
     font-size: 10px;
 }
 
@@ -1032,7 +971,6 @@ body {
     color: var(--brand-color);
 }
 
-/* Columna Derecha: Imagen y Detalles */
 .recipe-image-container {
     position: relative;
     border-radius: 32px;
@@ -1044,7 +982,6 @@ body {
 .recipe-main-image {
     width: 100%;
     height: 550px;
-    /* Altura generosa para imagen principal */
     object-fit: cover;
     display: block;
 }
@@ -1055,7 +992,6 @@ body {
     transform: translateY(-50%);
     background: rgba(255, 255, 255, 0.6);
     backdrop-filter: blur(4px);
-    /* Efecto cristal */
     border: none;
     width: 44px;
     height: 44px;
@@ -1091,7 +1027,6 @@ body {
     color: #555;
 }
 
-/* Ajustes Responsive Receta */
 @media (max-width: 991px) {
     .recipe-main-title {
         font-size: 28px;
@@ -1111,9 +1046,7 @@ body {
     }
 }
 
-/* =========================================
-   10. PANTALLA DE LOGIN
-   ========================================= */
+/* LOGIN*/
 .login-page-wrapper {
     display: flex;
     align-items: center;
@@ -1126,14 +1059,12 @@ body {
     max-width: 1000px;
     min-height: 600px;
     height: auto;
-    /* Reducimos el tamaño máximo y la altura para que no sea tan gigante */
     background-color: #fff;
     border-radius: 32px;
     overflow: hidden;
     box-shadow: 0 10px 40px rgba(0, 0, 0, 0.04);
 }
 
-/* Mitad Izquierda: Formulario */
 .login-form-area {
     flex: 1;
     padding: 3rem 4rem;
@@ -1153,7 +1084,6 @@ body {
     align-self: flex-start;
 }
 
-/* En la imagen el logo parece centrado arriba en una caja gris clara que ocupa todo el ancho */
 .login-logo-box.full-width {
     width: 100%;
     align-self: center;
@@ -1243,7 +1173,6 @@ body {
     color: var(--brand-color);
 }
 
-/* Mitad Derecha: Imagen */
 .login-image-area {
     flex: 1;
     background-color: #fff;
@@ -1270,7 +1199,6 @@ body {
 
     .login-image-area {
         display: none;
-        /* Ocultamos la imagen decorativa en móvil */
     }
 
     .login-form-area {
@@ -1278,14 +1206,11 @@ body {
     }
 }
 
-/* =========================================
-   11. DASHBOARD DE ADMINISTRACIÓN
-   ========================================= */
+/* DASHBOARD */
 .dashboard-wrapper {
     display: flex;
     min-height: 100vh;
     background-color: #f7f9fc;
-    /* Fondo general azulado/grisáceo */
 }
 
 /* Sidebar del Dashboard */
@@ -1331,20 +1256,16 @@ body {
 .sidebar-dash-link i {
     font-size: 18px;
     width: 24px;
-    /* Para alinear iconos */
     text-align: center;
 }
 
 .sidebar-dash-link:hover,
 .sidebar-dash-link.active {
     background-color: #fff4f2;
-    /* Fondo rojito muy suave */
     color: #ff6b6b;
-    /* Rojo/Coral del diseño */
     border-left-color: #ff6b6b;
 }
 
-/* Contenido Principal Dashboard */
 .dash-main-content {
     flex: 1;
     display: flex;
@@ -1352,7 +1273,6 @@ body {
     overflow-x: hidden;
 }
 
-/* Header del Dashboard */
 .dash-header {
     background-color: #fff;
     padding: 1rem 2rem;
@@ -1366,7 +1286,6 @@ body {
     font-size: 20px;
     font-weight: 800;
     color: #2c3e50;
-    /* Azul oscuro */
     margin: 0;
 }
 
@@ -1441,7 +1360,6 @@ body {
     object-fit: cover;
 }
 
-/* Cuerpo del Dashboard */
 .dash-body {
     padding: 2rem;
     flex: 1;
@@ -1453,7 +1371,6 @@ body {
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03);
     padding: 1.5rem;
     overflow-x: auto;
-    /* Para tablas en móvil */
 }
 
 .dash-card-header {
@@ -1481,7 +1398,6 @@ body {
     width: 4px;
     height: 18px;
     background-color: #5c82f0;
-    /* Rayita azul */
     border-radius: 2px;
 }
 
@@ -1521,7 +1437,6 @@ body {
     width: 100%;
     border-collapse: collapse;
     min-width: 800px;
-    /* Evita que se aplaste demasiado en pantallas pequeñas */
 }
 
 .dash-table th {
@@ -1541,7 +1456,6 @@ body {
     border-bottom: 1px solid #f9fafb;
 }
 
-/* Elementos de la tabla */
 .dash-item-img {
     width: 48px;
     height: 48px;
@@ -1557,12 +1471,10 @@ body {
     color: #2ecc71;
 }
 
-/* Verde */
 .dash-status.por-revisar {
     color: #ff6b6b;
 }
 
-/* Rojo */
 
 .dash-action-btn {
     background: none;
@@ -1572,7 +1484,6 @@ body {
     font-size: 18px;
 }
 
-/* Checkboxes personalizados */
 .dash-checkbox {
     width: 16px;
     height: 16px;
@@ -1582,7 +1493,6 @@ body {
     cursor: pointer;
 }
 
-/* Paginación final */
 .dash-pagination-wrapper {
     display: flex;
     justify-content: space-between;
@@ -1630,7 +1540,6 @@ body {
     color: #333;
 }
 
-/* Hamburguesa móvil para sidebar Dashboard */
 .dash-sidebar-toggle {
     display: none;
     background: none;
@@ -1640,12 +1549,10 @@ body {
     cursor: pointer;
 }
 
-/* Responsive Dashboard */
 @media (max-width: 991px) {
     .sidebar-dash {
         position: fixed;
         left: -260px;
-        /* Oculto por defecto */
         height: 100vh;
         box-shadow: 4px 0 10px rgba(0, 0, 0, 0.05);
     }
@@ -1661,7 +1568,6 @@ body {
 
     .dash-header-actions .dash-search-box {
         display: none;
-        /* Ocultamos buscador en móvil header */
     }
 }
 

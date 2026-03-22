@@ -7,8 +7,8 @@ export interface Ingredient {
   pivot?: {
     recipe_id: number;
     ingredient_id: number;
-    quantity?: string; // Añade esto para mostrar "200"
-    unit?: string;     // Añade esto para mostrar "gramos"
+    quantity?: string; 
+    unit?: string;     
   };
 }
 
@@ -25,10 +25,9 @@ export interface Recipe {
   image_url?: string[];
   created_at?: string;
   updated_at?: string;
-  // Campos adicionales para la vista
-  avg_rating?: number; // Promedio de la tabla 'ratings'
+  avg_rating?: number; // Promedio de las valoraciones
   user?: {
-    name: string; // Nombre del autor desde la tabla 'users'
+    name: string; // Nombre del autor 
   };
   category?: {
     id: number;
@@ -37,7 +36,7 @@ export interface Recipe {
   ingredients?: Ingredient[];
 }
 
-// para leer la respuesta exacta de Laravel al crear/actualizar
+// para leer la respuesta exacta de Laravel 
 export interface RecipeResponse {
   message: string;
   recipe: Recipe;

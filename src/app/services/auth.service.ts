@@ -9,7 +9,7 @@ export class AuthService {
   private http = inject(HttpClient);
   private apiUrl = 'http://localhost:8000/api';
   
-  // Usamos BehaviorSubject para emitir el estado actual a quien se suscriba
+  // BehaviorSubject para emitir el estado actual a quien se suscriba
   private currentUserSubject = new BehaviorSubject<any>(null);
   public currentUser$ = this.currentUserSubject.asObservable();
   
@@ -30,7 +30,7 @@ export class AuthService {
         this.currentUserSubject.next(user);
         this.isLoggedInSubject.next(true);
       } catch (e) {
-        this.logout(); // Si hay error parseando, limpiamos
+        this.logout(); 
       }
     }
   }
@@ -52,8 +52,7 @@ export class AuthService {
   }
 
   logout(): Observable<any> {
-    // Es posible enviar el token en la cabecera, pero lo haremos en el componente 
-    // o con un interceptor más adelante. Por ahora cerramos sesión localmente si falla.
+
     const token = localStorage.getItem('auth_token');
     
     return this.http.post(`${this.apiUrl}/logout`, {}, {

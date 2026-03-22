@@ -8,14 +8,11 @@
   <p>No se pudo cargar la receta. Inténtalo de nuevo más tarde.</p>
 </div>
 
-<!-- Contenido Principal: Receta -->
+<!-- Receta -->
 <main *ngIf="!loading && !error && recipe" class="container flex-grow-1 px-4 px-lg-5 pt-4 mb-5" style="max-width: 1440px;">
     <div class="row g-5">
 
-        <!-- Columna Izquierda: Información de la receta -->
         <div class="col-12 col-lg-7 order-2 order-lg-1">
-
-            <!-- Encabezado de Receta -->
             <div class="recipe-header-box">
                 <h1 class="recipe-main-title">{{ recipe.title }}</h1>
                 <div class="recipe-stats">
@@ -23,19 +20,13 @@
                     <span>{{ recipe.category?.name || '' }}</span>
                 </div>
             </div>
-
-            <!-- Detalles (Dificultad, Tiempo) -->
             <div class="recipe-meta-box">
                 <span>Dificultad: {{ recipe.difficulty }}</span>
                 <span>Tiempo total: {{ recipe.duration }} Min</span>
             </div>
-
-            <!-- Descripción principal -->
             <div class="recipe-desc-box">
                 {{ recipe.description }}
             </div>
-
-            <!-- Ingredientes -->
             <h2 class="recipe-section-title">Ingredientes</h2>
             <div class="row">
                 <div class="col-md-12">
@@ -46,20 +37,14 @@
                     </ul>
                 </div>
             </div>
-
-            <!-- Pasos -->
             <h2 class="recipe-section-title">Pasos a seguir</h2>
             <ol class="steps-list">
                 <li *ngFor="let step of getInstructions()">{{ step }}</li>
             </ol>
-
-            <!-- Comentarios -->
             <div class="comments-header">
                 <h2 class="recipe-section-title mb-0">Comentarios</h2>
                 <button class="btn-add-comment">Añade tu comentario</button>
             </div>
-
-            <!-- Lista de comentarios -->
             <div class="comments-list">
                 <div class="comment-card" *ngFor="let comment of recipe.comments">
                     <div class="comment-card-header">
@@ -81,7 +66,6 @@
 
         </div>
 
-        <!-- Columna Derecha: Imagen y Autor -->
         <div class="col-12 col-lg-5 order-1 order-lg-2">
 
             <div class="recipe-image-container position-relative">
@@ -96,11 +80,9 @@
                     Sin imagen
                 </div>
 
-                <!-- Botones de navegación de la imagen (sólo si hay más de 1 imagen) -->
                 <button *ngIf="images.length > 1" class="img-nav-btn img-nav-left" (click)="prevImage()"><i class="fa-solid fa-chevron-left"></i></button>
                 <button *ngIf="images.length > 1" class="img-nav-btn img-nav-right" (click)="nextImage()"><i class="fa-solid fa-chevron-right"></i></button>
                 
-                <!-- Indicador visual -->
                 <div *ngIf="images.length > 1" class="position-absolute bottom-0 start-50 translate-middle-x mb-2 d-flex gap-1">
                     <span *ngFor="let img of images; let i = index" class="rounded-circle"
                         [style.width.px]="8" [style.height.px]="8"

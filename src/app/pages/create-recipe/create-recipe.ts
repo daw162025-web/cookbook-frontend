@@ -39,9 +39,8 @@ export class CreateRecipeComponent implements OnInit {
       images: this.fb.array([])
     });
 
-    // Iniciar con 3 ingredientes vacíos para seguir el diseño base
+    // Iniciar con 3 ingredientes vacíos 
     this.addIngredient();
-
     this.addIngredient();
     this.addIngredient();
 
@@ -111,7 +110,7 @@ export class CreateRecipeComponent implements OnInit {
     }
   }
 
-  // Permite que Angular no destruya los inputs de archivos (y no se borren) al añadir más cajas
+  // Permite que no se destruya los inputs de archivos al añadir más cajas
   trackByIndex(index: number, obj: any): any {
     return index;
   }
@@ -137,24 +136,24 @@ export class CreateRecipeComponent implements OnInit {
       const total = parseInt(formValue.totalTime) || 0;
       const duration = prep + total;
 
-      // Adjuntar campos de texto
+      // añadir campos de texto
       formData.append('title', formValue.title);
       formData.append('description', formValue.description);
       formData.append('category_id', formValue.category_id);
       formData.append('difficulty', formValue.difficulty);
       formData.append('duration', duration.toString() === '0' ? '1' : duration.toString());
       
-      // Adjuntar arrays como JSON
+      // añadir arrays 
       formData.append('ingredients', JSON.stringify(formValue.ingredients));
       formData.append('steps', JSON.stringify(formValue.steps));
 
-      // Adjuntar los archivos Reales (Files) en lugar de las rutas
+      // añadir los files
       Object.keys(this.selectedFiles).forEach((indexStr) => {
         const i = parseInt(indexStr, 10);
         formData.append('images[]', this.selectedFiles[i]);
       });
 
-      // Llamar al backend!
+      // llamar a laravel
       this.recipeService.createRecipe(formData).subscribe({
         next: (res) => {
           this.router.navigate(['/']);

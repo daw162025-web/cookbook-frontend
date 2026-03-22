@@ -27,13 +27,12 @@ export class RegisterComponent {
     }, { validators: this.passwordMatchValidator });
   }
 
-  // Validador personalizado para comprobar que las contraseñas coinciden
+  // Validador para comprobar que las contraseñas coinciden
   passwordMatchValidator(control: AbstractControl): ValidationErrors | null {
     const password = control.get('password');
     const confirmPassword = control.get('password_confirmation');
 
     if (password && confirmPassword && password.value !== confirmPassword.value) {
-      // Marcamos el error en el control de confirmación
       confirmPassword.setErrors({ passwordMismatch: true });
       return { passwordMismatch: true };
     }
@@ -50,11 +49,9 @@ export class RegisterComponent {
         error: (err) => {
           console.error('Register error', err);
           if (err.error && err.error.errors) {
-            // Laravel envía los errores de validación en "errors"
+            // enviar los errores de validación en "errors"
             const firstErrorKey = Object.keys(err.error.errors)[0];
             this.errorMessage = err.error.errors[firstErrorKey][0]; 
-            // Esto mostrará por ejemplo "The email has already been taken."
-            // O si configuras Laravel en español, saldrá en español.
           } else if (err.error && err.error.message) {
             this.errorMessage = err.error.message;
           } else {

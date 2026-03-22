@@ -1,7 +1,7 @@
-    <!-- Main Content: Formulario -->
+
     <main class="container flex-grow-1 px-4 px-lg-5 pt-3 mb-5" style="max-width: 1200px;">
 
-        <!-- Cabecera de Página -->
+
         <div class="page-header">
             <h1 class="page-title">Sube tu propia receta</h1>
         </div>
@@ -9,7 +9,6 @@
         <!-- Formulario reactivo -->
         <form [formGroup]="recipeForm" (ngSubmit)="onSubmit()">
 
-            <!-- SECCIÓN 1: Detalles de la receta -->
             <section>
                 <h2 class="form-section-title">Detalles de la receta</h2>
 
@@ -52,27 +51,23 @@
                 </div>
             </section>
 
-            <!-- SECCIÓN 2: Ingredientes -->
             <section>
                 <h2 class="form-section-title">Ingredientes</h2>
 
-                <!-- Headers de las columnas -->
                 <div class="row mb-2 d-none d-md-flex px-1 text-muted fw-bold">
                     <div class="col-md-4"><label class="form-label mb-0 ms-2">Cantidad o Medida</label></div>
                     <div class="col-md-7"><label class="form-label mb-0 ms-2">Ingrediente</label></div>
-                    <div class="col-md-1"></div> <!-- Espacio extra botón eliminar -->
+                    <div class="col-md-1"></div> 
                 </div>
 
-                <!-- Lista de Ingredientes Dinámica -->
+                <!-- Lista de ingredientes dinamica -->
                 <div class="d-flex flex-column gap-3" formArrayName="ingredients">
                     
                     <div *ngFor="let ingredient of ingredients.controls; let i = index; let last = last; trackBy: trackByIndex" [formGroupName]="i" class="row gx-3 gy-2 align-items-center">
                         <div class="col-12 col-md-4">
-                            <!-- Si son 4 huevos, pondrá "4" -->
                             <input type="text" class="form-control-custom w-100" formControlName="cantidad" placeholder="Ej: 4, 100g, 1 taza">
                         </div>
                         <div class="col-12 col-md-8 position-relative">
-                            <!-- Si son 4 huevos, aquí pondrá "Huevos" -->
                             <input type="text" class="form-control-custom w-100 pe-5" formControlName="nombre" placeholder="Ej: Huevos grandes, Azúcar..." list="ingredientsList" autocomplete="off">
 
                             <button *ngIf="ingredients.length > 1" type="button" class="btn border-0 text-danger position-absolute end-0 top-50 translate-middle-y me-1" (click)="removeIngredient(i)">
@@ -80,7 +75,6 @@
                             </button>
                         </div>
 
-                        <!-- Botón añadir más sólo en la última fila -->
                         <div *ngIf="last" class="col-12 text-end text-md-start mt-1">
                             <button type="button" class="btn-add-more" (click)="addIngredient()">
                                 <i class="fa-solid fa-plus text-muted" style="font-size: 11px;"></i> Añade más ingredientes
@@ -90,14 +84,13 @@
 
                 </div>
 
-                <!-- Datalist dinámico cargado desde Laravel -->
+                <!-- Datalist dinamico cargado desde laravel -->
                 <datalist id="ingredientsList">
                     <option *ngFor="let item of availableIngredients" [value]="item.name"></option>
                 </datalist>
 
             </section>
 
-            <!-- SECCIÓN 3: Pasos a seguir -->
             <section>
                 <h2 class="form-section-title">Pasos a seguir</h2>
 
@@ -113,7 +106,6 @@
                             </button>
                         </div>
 
-                        <!-- Botón añadir más sólo en la última fila -->
                         <div *ngIf="last" class="text-end text-xl-start" style="min-width: 150px;">
                             <button type="button" class="btn-add-more" (click)="addStep()">
                                 <i class="fa-solid fa-plus text-muted" style="font-size: 11px;"></i> Añade más pasos
@@ -123,8 +115,6 @@
 
                 </div>
             </section>
-
-            <!-- SECCIÓN 4: Imágenes -->
             <section>
                 <h2 class="form-section-title">Imágenes</h2>
 
@@ -140,7 +130,6 @@
                             </button>
                         </div>
 
-                        <!-- Botón añadir más sólo en la última fila -->
                         <div *ngIf="last" class="text-end text-xl-start" style="min-width: 170px;">
                             <button type="button" class="btn-add-more" (click)="addImage()">
                                 <i class="fa-solid fa-plus text-muted" style="font-size: 11px;"></i> Añadir imagen
@@ -151,7 +140,6 @@
                 </div>
             </section>
 
-            <!-- Botones Finales -->
             <div class="form-actions">
                 <button type="button" class="btn-cancel" routerLink="/">Cancelar</button>
                 <button type="submit" class="btn-submit" [disabled]="!recipeForm.valid || isSubmitting" [class.opacity-50]="!recipeForm.valid || isSubmitting">

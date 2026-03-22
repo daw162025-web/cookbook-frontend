@@ -3,15 +3,15 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 15px 60px; /* Aumentado de 40px a 60px para dar más espacio a los lados */
+  padding: 15px 60px;
   background-color: #ffffff;
   font-family: 'Segoe UI', Tahoma, sans-serif;
   position: relative; /* Importante para el menú móvil desplegable */
-  box-shadow: 0 2px 4px rgba(0,0,0,0.05); /* Un toquecito de sombra queda muy pro */
+  box-shadow: 0 2px 4px rgba(0,0,0,0.05); 
   border-radius: 20px;
 }
 
-/* 1. Logo */
+/* Logo */
 .navbar-logo {
   display: flex;
   align-items: center;
@@ -25,10 +25,10 @@
 .logo-text {
   font-size: 22px;
   font-weight: bold;
-  color: #ff764c; /* Naranja del texto Cookbook */
+  color: #ff764c; 
 }
 
-/* 2. Enlaces */
+/* Enlaces */
 .navbar-links {
   display: flex;
   list-style: none;
@@ -40,7 +40,6 @@
 .navbar-links a {
   text-decoration: none;
   color: #333;
-  font-weight: 600;
   font-size: 14px;
   padding: 8px 16px;
   border-radius: 20px;
@@ -48,10 +47,10 @@
 }
 /* El botón verde de Explorar */
 .navbar-links a.active {
-  background-color: #bdf2c3; /* Verde claro */
+  background-color: #bdf2c3; 
 }
 
-/* 3. Buscador */
+/* Buscador */
 .navbar-search {
   display: flex;
   align-items: center;
@@ -74,7 +73,7 @@
   font-size: 14px;
 }
 
-/* 4. Botones */
+/*Botones */
 .navbar-auth {
   display: flex;
   gap: 15px;
@@ -83,7 +82,7 @@
   border: none;
   padding: 10px 20px;
   border-radius: 20px;
-  font-weight: bold;
+  /* font-weight: bold; */
   cursor: pointer;
   font-size: 14px;
   transition: opacity 0.3s;
@@ -92,11 +91,11 @@
   opacity: 0.8;
 }
 .btn-login {
-  background-color: #e0f7fa; /* Azul muy claro */
-  color: #00bcd4; /* Texto cyan */
+  background-color: #e0f7fa; 
+  color: #00bcd4; 
 }
 .btn-register {
-  background-color: #00bcd4; /* Cyan fuerte */
+  background-color: #00bcd4; 
   color: white;
 }
 
@@ -104,8 +103,8 @@
   display: flex;
   align-items: center;
   gap: 20px;
-  flex: 1;               /* Esto hace que el menú crezca y rellene el centro */
-  justify-content: flex-start; /* Por defecto los lleva al final, pero... */
+  flex: 1;              
+  justify-content: flex-start; 
 }
 
 /* Ocultar el botón hamburguesa en ordenador */
@@ -118,9 +117,25 @@
   color: #333;
 }
 
-/* ... Mantén aquí tus estilos de .navbar-logo, .navbar-links, .navbar-search, .navbar-auth ... */
+/* Cambio de color en la pagina que estemos */
+.nav-pill-green.active {
+    background-color: #bdf2c3 !important; 
+    color: #0b0c0b !important;            
+}
 
-/* -- MAGIA RESPONSIVE (Móviles y Tablets) -- */
+.nav-link {
+    transition: all 0.3s ease;
+    border-radius: 20px;
+    padding: 8px 16px;
+    font-weight: 600;
+}
+
+.nav-link:hover:not(.active) {
+    background-color: #f3f4f6;
+}
+
+
+/* Responsive */
 @media (max-width: 900px) {
   /* Hacemos visible el botón hamburguesa */
   .hamburger-btn {
@@ -129,24 +144,23 @@
 
   /* Cambiamos el cajón para que sea un menú desplegable vertical */
   .navbar-menu {
-    display: none; /* Oculto por defecto */
+    display: none; 
     flex-direction: column;
     position: absolute;
-    top: 70px; /* Justo debajo del navbar */
+    top: 70px; 
     left: 0;
     width: 100%;
     background-color: #ffffff;
     padding: 20px 0;
     box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1);
-    z-index: 100; /* Para que flote por encima del resto de la página */
+    z-index: 100;
   }
 
-  /* Cuando Angular le pone la clase 'open', se muestra */
   .navbar-menu.open {
     display: flex; 
   }
 
-  /* Ajustamos tamaños para que no se salgan de la pantalla del móvil */
+  
   .navbar-search {
     width: 85%;
     margin: 10px 0;
@@ -159,6 +173,6 @@
   }
 
   .navbar-auth button {
-    width: 100%; /* Botones que ocupan todo el ancho en móvil */
+    width: 100%; 
   }
 }

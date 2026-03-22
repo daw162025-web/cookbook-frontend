@@ -44,14 +44,14 @@ export class Navbar implements OnInit {
     this.isMenuOpen = !this.isMenuOpen;
   }
 
-  // Función útil para cerrar el menú al hacer clic en un enlace en móvil
+  // Función para cerrar el menú al hacer clic en un enlace en móvil
   closeMenu() {
     this.isMenuOpen = false;
     this.isUserDropdownOpen = false;
   }
 
   toggleUserDropdown(event: Event) {
-    event.stopPropagation(); // Evitamos que el document:click de arriba reciba este evento
+    event.stopPropagation(); 
     this.isUserDropdownOpen = !this.isUserDropdownOpen;
   }
 
@@ -79,4 +79,4 @@ export class Navbar implements OnInit {
       });
     }
   }
-}
+}

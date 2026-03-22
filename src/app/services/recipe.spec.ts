@@ -23,7 +23,7 @@ export class RecipeService {
     return this.http.get<Recipe>(`${this.apiUrl}/${id}`);
   }
 
-  //Crear una nueva receta (Usamos RecipeResponse porque Laravel devuelve un objeto con un "message")
+  //Crear una nueva receta 
   createRecipe(recipe: Recipe): Observable<RecipeResponse> {
     return this.http.post<RecipeResponse>(this.apiUrl, recipe);
   }

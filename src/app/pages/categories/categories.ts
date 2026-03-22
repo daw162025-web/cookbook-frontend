@@ -2,7 +2,7 @@ import { Component, OnInit, inject, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { CategoryService } from '../../services/category.service';
 import { Category } from '../../models/category';
-import { Recipe } from '../../models/recipe'; // Importa también aquí
+import { Recipe } from '../../models/recipe'; 
 import { RecipeCardComponent } from '../../components/recipe-card/recipe-card';
 
 @Component({
@@ -14,8 +14,8 @@ import { RecipeCardComponent } from '../../components/recipe-card/recipe-card';
 })
 export class CategoriesComponent implements OnInit {
   categories: Category[] = [];
-  filteredRecipes: Recipe[] = [];      // <--- AÑADE ESTA LÍNEA
-  selectedCategoryId: number | null = null; // <--- AÑADE ESTA LÍNEA
+  filteredRecipes: Recipe[] = [];      
+  selectedCategoryId: number | null = null; 
 
   private categoryService = inject(CategoryService);
   private cdr = inject(ChangeDetectorRef);
@@ -25,7 +25,7 @@ export class CategoriesComponent implements OnInit {
       next: (data: any) => {
         console.log('Categories recibidas:', data);
         this.categories = Array.isArray(data) ? data : (data.categories || data.data || []);
-        // Si quieres que cargue una por defecto al entrar:
+        //Que cargue por defecto cuando entre
         if (this.categories.length > 0) {
           this.selectCategory(this.categories[0].id);
         }
@@ -35,7 +35,7 @@ export class CategoriesComponent implements OnInit {
     });
   }
 
-  // Esta es la función que llama tu HTML al hacer (click)
+  //al seleccionar categoria que cargue las recetas
   selectCategory(id: number): void {
     this.selectedCategoryId = id;
     this.categoryService.getRecipesByCategory(id).subscribe({

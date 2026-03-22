@@ -31,7 +31,6 @@ export class RecipeService {
   }
 
   updateRecipe(id: number, formData: FormData): Observable<any> {
-    // Usamos POST porque en Laravel el manejo de multipart/form-data con PUT/PATCH es problemático
     return this.http.post<any>(`${this.apiUrl}/recipes/${id}`, formData);
   }
 

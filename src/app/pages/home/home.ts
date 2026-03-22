@@ -12,10 +12,9 @@ import { RecipeCardComponent } from '../../components/recipe-card/recipe-card';
   styleUrls: ['./home.css']
 })
 export class HomeComponent implements OnInit {
-  // Aquí guardaremos las recetas 
+  // guardar las recetas 
   recipes: Recipe[] = []; 
 
-  // Inyectamos el servicio
   private recipeService = inject(RecipeService);
   private cdr = inject(ChangeDetectorRef);
 
@@ -26,12 +25,10 @@ export class HomeComponent implements OnInit {
   loadRecipes() {
     this.recipeService.getRecipes().subscribe({
       next: (data: any) => {
-        // Tu lógica de limpieza está bien, pero aseguremos el tiro:
         this.recipes = Array.isArray(data) ? data : (data.recipes || data.data || []);
         
         console.log('Recetas listas para el HTML:', this.recipes);
         
-        // Esto forzará el renderizado
         this.cdr.detectChanges(); 
       },
       error: (err) => console.error('Error:', err)

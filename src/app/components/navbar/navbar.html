@@ -58,10 +58,8 @@
             <div class="dropdown d-flex justify-content-center mt-2 mt-xl-0 ms-xl-2 position-relative">
                 <a href="javascript:void(0)" class="d-flex align-items-center text-decoration-none text-muted gap-2"
                     (click)="toggleUserDropdown($event)">
-                    <!-- Generamos avatar con iniciales o pravatar -->
                     <img [src]="'https://ui-avatars.com/api/?name=' + ((authService.currentUser$ | async)?.name || 'U') + '&background=00bcd4&color=fff'" alt="Avatar" width="38"
                         height="38" class="rounded-circle shadow-sm">
-                    <!-- Icono dropdown (Chevron) a la derecha de la imagen -->
                     <i class="fa-solid fa-chevron-down small"></i>
                 </a>
                 

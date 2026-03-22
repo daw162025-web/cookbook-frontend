@@ -7,7 +7,7 @@ import { Observable } from 'rxjs';
 })
 export class IngredientService {
   private http = inject(HttpClient);
-  private apiUrl = 'http://localhost:8000/api/ingredients'; // URL de tu backend
+  private apiUrl = 'http://localhost:8000/api/ingredients';
 
   getIngredients(): Observable<any[]> {
     return this.http.get<any[]>(this.apiUrl);
