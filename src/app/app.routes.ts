@@ -7,15 +7,17 @@ import { RegisterComponent } from './pages/register/register';
 import { RecipeDetailComponent } from './pages/recipe-detail/recipe-detail';
 import { CreateRecipeComponent } from './pages/create-recipe/create-recipe';
 import { MyRecipesComponent } from './pages/my-recipes/my-recipes';
+import { EditRecipeComponent } from './pages/edit-recipe/edit-recipe';
 
 export const routes: Routes = [
-  { path: '', component: HomeComponent }, 
-  { path: 'categories', component: CategoriesComponent }, 
-  { path: 'search', component: SearchComponent }, 
+  { path: '', component: HomeComponent },
+  { path: 'categories', component: CategoriesComponent },
+  { path: 'search', component: SearchComponent },
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegisterComponent },
   { path: 'recipe/:id', component: RecipeDetailComponent },
   { path: 'create-recipe', component: CreateRecipeComponent },
+  { path: 'edit-recipe/:id', component: EditRecipeComponent },
   { path: 'my-recipes', component: MyRecipesComponent },
-  { path: '**', redirectTo: '' } 
+  { path: '**', redirectTo: '' }
 ];

@@ -1,3 +1,5 @@
+import { Category } from './category';
+
 export interface Ingredient {
   id: number;
   name: string;
@@ -15,7 +17,6 @@ export interface Ingredient {
 export interface Recipe {
   id: number;
   user_id: number;
-  category_id: number | string;
   title: string;
   description: string;
   instructions: string;
@@ -29,10 +30,7 @@ export interface Recipe {
   user?: {
     name: string; // Nombre del autor 
   };
-  category?: {
-    id: number;
-    name: string;
-  };
+  categories?: Category[];
   ingredients?: Ingredient[];
 }
 

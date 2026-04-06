@@ -1,11 +1,15 @@
 <main class="container flex-grow-1 px-4 px-lg-5 pt-3 mb-5" style="max-width: 1200px;">
-
-
     <div class="page-header">
-        <h1 class="page-title">Sube tu propia receta</h1>
+        <h1 class="page-title">Editar Receta</h1>
     </div>
 
-    <form [formGroup]="recipeForm" (ngSubmit)="onSubmit()">
+    <!-- Loading -->
+    <div *ngIf="loadingData" class="d-flex justify-content-center align-items-center py-5">
+        <div class="spinner-border text-primary" role="status"></div>
+        <span class="ms-3 text-muted">Cargando datos de tu receta...</span>
+    </div>
+
+    <form *ngIf="!loadingData" [formGroup]="recipeForm" (ngSubmit)="onSubmit()">
 
         <section>
             <h2 class="form-section-title">Detalles de la receta</h2>
@@ -27,7 +31,7 @@
 
                 <div class="category-panel p-3 bg-light rounded border">
                     <ng-container *ngFor="let parentCat of availableCategories">
-                        <!-- Mostramos titulo de categoria si el padre tiene hijos de categorias -->
+                        <!-- Mostramos titulo de categroa si el padre tiene hijos categorias -->
                         <div *ngIf="parentCat.children && parentCat.children.length > 0" class="mb-3">
                             <h6 class="text-uppercase text-muted fw-bold mb-2"
                                 style="font-size: 0.75rem; letter-spacing: 0.5px;">{{parentCat.name}}</h6>
@@ -41,7 +45,7 @@
                             </div>
                         </div>
 
-                        <!-- Si una categoría no tiene hijos:-->
+                        <!-- Si una categoría no tiene hijos: -->
                         <div *ngIf="!parentCat.children || parentCat.children.length === 0"
                             class="d-inline-flex me-2 mb-2">
                             <button type="button" class="btn rounded-pill border category-chip text-secondary"
@@ -60,7 +64,7 @@
             </div>
 
             <div class="row g-4">
-                <div class="col-md-4">
+                <div class="col-md-6">
                     <label class="form-label">Dificultad</label>
                     <select class="form-select form-control-custom" formControlName="difficulty">
                         <option value="" disabled selected>Selecciona</option>
@@ -69,13 +73,11 @@
                         <option value="dificil">Difícil</option>
                     </select>
                 </div>
-                <div class="col-md-4">
-                    <label class="form-label">Tiempo de preparación (minutos)</label>
-                    <input type="text" class="form-control-custom" formControlName="prepTime" placeholder="Ej: 10">
-                </div>
-                <div class="col-md-4">
-                    <label class="form-label">Tiempo de cocción  (minutos)</label>
-                    <input type="text" class="form-control-custom" formControlName="totalTime" placeholder="Ej: 30">
+                
+                <div class="col-md-6">
+                    <label class="form-label">Duración total estimada (en minutos)</label>
+                    <input type="text" class="form-control-custom" formControlName="totalTime"
+                        placeholder="Ej: 30 Minutos">
                 </div>
             </div>
         </section>
@@ -154,7 +156,31 @@
             </div>
         </section>
         <section>
-            <h2 class="form-section-title">Imágenes</h2>
+            <h2 class="form-section-title">Actualizar Fotografías</h2>
+            <p class="text-secondary small mb-4">
+                <i class="fa-solid fa-circle-info me-1"></i> Puedes gestionar las fotos actuales o subir nuevas. Las
+                anteriores sobrevivirán si no las eliminas explícitamente arrastrándolas a la papelera.
+            </p>
+
+            <!-- fotos que ya tenia la receta-->
+            <div *ngIf="originalImages && originalImages.length > 0" class="mb-4">
+                <h6 class="mb-2 text-muted fw-bold">Fotografías actuales:</h6>
+                <div class="d-flex flex-wrap gap-3 p-3 bg-light rounded border">
+                    <div *ngFor="let img of originalImages; let i = index"
+                        class="position-relative d-inline-block rounded bg-white shadow-sm" style="padding: 4px;">
+                        <img [src]="img" alt="Fotografía guardada" class="rounded object-fit-cover border"
+                            style="width: 120px; height: 120px;">
+
+                        <!-- Boton de borrado -->
+                        <button type="button" class="btn btn-danger position-absolute top-0 end-0 rounded-circle shadow"
+                            style="width: 25px; height: 25px; padding: 0; transform: translate(30%, -30%); z-index: 5;"
+                            title="Eliminar esta foto" (click)="removeOriginalImage(i)">
+                            <i class="fa-solid fa-xmark d-flex justify-content-center align-items-center h-100"
+                                style="font-size: 13px;"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
 
             <div class="d-flex flex-column gap-3" formArrayName="images">
 
@@ -162,7 +188,7 @@
                     class="d-flex flex-column flex-xl-row gap-3 align-items-xl-center">
                     <div
                         class="step-group flex-grow-1 position-relative mb-0 d-flex align-items-center bg-white px-3 border rounded">
-                        <div class="step-label mb-0 me-3" style="min-width: 80px;">Foto {{ i + 1 }}</div>
+                        <div class="step-label mb-0 me-3" style="min-width: 80px;">Nueva Foto {{ i + 1 }}</div>
                         <input type="file" accept="image/*"
                             class="form-control border-0 shadow-none bg-transparent flex-grow-1"
                             (change)="onFileChange($event, i)">
@@ -175,7 +201,7 @@
 
                     <div *ngIf="last" class="text-end text-xl-start" style="min-width: 170px;">
                         <button type="button" class="btn-add-more" (click)="addImage()">
-                            <i class="fa-solid fa-plus text-muted" style="font-size: 11px;"></i> Añadir imagen
+                            <i class="fa-solid fa-plus text-muted" style="font-size: 11px;"></i> Añadir otra imagen
                         </button>
                     </div>
                 </div>
@@ -184,17 +210,18 @@
         </section>
 
         <div *ngIf="!recipeForm.valid" class="text-danger text-end mb-3 small" style="font-weight: 500;">
-            <i class="fa-solid fa-circle-exclamation me-1"></i> Faltan campos obligatorios para poder subir la receta.
+            <i class="fa-solid fa-circle-exclamation me-1"></i> Debes corregir los errores para poder guardar los
+            cambios (El título, pasos e ingredientes siguen siendo obligatorios).
         </div>
 
         <div class="form-actions">
-            <button type="button" class="btn-cancel" routerLink="/">Cancelar</button>
+            <button type="button" class="btn-cancel" routerLink="/my-recipes">Cancelar</button>
             <button type="submit" class="btn-submit" [disabled]="!recipeForm.valid || isSubmitting"
                 [class.opacity-50]="!recipeForm.valid || isSubmitting">
                 <span *ngIf="isSubmitting">
-                    <span class="spinner-border spinner-border-sm me-2" role="status"></span>Subiendo...
+                    <span class="spinner-border spinner-border-sm me-2" role="status"></span>Guardando...
                 </span>
-                <span *ngIf="!isSubmitting">Subir receta</span>
+                <span *ngIf="!isSubmitting">Guardar cambios</span>
             </button>
         </div>
 

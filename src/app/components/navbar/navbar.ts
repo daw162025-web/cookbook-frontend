@@ -21,7 +21,7 @@ export class Navbar implements OnInit {
 
   @HostListener('document:click', ['$event'])
   onDocumentClick(event: Event) {
-    // Si se hace click en otro sitio del documento, cerramos el dropdown
+    // Si se hace click en otro sitio, cerramos el dropdown
     this.isUserDropdownOpen = false;
   }
 

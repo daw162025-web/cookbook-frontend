@@ -2,11 +2,12 @@ import { Component, OnInit, inject, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule, ActivatedRoute } from '@angular/router';
 import { RecipeService } from '../../services/recipe.service';
+import { TimeFormatPipe } from '../../pipes/time-format-pipe';
 
 @Component({
   selector: 'app-recipe-detail',
   standalone: true,
-  imports: [CommonModule, RouterModule],
+  imports: [CommonModule, RouterModule, TimeFormatPipe],
   templateUrl: './recipe-detail.html',
   styleUrl: './recipe-detail.css'
 })

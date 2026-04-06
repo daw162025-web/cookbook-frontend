@@ -1,7 +1,7 @@
 <main class="container-fluid flex-grow-1 px-4 px-lg-5" style="max-width: 1440px; margin: 0 auto;">
         <div class="row pt-4 pb-5 g-4">
 
-            <!-- Columna Izquierda: Sidebar -->
+            <!--Sidebar -->
             <div class="col-12 col-xl-3 sidebar-col" style="width: 100%; max-width: 300px;">
                 <h1 class="fw-extrabold text-dark-custom mb-4 d-none d-lg-block" style="font-size: 34px;">Categorias
                 </h1>
@@ -9,18 +9,38 @@
                 <div class="sidebar d-flex flex-column">
                     <div class="sidebar-scroll">
                     @for (category of categories; track category.id) {
-                        <a href="javascript:void(0)" 
-                        class="cat-item" 
-                        [class.active]="selectedCategoryId === category.id"
-                        (click)="selectCategory(category.id)">
-                        {{ category.name }}
-                        </a>
+                        
+                        <!-- Si tiene hijos, se pinta como encabezado separador y luego iteramos sus hijos -->
+                        <ng-container *ngIf="category.children && category.children.length > 0">
+                            <h6 class="mt-4 mb-2 text-muted fw-bold text-uppercase" style="font-size: 0.75rem; letter-spacing: 1px; padding-left: 10px;">
+                                {{ category.name }}
+                            </h6>
+                            @for (child of category.children; track child.id) {
+                                <a href="javascript:void(0)" 
+                                class="cat-item ps-3" 
+                                [class.active]="selectedCategoryId === child.id"
+                                (click)="selectCategory(child.id)">
+                                {{ child.name }}
+                                </a>
+                            }
+                        </ng-container>
+
+                        <!-- Si no tiene hijos se renderiza normal -->
+                        <ng-container *ngIf="!category.children || category.children.length === 0">
+                            <a href="javascript:void(0)" 
+                            class="cat-item" 
+                            [class.active]="selectedCategoryId === category.id"
+                            (click)="selectCategory(category.id)">
+                            {{ category.name }}
+                            </a>
+                        </ng-container>
+
                     }
                     </div>
                 </div>
             </div>
 
-            <!-- Columna Derecha: Grid Recetas -->
+            <!--Grid de recetas -->
             <div class="col-12 col-lg-9 ">
                 
                 <div class="row g-4 recipe-grid">

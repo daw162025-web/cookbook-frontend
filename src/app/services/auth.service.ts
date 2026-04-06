@@ -9,7 +9,8 @@ export class AuthService {
   private http = inject(HttpClient);
   private apiUrl = 'http://localhost:8000/api';
   
-  // BehaviorSubject para emitir el estado actual a quien se suscriba
+  // BehaviorSubject para gestionar el estado global de la autenticación de forma reactiva, 
+  // asegurando que todos los componentes tengan siempre la información más reciente del usuario
   private currentUserSubject = new BehaviorSubject<any>(null);
   public currentUser$ = this.currentUserSubject.asObservable();
   

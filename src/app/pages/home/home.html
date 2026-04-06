@@ -10,23 +10,57 @@
                     INSPÍRATE. COCINA. COMPARTE.<br>
                     ¡NUNCA TE FALTARÁN IDEAS!
                 </h1>
-                <button class="btn btn-hero">BUSCA LAS MEJORES RECETAS</button>
             </div>
         </section>
 
-        <section class="container-fluid" style="max-width: 1200px; margin: 0 auto;">
-          <h2 class="section-title">Recetas populares</h2>
+        <section class="container-fluid pt-4 pb-5" style="max-width: 1440px; margin: 0 auto;">
+          <!-- Platos Principales -->
+          <div *ngIf="mainCourses.length > 0" class="mb-5">
+              <div class="d-flex align-items-center justify-content-between mb-4">
+                  <h2 class="section-title mb-0">Platos Principales</h2>
+              </div>
+              <div class="row flex-nowrap overflow-auto hide-scrollbar pb-4 g-4" style="scroll-snap-type: x mandatory;">
+                @for (recipe of mainCourses; track recipe.id) {
+                  <div class="col-11 col-md-6 col-lg-4 col-xl-3" style="scroll-snap-align: start;">
+                    <app-recipe-card [recipe]="recipe"></app-recipe-card>
+                  </div>
+                }
+              </div>
+          </div>
 
-          <div class="row g-4 g-xl-5 pb-5">
-            @for (recipe of recipes; track recipe.id) {
-              <div class="col-12 col-md-6 col-lg-4">
-                <app-recipe-card [recipe]="recipe"></app-recipe-card>
+          <!-- Segundos Platos -->
+          <div *ngIf="secondCourses.length > 0" class="mb-5">
+              <div class="d-flex align-items-center justify-content-between mb-4">
+                  <h2 class="section-title mb-0">Segundos Platos</h2>
               </div>
-            } @empty {
-              <div class="col-12 text-center">
-                <p>Aún no hay recetas publicadas. ¡Sé el primero en crear una!</p>
+              <div class="row flex-nowrap overflow-auto hide-scrollbar pb-4 g-4" style="scroll-snap-type: x mandatory;">
+                @for (recipe of secondCourses; track recipe.id) {
+                  <div class="col-11 col-md-6 col-lg-4 col-xl-3" style="scroll-snap-align: start;">
+                    <app-recipe-card [recipe]="recipe"></app-recipe-card>
+                  </div>
+                }
               </div>
-            }
+          </div>
+
+          <!-- Postres -->
+          <div *ngIf="desserts.length > 0" class="mb-5">
+              <div class="d-flex align-items-center justify-content-between mb-4">
+                  <h2 class="section-title mb-0">Dulces y Postres</h2>
+              </div>
+              <div class="row flex-nowrap overflow-auto hide-scrollbar pb-4 g-4" style="scroll-snap-type: x mandatory;">
+                @for (recipe of desserts; track recipe.id) {
+                  <div class="col-11 col-md-6 col-lg-4 col-xl-3" style="scroll-snap-align: start;">
+                    <app-recipe-card [recipe]="recipe"></app-recipe-card>
+                  </div>
+                }
+              </div>
+          </div>
+          
+          <!-- Mensaje vacío si no hay absolutamente ninguna receta -->
+          <div *ngIf="mainCourses.length === 0 && secondCourses.length === 0 && desserts.length === 0" class="text-center py-5">
+             <i class="fa-solid fa-utensils fs-1 text-muted mb-3"></i>
+             <h4 class="text-muted">Aún no hay recetas clasificadas.</h4>
+             <p class="text-muted">¡Sé el primero en crear una y asignarle una categoría!</p>
           </div>
         </section>
     </main>

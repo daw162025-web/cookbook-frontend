@@ -3,11 +3,12 @@ import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { RecipeService } from '../../services/recipe.service';
 import { Recipe } from '../../models/recipe';
+import { DifficultyPipe } from '../../pipes/difficulty-pipe';
 
 @Component({
   selector: 'app-my-recipes',
   standalone: true,
-  imports: [CommonModule, RouterModule],
+  imports: [CommonModule, RouterModule, DifficultyPipe],
   templateUrl: './my-recipes.html',
   styleUrl: './my-recipes.css'
 })

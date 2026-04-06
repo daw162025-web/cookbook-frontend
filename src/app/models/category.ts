@@ -3,4 +3,6 @@ export interface Category {
   name: string;
   image_url?: string;
   description?: string;
+  parent_id?: number | null;
+  children?: Category[];
 }

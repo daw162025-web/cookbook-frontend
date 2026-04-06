@@ -1,4 +1,4 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, inject, OnInit, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormBuilder, FormGroup, FormArray, Validators } from '@angular/forms';
 import { IngredientService } from '../../services/ingredient.service';
@@ -20,6 +20,7 @@ export class CreateRecipeComponent implements OnInit {
   private categoryService = inject(CategoryService);
   private recipeService = inject(RecipeService);
   private router = inject(Router);
+  private cdr = inject(ChangeDetectorRef);
 
   selectedFiles: { [key: number]: File } = {};
   availableIngredients: any[] = [];
@@ -30,7 +31,7 @@ export class CreateRecipeComponent implements OnInit {
     this.recipeForm = this.fb.group({
       title: ['', Validators.required],
       description: ['', Validators.required],
-      category_id: ['', Validators.required],
+      category_ids: [[], Validators.required], // Inicializado como array
       difficulty: ['', Validators.required],
       prepTime: ['', Validators.required],
       totalTime: ['', Validators.required],
@@ -39,28 +40,32 @@ export class CreateRecipeComponent implements OnInit {
       images: this.fb.array([])
     });
 
-    // Iniciar con 3 ingredientes vacíos 
+    // Iniciar con huecos vacíos para el form
     this.addIngredient();
     this.addIngredient();
     this.addIngredient();
 
-    // Iniciar con 3 pasos vacíos
     this.addStep();
     this.addStep();
     this.addStep();
 
-    // Iniciar con 1 imagen vacía
     this.addImage();
   }
 
   ngOnInit() {
     this.ingredientService.getIngredients().subscribe({
-      next: (data) => this.availableIngredients = data,
+      next: (data) => {
+        this.availableIngredients = data;
+        this.cdr.detectChanges();
+      },
       error: (err) => console.error('Error cargando ingredientes', err)
     });
 
     this.categoryService.getCategories().subscribe({
-      next: (data) => this.availableCategories = data,
+      next: (data) => {
+        this.availableCategories = data;
+        this.cdr.detectChanges();
+      },
       error: (err) => console.error('Error cargando categorías', err)
     });
   }
@@ -125,13 +130,29 @@ export class CreateRecipeComponent implements OnInit {
     }
   }
 
+  selectCategory(id: number) {
+    const currentCats = this.recipeForm.get('category_ids')?.value as number[] || [];
+    const index = currentCats.indexOf(id);
+    if (index > -1) {
+      currentCats.splice(index, 1);
+    } else {
+      currentCats.push(id);
+    }
+    this.recipeForm.get('category_ids')?.setValue(currentCats);
+  }
+
+  isCategorySelected(id: number): boolean {
+    const currentCats = this.recipeForm.get('category_ids')?.value as number[] || [];
+    return currentCats.includes(id);
+  }
+
   onSubmit() {
     if (this.recipeForm.valid && !this.isSubmitting) {
       this.isSubmitting = true;
       const formData = new FormData();
       const formValue = this.recipeForm.value;
 
-      // Calcular duracion sumando tiempos
+      // Calcular duracion 
       const prep = parseInt(formValue.prepTime) || 0;
       const total = parseInt(formValue.totalTime) || 0;
       const duration = prep + total;
@@ -139,10 +160,15 @@ export class CreateRecipeComponent implements OnInit {
       // añadir campos de texto
       formData.append('title', formValue.title);
       formData.append('description', formValue.description);
-      formData.append('category_id', formValue.category_id);
       formData.append('difficulty', formValue.difficulty);
       formData.append('duration', duration.toString() === '0' ? '1' : duration.toString());
-      
+
+      // categorias multiples
+      const catIds: number[] = formValue.category_ids || [];
+      catIds.forEach(id => {
+        formData.append('category_ids[]', id.toString());
+      });
+
       // añadir arrays 
       formData.append('ingredients', JSON.stringify(formValue.ingredients));
       formData.append('steps', JSON.stringify(formValue.steps));

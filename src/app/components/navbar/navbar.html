@@ -49,12 +49,9 @@
           </div>
 
           <ng-container *ngIf="authService.isLoggedIn$ | async; else guestLinks">
-            <!-- Botón Sube tu receta -->
             <button class="btn btn-upload d-flex align-items-center justify-content-center gap-2 text-nowrap" routerLink="/create-recipe" (click)="closeMenu()">
                 <i class="fa-solid fa-plus"></i> Sube tu receta
             </button>
-
-            <!-- Perfil Dropdown -->
             <div class="dropdown d-flex justify-content-center mt-2 mt-xl-0 ms-xl-2 position-relative">
                 <a href="javascript:void(0)" class="d-flex align-items-center text-decoration-none text-muted gap-2"
                     (click)="toggleUserDropdown($event)">

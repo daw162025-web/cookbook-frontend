@@ -49,7 +49,7 @@ export class RegisterComponent {
         error: (err) => {
           console.error('Register error', err);
           if (err.error && err.error.errors) {
-            // enviar los errores de validación en "errors"
+            // enviar los errores de validación 
             const firstErrorKey = Object.keys(err.error.errors)[0];
             this.errorMessage = err.error.errors[firstErrorKey][0]; 
           } else if (err.error && err.error.message) {

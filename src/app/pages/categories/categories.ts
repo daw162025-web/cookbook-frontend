@@ -27,7 +27,9 @@ export class CategoriesComponent implements OnInit {
         this.categories = Array.isArray(data) ? data : (data.categories || data.data || []);
         //Que cargue por defecto cuando entre
         if (this.categories.length > 0) {
-          this.selectCategory(this.categories[0].id);
+          const firstCat = this.categories[0];
+          const idToLoad = (firstCat.children && firstCat.children.length > 0) ? firstCat.children[0].id : firstCat.id;
+          this.selectCategory(idToLoad);
         }
         this.cdr.detectChanges();
       },

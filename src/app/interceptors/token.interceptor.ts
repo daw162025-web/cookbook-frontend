@@ -1,28 +1,41 @@
-import { HttpInterceptorFn } from '@angular/common/http';
+import { HttpInterceptorFn, HttpErrorResponse } from '@angular/common/http';
 import { inject } from '@angular/core';
 import { AuthService } from '../services/auth.service';
+import { catchError, throwError } from 'rxjs';
+import { Router } from '@angular/router';
 
-/**
- * Este interceptor se encarga de mirar cada petición HTTP que sale de Angular hacia al backend de Laravel.
- */
 export const tokenInterceptor: HttpInterceptorFn = (req, next) => {
-  // Inyectamos el servicio de autenticación para acceder al token.
   const authService = inject(AuthService);
-  
-  // Obtenemos el token
+  const router = inject(Router);
   const token = authService.getToken();
 
+  let request = req;
+
+  //Añadimos el token si existe
   if (token) {
-   //Las peticiones originales no se pueden editar por eso las clonamos y les añadimos las cabeceras
-    const clonedReq = req.clone({
+    request = req.clone({
       setHeaders: {
-        // Añadimos el encabezado que Laravel Sanctum 
         Authorization: `Bearer ${token}`
       }
     });
-
-    //Enviamos la petición clonada 
-    return next(clonedReq);
   }
-  return next(req);
+
+  //Gestionamos la respuesta del servidor
+  return next(request).pipe(
+    catchError((error: HttpErrorResponse) => {
+      // Si el servidor nos dice que el token no vale (401)
+      if (error.status === 401) {
+        console.warn('Sesión expirada o token inválido. Redirigiendo...');
+        
+        // Limpiamos los datos del usuario en el frontend
+        authService.logout(); 
+        
+        // Lo mandamos al login para que vuelva a entrar
+        router.navigate(['/login']);
+      }
+      
+      // Seguimos lanzando el error para que el componente también sepa que algo falló
+      return throwError(() => error);
+    })
+  );
 };
