@@ -2,13 +2,15 @@ import { Injectable, inject } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Recipe } from '../models/recipe';
+import { environment } from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class RecipeService {
   private http = inject(HttpClient);
-  private apiUrl = 'http://localhost:8000/api';
+  // private apiLocal = 'http://localhost:8000/api';
+  private apiUrl = environment.apiUrl;
 
   getRecipes(search?: string): Observable<Recipe[]> {
     let params = new HttpParams();

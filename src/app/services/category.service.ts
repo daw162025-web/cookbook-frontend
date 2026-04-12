@@ -3,19 +3,21 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Category } from '../models/category';
 import { Recipe } from '../models/recipe'; 
+import { environment } from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class CategoryService {
   private http = inject(HttpClient);
-  private apiUrl = 'http://localhost:8000/api/categories';
+  // private apiUrl = 'http://localhost:8000/api/categories';
+  private apiUrl = environment.apiUrl;
 
   getCategories(): Observable<Category[]> {
-    return this.http.get<Category[]>(this.apiUrl);
+    return this.http.get<Category[]>(`${this.apiUrl}/categories`);
   }
 
   getRecipesByCategory(categoryId: number): Observable<Recipe[]> {
-    return this.http.get<Recipe[]>(`${this.apiUrl}/${categoryId}/recipes`);
+    return this.http.get<Recipe[]>(`${this.apiUrl}/categories/${categoryId}/recipes`);
   }
 }
