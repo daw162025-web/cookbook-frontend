@@ -32,12 +32,14 @@
   color: #e74c3c; /* Color rojo para el corazón relleno */
 }
 
-/* La clase fa-solid suele necesitar que le forcemos el color */
-.fa-heart.fa-solid, .text-danger {
-    color: #ff4757 !important; /* Un rojo vibrante */
+/* Forzamos que el corazón sólido sea rojo */
+.fa-solid.fa-heart.text-danger {
+    color: #e74c3c !important;
+    display: inline-block !important;
 }
 
-/* Opcional: un efecto cuando esté vacío */
+/* Forzamos que el corazón regular sea gris */
 .fa-regular.fa-heart {
-    color: #a4b0be;
+    color: #ccc !important;
+    display: inline-block !important;
 }

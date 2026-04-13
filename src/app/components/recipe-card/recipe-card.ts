@@ -21,16 +21,15 @@ export class RecipeCardComponent {
     event.stopPropagation();
 
     this.recipeService.toggleFavorite(recipe.id).subscribe({
-      next: (res) => {
-        // ACTUALIZACIÓN CRUCIAL:
-        // Usamos la respuesta de la API para asegurar que el estado es real
-        recipe.is_favorite = res.is_favorite; 
-        this.favoriteToggled.emit(recipe);
-        console.log('Estado de favorito cambiado', res);
+      next: (res: any) => {
+        // Forzamos la conversión a booleano real (true/false)
+        // así evitamos que "0", "1" o null rompan el HTML
+        this.recipe.is_favorite = !!res.is_favorite; 
+        
+        this.favoriteToggled.emit(this.recipe);
+        console.log('Mensaje API:', res.message, 'Estado final:', this.recipe.is_favorite);
       },
-      error: (err) => {
-        console.error('Error al gestionar favorito', err);
-      }
+      error: (err) => console.error('Error al gestionar favorito', err)
     });
-}
+  }
 }
