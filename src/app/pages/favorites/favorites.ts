@@ -1,8 +1,9 @@
-import { Component, OnInit, inject } from '@angular/core';
+import { Component, OnInit, inject, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RecipeService } from '../../services/recipe.service';
 import { Recipe } from '../../models/recipe';
 import { RecipeCardComponent } from '../../components/recipe-card/recipe-card';
+
 
 @Component({
   selector: 'app-favorites',
@@ -12,6 +13,7 @@ import { RecipeCardComponent } from '../../components/recipe-card/recipe-card';
 })
 export class Favorites implements OnInit {
   private recipeService = inject(RecipeService);
+  private cdr = inject(ChangeDetectorRef); // Inyectamos el detector
   recipes: Recipe[] = [];
   loading = true;
 
@@ -22,9 +24,9 @@ export class Favorites implements OnInit {
   loadFavorites() {
     this.recipeService.getFavorites().subscribe({
       next: (data) => {
-        console.log('Favoritos cargados:', data);
         this.recipes = data;
         this.loading = false;
+        this.cdr.detectChanges(); // Aseguramos que se vea el listado al cargar
       },
       error: (err) => {
         console.error('Error al cargar favoritos', err);
@@ -35,8 +37,12 @@ export class Favorites implements OnInit {
 
   onFavoriteToggled(recipe: Recipe) {
     if (!recipe.is_favorite) {
-      // Si ya no es favorito, lo quitamos de la lista actual
+      // 1. Filtramos el array
       this.recipes = this.recipes.filter(r => r.id !== recipe.id);
+      
+      // 2. ¡FORZAMOS EL REPINTADO! 
+      // Así la card desaparece de la vista inmediatamente
+      this.cdr.detectChanges(); 
     }
   }
 }
