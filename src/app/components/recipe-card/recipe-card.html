@@ -12,8 +12,9 @@
       </span>
     </div>
     <button class="btn btn-ver-mas mb-0 mt-0" [routerLink]="['/recipe', recipe.id]" *ngIf="recipe.id">Ver más</button>
- <button class="btn-favorite" (click)="toggleFavorite($event, recipe)">
-  <i [class]="recipe.is_favorite ? 'fa-solid fa-heart text-danger' : 'fa-regular fa-heart'"></i>
+<button class="btn-favorite" (click)="toggleFavorite($event, recipe)">
+  <i [class]="recipe.is_favorite ? 'fa-solid fa-heart' : 'fa-regular fa-heart'"
+     [style.color]="recipe.is_favorite ? 'red' : 'gray'"></i>
 </button>
   </div>
 </article>

@@ -8,6 +8,7 @@ import { RecipeDetailComponent } from './pages/recipe-detail/recipe-detail';
 import { CreateRecipeComponent } from './pages/create-recipe/create-recipe';
 import { MyRecipesComponent } from './pages/my-recipes/my-recipes';
 import { EditRecipeComponent } from './pages/edit-recipe/edit-recipe';
+import { Favorites } from './pages/favorites/favorites';
 
 export const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -19,5 +20,7 @@ export const routes: Routes = [
   { path: 'create-recipe', component: CreateRecipeComponent },
   { path: 'edit-recipe/:id', component: EditRecipeComponent },
   { path: 'my-recipes', component: MyRecipesComponent },
+  { path: 'favorites', component: Favorites },
   { path: '**', redirectTo: '' }
+  
 ];
