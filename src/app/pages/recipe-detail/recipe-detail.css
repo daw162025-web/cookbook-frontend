@@ -105,3 +105,20 @@ html {
 .star-active:hover, .star-empty:hover {
     transform: scale(1.3);
 }
+
+.recipe-actions .fa-star:hover {
+    transform: scale(1.3);
+}
+
+.text-warning {
+    color: #f1c40f !important;
+}
+
+/* Para que en móviles el selector de estrellas no se amontone */
+@media (max-width: 768px) {
+    .recipe-actions .ms-md-auto {
+        margin-left: 0 !important;
+        width: 100%;
+        justify-content: center;
+    }
+}

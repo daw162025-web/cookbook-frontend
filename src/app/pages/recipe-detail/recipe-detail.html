@@ -14,10 +14,10 @@
     <div class="row g-5 justify-content-center">
             
         <!-- Columna Izquierda -->
-        <div class="d-flex justify-content-between align-items-start flex-wrap gap-3">
-    <div style="flex: 1; min-width: 300px;">
+        <div class="col-lg-8 order-2 order-lg-1 pe-lg-5">
+    <div class="mb-5 pb-2 border-bottom">
         <div class="mb-3 d-flex flex-wrap gap-2">
-            <span *ngFor="let cat of recipe.categories" class="badge rounded-pill text-white border-0" style="background-color: #FF7B54 !important;">
+            <span *ngFor="let cat of recipe.categories" class="badge rounded-pill text-white border-0" style="background-color: #FF7B54 !important; font-weight: 500; font-size: 0.85rem; padding: 0.4rem 0.8rem;">
                 {{ cat.name }}
             </span>
         </div>
@@ -25,22 +25,42 @@
         <h1 class="recipe-main-title text-dark fw-bold mb-3" style="font-size: 3.5rem; line-height: 1.1;">
             {{ recipe.title }}
         </h1>
-    </div>
-
-    <div class="rating-box p-3 rounded-4 shadow-sm border text-center bg-white" style="width: 180px;">
-        <p class="text-muted small mb-2 fw-bold text-uppercase" style="letter-spacing: 1px;">Tu nota</p>
-        <div class="d-flex justify-content-center gap-1 mb-2">
-            <i *ngFor="let s of [1,2,3,4,5]" 
-               (click)="rate(s)"
-               [class]="(userRating >= s) ? 'fa-solid fa-star star-active' : 'fa-regular fa-star star-empty'"
-               style="cursor: pointer; font-size: 1.4rem;">
-            </i>
+        
+        <div class="recipe-stats d-flex flex-wrap gap-4 text-secondary fw-medium mb-4 fs-6">
+            <span><i class="fa-solid fa-star text-warning"></i> {{ recipe.avg_rating || '5.0' }}</span>
+            <span><i class="fa-solid fa-gauge-high"></i> Dificultad: {{ recipe.difficulty }}</span>
+            <span><i class="fa-regular fa-clock"></i> {{ recipe.duration | timeFormat }} </span>
+            <span><i class="fa-solid fa-user-pen"></i> Receta de {{ recipe.user?.name || 'Desconocido' }}</span>
         </div>
-        <span class="badge bg-light text-dark border rounded-pill">
-            {{ userRating > 0 ? '¡Gracias!' : 'Vota ahora' }}
-        </span>
+
+        <div class="recipe-actions d-flex flex-wrap align-items-center gap-3 mb-4">
+            <button class="btn btn-favorite-detail rounded-pill px-4 py-2 d-flex align-items-center gap-2" (click)="toggleFavorite(recipe)">
+                <i [class]="recipe.is_favorite ? 'fa-solid fa-heart text-danger' : 'fa-regular fa-heart'"></i>
+                <span class="fw-bold">{{ recipe.is_favorite ? 'Guardada en favoritos' : 'Guardar en favoritos' }}</span>
+            </button>
+            
+            <button class="btn btn-light rounded-pill px-4 py-2 text-muted border d-flex align-items-center gap-2" (click)="shareRecipe()">
+                <i class="fa-solid fa-share-nodes"></i> 
+                <span class="fw-bold">Compartir</span>
+            </button>
+
+            <div class="ms-md-auto d-flex align-items-center gap-2 px-3 py-1 bg-light rounded-pill border">
+                <span class="small fw-bold text-muted text-uppercase" style="font-size: 0.7rem;">Valorar:</span>
+                <div class="d-flex gap-1">
+                    <i *ngFor="let s of [1,2,3,4,5]" 
+                       (click)="rate(s)"
+                       [class]="(userRating >= s) ? 'fa-solid fa-star text-warning' : 'fa-regular fa-star text-muted'"
+                       style="cursor: pointer; font-size: 1.1rem; transition: transform 0.2s;">
+                    </i>
+                </div>
+            </div>
+        </div>
+        
+        <p class="recipe-desc-box fs-5 text-muted mb-4" style="line-height: 1.6;">
+            {{ recipe.description }}
+        </p>
     </div>
-</div>
+    </div>
 
         <!-- Columna Derecha-->
         <div class="col-lg-4 order-1 order-lg-2">
