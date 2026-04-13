@@ -15,52 +15,99 @@
             
         <!-- Columna Izquierda -->
         <div class="col-lg-8 order-2 order-lg-1 pe-lg-5">
-    <div class="mb-5 pb-2 border-bottom">
-        <div class="mb-3 d-flex flex-wrap gap-2">
-            <span *ngFor="let cat of recipe.categories" class="badge rounded-pill text-white border-0" style="background-color: #FF7B54 !important; font-weight: 500; font-size: 0.85rem; padding: 0.4rem 0.8rem;">
-                {{ cat.name }}
-            </span>
-        </div>
-        
-        <h1 class="recipe-main-title text-dark fw-bold mb-3" style="font-size: 3.5rem; line-height: 1.1;">
-            {{ recipe.title }}
-        </h1>
-        
-        <div class="recipe-stats d-flex flex-wrap gap-4 text-secondary fw-medium mb-4 fs-6">
-            <span><i class="fa-solid fa-star text-warning"></i> {{ recipe.avg_rating || '5.0' }}</span>
-            <span><i class="fa-solid fa-gauge-high"></i> Dificultad: {{ recipe.difficulty }}</span>
-            <span><i class="fa-regular fa-clock"></i> {{ recipe.duration | timeFormat }} </span>
-            <span><i class="fa-solid fa-user-pen"></i> Receta de {{ recipe.user?.name || 'Desconocido' }}</span>
-        </div>
-
-        <div class="recipe-actions d-flex flex-wrap align-items-center gap-3 mb-4">
-            <button class="btn btn-favorite-detail rounded-pill px-4 py-2 d-flex align-items-center gap-2" (click)="toggleFavorite(recipe)">
-                <i [class]="recipe.is_favorite ? 'fa-solid fa-heart text-danger' : 'fa-regular fa-heart'"></i>
-                <span class="fw-bold">{{ recipe.is_favorite ? 'Guardada en favoritos' : 'Guardar en favoritos' }}</span>
-            </button>
             
-            <button class="btn btn-light rounded-pill px-4 py-2 text-muted border d-flex align-items-center gap-2" (click)="shareRecipe()">
-                <i class="fa-solid fa-share-nodes"></i> 
-                <span class="fw-bold">Compartir</span>
-            </button>
+            <div class="mb-5 pb-2 border-bottom">
+                <!-- Categorías -->
+                <div class="mb-3 d-flex flex-wrap gap-2">
+                    <span *ngFor="let cat of recipe.categories" class="badge rounded-pill text-white border-0" style="background-color: #FF7B54 !important; font-weight: 500; font-size: 0.85rem; padding: 0.4rem 0.8rem;">
+                        {{ cat.name }}
+                    </span>
+                </div>
+                
+                <!-- Título -->
+                <h1 class="recipe-main-title text-dark fw-bold mb-3" style="font-size: 3.5rem; line-height: 1.1;">
+                    {{ recipe.title }}
+                </h1>
+                
+                <!-- Info -->
+               <div class="recipe-actions d-flex flex-wrap align-items-center gap-3 mb-4">
+                    <button class="btn btn-favorite-detail rounded-pill px-4 py-2 d-flex align-items-center gap-2" (click)="toggleFavorite(recipe)">
+                        <i [class]="recipe.is_favorite ? 'fa-solid fa-heart text-danger' : 'fa-regular fa-heart'"></i>
+                        <span class="fw-bold">{{ recipe.is_favorite ? 'Guardada en favoritos' : 'Guardar en favoritos' }}</span>
+                    </button>
+                    
+                    <button class="btn btn-light rounded-pill px-4 py-2 text-muted border d-flex align-items-center gap-2" (click)="shareRecipe()">
+                        <i class="fa-solid fa-share-nodes"></i> 
+                        <span class="fw-bold">Compartir</span>
+                    </button>
 
-            <div class="ms-md-auto d-flex align-items-center gap-2 px-3 py-1 bg-light rounded-pill border">
-                <span class="small fw-bold text-muted text-uppercase" style="font-size: 0.7rem;">Valorar:</span>
-                <div class="d-flex gap-1">
-                    <i *ngFor="let s of [1,2,3,4,5]" 
-                       (click)="rate(s)"
-                       [class]="(userRating >= s) ? 'fa-solid fa-star text-warning' : 'fa-regular fa-star text-muted'"
-                       style="cursor: pointer; font-size: 1.1rem; transition: transform 0.2s;">
-                    </i>
+                    <div class="ms-md-auto d-flex align-items-center gap-2 px-3 py-1 bg-light rounded-pill border">
+                        <span class="small fw-bold text-muted text-uppercase" style="font-size: 0.7rem;">Valorar:</span>
+                        <div class="d-flex gap-1">
+                            <i *ngFor="let s of [1,2,3,4,5]" 
+                            (click)="rate(s)"
+                            [class]="(userRating >= s) ? 'fa-solid fa-star text-warning' : 'fa-regular fa-star text-muted'"
+                            style="cursor: pointer; font-size: 1.1rem; transition: transform 0.2s;">
+                            </i>
+                        </div>
+                    </div>
+                </div>
+                        
+                <!-- Descripción -->
+                <p class="recipe-desc-box fs-5 text-muted mb-4" style="line-height: 1.6;">
+                    {{ recipe.description }}
+                </p>
+            </div>
+
+            <!-- Bloque Pasos -->
+            <h2 class="recipe-section-title d-flex align-items-center mb-4 fs-3 pt-2">
+                <i class="fa-solid fa-kitchen-set me-2" style="color: #bdf2c3;">
+                </i> Pasos a seguir</h2>
+            
+            <div class="steps-wrapper mb-5">
+                <div class="step-card d-flex mb-4" *ngFor="let step of getInstructions(); let i = index">
+                    <div class="step-number me-4 flex-shrink-0">
+                        <h3 class="fw-bold text-muted mb-0" style="font-size: 3rem; opacity: 0.3; line-height: 1;">{{ i + 1 }}</h3>
+                    </div>
+                    <div class="step-content pt-2">
+                        <p class="text-dark" style="font-size: 1.05rem; line-height: 1.6;">{{ step }}</p>
+                    </div>
                 </div>
             </div>
+
+            <hr class="my-5 border-light border-2">
+
+            <!-- Comentarios -->
+            <div class="comments-section bg-light p-4 p-md-5 rounded-4 mt-5">
+                <div class="d-flex justify-content-between align-items-center mb-4" >
+                    <h2 class="fs-4 mb-0">
+                        <i class="fa-regular fa-comments me-2" style="color: #bdf2c3;" >
+
+                    </i> Comentarios de la comunidad</h2>
+                    <button class="btn btn-green-outline rounded-pill btn-sm px-4 fw-bold">Añade tu comentario</button>
+                </div>
+
+                <div class="comments-list">
+                    <div class="comment-card bg-white p-4 rounded-3 shadow-sm mb-3 border-0" *ngFor="let comment of recipe.comments">
+                        <div class="d-flex justify-content-between align-items-center mb-2">
+                            <div class="fw-bold text-dark"><i class="fa-solid fa-circle-user text-muted me-2"></i> {{ comment.user?.name || 'Usuario' }}</div>
+                            <div class="text-muted small">{{ comment.created_at | date:'mediumDate' }}</div>
+                        </div>
+                        <p class="text-secondary mb-3">{{ comment.body }}</p>
+                        <div>
+                            <button class="btn btn-sm btn-light rounded-pill px-3 shadow-sm text-muted hover-like"><i class="fa-regular fa-heart me-1"></i> Me gusta</button>
+                        </div>
+                    </div>
+
+                    <div *ngIf="!recipe.comments?.length" class="text-center py-5">
+                        <i class="fa-regular fa-comment-dots fs-1 text-muted opacity-50 mb-3"></i>
+                        <p class="lead text-muted">Aún no hay comentarios.</p>
+                        <p class="small text-muted">¡Sé el primero en preparar esta delicia y contarnos qué tal!</p>
+                    </div>
+                </div>
+            </div>
+            
         </div>
-        
-        <p class="recipe-desc-box fs-5 text-muted mb-4" style="line-height: 1.6;">
-            {{ recipe.description }}
-        </p>
-    </div>
-    </div>
 
         <!-- Columna Derecha-->
         <div class="col-lg-4 order-1 order-lg-2">
