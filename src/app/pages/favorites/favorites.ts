@@ -31,4 +31,11 @@ export class Favorites implements OnInit {
       }
     });
   }
+
+  onFavoriteToggled(recipe: Recipe) {
+    if (!recipe.is_favorite) {
+      // Si ya no es favorito, lo quitamos de la lista actual
+      this.recipes = this.recipes.filter(r => r.id !== recipe.id);
+    }
+  }
 }
