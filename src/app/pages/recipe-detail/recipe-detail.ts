@@ -22,6 +22,7 @@ export class RecipeDetailComponent implements OnInit {
   currentImageIndex = 0;
   loading = true;
   error = false;
+  userRating = 0;
 
   ngOnInit() {
     const id = Number(this.route.snapshot.paramMap.get('id'));
@@ -85,21 +86,32 @@ export class RecipeDetailComponent implements OnInit {
   }
   shareRecipe() {
   const shareData = {
-    title: this.recipe.title,
-    text: `¡Mira esta receta de ${this.recipe.title} en Cookbook!`,
-    url: window.location.href
-  };
+      title: this.recipe.title,
+      text: `¡Mira esta receta de ${this.recipe.title} en Cookbook!`,
+      url: window.location.href
+    };
 
-  // Comprobamos si el navegador soporta la Web Share API
-  if (navigator.share) {
-    navigator.share(shareData)
-      .then(() => console.log('Receta compartida con éxito'))
-      .catch((error) => console.log('Error al compartir', error));
-  } else {
-    // Si no lo soporta (fallback), copiamos al portapapeles
-    navigator.clipboard.writeText(window.location.href);
-    // Aquí podrías usar un Toast o un pequeño mensaje en lugar de un alert
-    alert('Menú de compartir no disponible. Enlace copiado al portapapeles.');
+    // Comprobamos si el navegador soporta la Web Share API
+    if (navigator.share) {
+      navigator.share(shareData)
+        .then(() => console.log('Receta compartida con éxito'))
+        .catch((error) => console.log('Error al compartir', error));
+    } else {
+      // Si no lo soporta (fallback), copiamos al portapapeles
+      navigator.clipboard.writeText(window.location.href);
+      // Aquí podrías usar un Toast o un pequeño mensaje en lugar de un alert
+      alert('Menú de compartir no disponible. Enlace copiado al portapapeles.');
+    }
   }
+
+  rate(stars: number) {
+  this.recipeService.rateRecipe(this.recipe.id, stars).subscribe({
+    next: (res) => {
+      this.recipe.avg_rating = res.avg_rating; // Actualizamos la media visualmente
+      this.userRating = stars; // Marcamos las estrellas que puso
+      this.cdr.detectChanges();
+    },
+    error: (err) => alert('Debes estar logueado para valorar')
+  });
 }
 }

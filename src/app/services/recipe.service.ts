@@ -46,4 +46,7 @@ export class RecipeService {
   getFavorites(): Observable<Recipe[]> {
     return this.http.get<Recipe[]>(`${this.apiUrl}/favorites`);
   }
+  rateRecipe(recipeId: number, score: number): Observable<any> {
+    return this.http.post(`${this.apiUrl}/recipes/${recipeId}/rate`, { score });
+  }
 }
