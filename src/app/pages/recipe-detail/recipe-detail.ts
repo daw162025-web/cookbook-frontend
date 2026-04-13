@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { RouterModule, ActivatedRoute } from '@angular/router';
 import { RecipeService } from '../../services/recipe.service';
 import { TimeFormatPipe } from '../../pipes/time-format-pipe';
+import { Recipe } from '../../models/recipe';
 
 @Component({
   selector: 'app-recipe-detail',
@@ -70,5 +71,20 @@ export class RecipeDetailComponent implements OnInit {
     if (!this.recipe?.instructions) return [];
     if (Array.isArray(this.recipe.instructions)) return this.recipe.instructions;
     try { return JSON.parse(this.recipe.instructions); } catch { return [this.recipe.instructions]; }
+  }
+
+  toggleFavorite(recipe: Recipe) {
+    this.recipeService.toggleFavorite(recipe.id).subscribe({
+      next: (res) => {
+        this.recipe.is_favorite = !!res.is_favorite;
+        this.cdr.detectChanges(); // Forzamos el repintado
+        console.log('Favorito actualizado en detalle', res);
+      },
+      error: (err) => console.error('Error al guardar favorito', err)
+    });
+  }
+  shareRecipe() {
+    navigator.clipboard.writeText(window.location.href);
+    alert('¡Enlace copiado al portapapeles!');
   }
 }

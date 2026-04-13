@@ -35,6 +35,18 @@
                     <span><i class="fa-solid fa-gauge-high"></i> Dificultad: {{ recipe.difficulty }}</span>
                     <span><i class="fa-regular fa-clock"></i> {{ recipe.duration | timeFormat }} </span>
                     <span><i class="fa-solid fa-user-pen"></i> Receta de {{ recipe.user?.name || 'Desconocido' }}</span>
+                
+                    <div class="recipe-actions d-flex gap-3 mb-4">
+    <button class="btn btn-favorite-detail rounded-pill px-4 py-2 d-flex align-items-center gap-2" 
+            (click)="toggleFavorite(recipe)">
+        <i [class]="recipe.is_favorite ? 'fa-solid fa-heart text-danger' : 'fa-regular fa-heart'"></i>
+        <span class="fw-bold">{{ recipe.is_favorite ? 'Guardada en favoritos' : 'Guardar en favoritos' }}</span>
+    </button>
+    
+    <button class="btn btn-light rounded-pill px-4 py-2 text-muted border" (click)="shareRecipe()">
+        <i class="fa-solid fa-share-nodes"></i> Compartir
+    </button>
+</div>
                 </div>
                 
                 <!-- Descripción -->

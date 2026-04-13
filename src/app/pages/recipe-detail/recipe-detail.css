@@ -55,3 +55,26 @@ html {
     background-color: #bdf2c3;
     color: #1a5928;
 }
+
+.btn-favorite-detail {
+    background-color: white;
+    border: 2px solid #f8f9fa;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    transition: all 0.3s ease;
+    color: #2d3436;
+}
+
+.btn-favorite-detail:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 15px rgba(0,0,0,0.1);
+    background-color: #fff;
+    border-color: #ff7b54; /* El naranja que usas en badges */
+}
+
+.btn-favorite-detail i {
+    font-size: 1.2rem;
+}
+
+.text-danger {
+    color: #e74c3c !important;
+}
