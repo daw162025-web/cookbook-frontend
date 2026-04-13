@@ -1,5 +1,6 @@
 <article class="recipe-card" [class.bg-light-variant]="true">
-  <img [src]="recipe.image_url?.[0]" [alt]="recipe.title" class="recipe-img">
+  <img [src]="recipe.image_url" [alt]="recipe.title" class="recipe-img">
+  
   <h3 class="recipe-title push-down">{{ recipe.title }}</h3>
   
   <div class="recipe-footer mt-auto">
