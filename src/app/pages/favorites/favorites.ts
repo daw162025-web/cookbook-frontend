@@ -22,6 +22,7 @@ export class Favorites implements OnInit {
   loadFavorites() {
     this.recipeService.getFavorites().subscribe({
       next: (data) => {
+        console.log('Favoritos cargados:', data);
         this.recipes = data;
         this.loading = false;
       },
