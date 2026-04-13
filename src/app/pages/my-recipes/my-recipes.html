@@ -33,10 +33,10 @@
             <div class="recipe-manage-card h-100 shadow-sm border-0 rounded-4 overflow-hidden bg-white position-relative">
                 
                 <div class="card-img-container position-relative">
-                    <img [src]="recipe.image_url?.[0] || 'assets/placeholder.jpg'" 
-                         class="card-img-top" 
-                         style="height: 200px; object-fit: cover;"
-                         alt="Recipe image">
+                    <img [src]="recipe.image_url || 'assets/placeholder.jpg'" 
+                    class="card-img-top" 
+                    style="height: 200px; object-fit: cover;"
+                    alt="Recipe image">
                     
                     <div class="position-absolute top-0 start-0 m-3 d-flex flex-column gap-2">
                         <span class="badge rounded-pill bg-white text-dark shadow-sm px-3 py-2 border">
