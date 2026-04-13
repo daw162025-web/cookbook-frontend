@@ -32,6 +32,7 @@ export interface Recipe {
   };
   categories?: Category[];
   ingredients?: Ingredient[];
+  is_favorite?: boolean; // Este campo nos dirá si el corazón debe estar relleno o vacío
 }
 
 // para leer la respuesta exacta de Laravel 

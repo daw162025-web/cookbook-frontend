@@ -1,0 +1,33 @@
+.recipe-card {
+  position: relative; /* Para que el botón se posicione respecto a la card */
+}
+
+.btn-favorite {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  background: white;
+  border: none;
+  border-radius: 50%;
+  width: 35px;
+  height: 35px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+  cursor: pointer;
+  z-index: 10; /* Para estar encima de la imagen */
+  transition: transform 0.2s;
+}
+
+.btn-favorite:hover {
+  transform: scale(1.1);
+}
+
+.btn-favorite i {
+  font-size: 1.2rem;
+}
+
+.text-danger {
+  color: #e74c3c; /* Color rojo para el corazón relleno */
+}

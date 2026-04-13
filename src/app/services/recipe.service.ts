@@ -39,4 +39,8 @@ export class RecipeService {
   deleteRecipe(id: number): Observable<any> {
     return this.http.delete<any>(`${this.apiUrl}/recipes/${id}`);
   }
+
+  toggleFavorite(recipeId: number): Observable<any> {
+    return this.http.post(`${this.apiUrl}/recipes/${recipeId}/favorite`, {});
+}
 }
