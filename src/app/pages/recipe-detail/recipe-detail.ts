@@ -84,7 +84,22 @@ export class RecipeDetailComponent implements OnInit {
     });
   }
   shareRecipe() {
+  const shareData = {
+    title: this.recipe.title,
+    text: `¡Mira esta receta de ${this.recipe.title} en Cookbook!`,
+    url: window.location.href
+  };
+
+  // Comprobamos si el navegador soporta la Web Share API
+  if (navigator.share) {
+    navigator.share(shareData)
+      .then(() => console.log('Receta compartida con éxito'))
+      .catch((error) => console.log('Error al compartir', error));
+  } else {
+    // Si no lo soporta (fallback), copiamos al portapapeles
     navigator.clipboard.writeText(window.location.href);
-    alert('¡Enlace copiado al portapapeles!');
+    // Aquí podrías usar un Toast o un pequeño mensaje en lugar de un alert
+    alert('Menú de compartir no disponible. Enlace copiado al portapapeles.');
   }
+}
 }

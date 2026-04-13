@@ -43,9 +43,10 @@
         <span class="fw-bold">{{ recipe.is_favorite ? 'Guardada en favoritos' : 'Guardar en favoritos' }}</span>
     </button>
     
-    <button class="btn btn-light rounded-pill px-4 py-2 text-muted border" (click)="shareRecipe()">
-        <i class="fa-solid fa-share-nodes"></i> Compartir
-    </button>
+    <button class="btn btn-light rounded-pill px-4 py-2 text-muted border d-flex align-items-center gap-2" (click)="shareRecipe()">
+    <i class="fa-solid fa-share-nodes"></i> 
+    <span class="fw-bold">Compartir</span>
+</button>
 </div>
                 </div>
                 
