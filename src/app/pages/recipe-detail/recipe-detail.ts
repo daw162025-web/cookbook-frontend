@@ -28,9 +28,20 @@ export class RecipeDetailComponent implements OnInit {
       this.recipeService.getRecipe(id).subscribe({
         next: (data) => {
           this.recipe = data;
-          this.images = Array.isArray(data.image_url)
-            ? data.image_url
-            : (data.image_url ? [data.image_url] : []);
+
+          if (Array.isArray(data.image_url)) {
+            this.images = data.image_url;
+          } else if (typeof data.image_url === 'string') {
+            try {
+              const parsed = JSON.parse(data.image_url);
+              this.images = Array.isArray(parsed) ? parsed : [parsed];
+            } catch {
+              this.images = data.image_url ? [data.image_url] : [];
+            }
+          } else {
+            this.images = [];
+          }
+
           this.loading = false;
           this.cdr.detectChanges();
         },
