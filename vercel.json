@@ -1,5 +1,8 @@
 {
   "rewrites": [
-    {"source": "/(.*)", "destination": "/index.html"}
+    {
+      "source": "/api/:path*",
+      "destination": "https://cookbook-backend-production-9c68.up.railway.app/api/:path*"
+    }
   ]
 }
