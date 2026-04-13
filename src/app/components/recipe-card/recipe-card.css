@@ -31,3 +31,13 @@
 .text-danger {
   color: #e74c3c; /* Color rojo para el corazón relleno */
 }
+
+/* La clase fa-solid suele necesitar que le forcemos el color */
+.fa-heart.fa-solid, .text-danger {
+    color: #ff4757 !important; /* Un rojo vibrante */
+}
+
+/* Opcional: un efecto cuando esté vacío */
+.fa-regular.fa-heart {
+    color: #a4b0be;
+}

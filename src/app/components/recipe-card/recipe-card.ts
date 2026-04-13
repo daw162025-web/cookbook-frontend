@@ -17,21 +17,18 @@ export class RecipeCardComponent {
 
   toggleFavorite(event: Event, recipe: Recipe) {
     event.preventDefault();
-    event.stopPropagation(); // Evita que el clic active el routerLink de la card
+    event.stopPropagation();
 
     this.recipeService.toggleFavorite(recipe.id).subscribe({
       next: (res) => {
-        // Invertimos el estado localmente para que el corazón cambie al instante
-        recipe.is_favorite = !recipe.is_favorite;
+        // ACTUALIZACIÓN CRUCIAL:
+        // Usamos la respuesta de la API para asegurar que el estado es real
+        recipe.is_favorite = res.is_favorite; 
         console.log('Estado de favorito cambiado', res);
       },
       error: (err) => {
         console.error('Error al gestionar favorito', err);
-        // Aquí podrías añadir un aviso si el usuario no está logueado
-        if (err.status === 401) {
-          alert('Debes iniciar sesión para añadir a favoritos');
-        }
       }
     });
-  }
+}
 }
