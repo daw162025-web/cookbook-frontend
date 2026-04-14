@@ -114,6 +114,36 @@ html {
     color: #f1c40f !important;
 }
 
+/* Botón principal verde */
+.btn-green {
+    background-color: #bdf2c3;
+    color: #1a5928;
+    border: 2px solid #bdf2c3;
+    transition: all 0.3s ease;
+}
+
+.btn-green:hover:not(:disabled) {
+    background-color: #a7e4ae;
+    border-color: #a7e4ae;
+    transform: translateY(-1px);
+}
+
+/* Evitar que cambie bruscamente cuando está desactivado */
+.btn-green:disabled {
+    background-color: #e9ecef; /* Gris clarito */
+    border-color: #dee2e6;
+    color: #adb5bd;
+    cursor: not-allowed;
+    opacity: 0.8;
+}
+
+.form-control:focus {
+    border-color: #bdf2c3 !important;
+    box-shadow: 0 0 0 0.25;
+    margin-left:rgba(189, 242, 195, 0.25) !important;
+    outline: 0;
+}
+
 /* Para que en móviles el selector de estrellas no se amontone */
 @media (max-width: 768px) {
     .recipe-actions .ms-md-auto {
