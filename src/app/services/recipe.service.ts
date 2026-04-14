@@ -49,4 +49,7 @@ export class RecipeService {
   rateRecipe(recipeId: number, score: number): Observable<any> {
     return this.http.post(`${this.apiUrl}/recipes/${recipeId}/rate`, { score });
   }
+  addComment(recipeId: number, content: string): Observable<any> {
+    return this.http.post(`${this.apiUrl}/recipes/${recipeId}/comments`, { content });
+  }
 }

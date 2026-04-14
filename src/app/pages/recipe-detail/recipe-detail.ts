@@ -4,11 +4,12 @@ import { RouterModule, ActivatedRoute, Router } from '@angular/router';
 import { RecipeService } from '../../services/recipe.service';
 import { TimeFormatPipe } from '../../pipes/time-format-pipe';
 import { Recipe } from '../../models/recipe';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-recipe-detail',
   standalone: true,
-  imports: [CommonModule, RouterModule, TimeFormatPipe],
+  imports: [CommonModule, RouterModule, TimeFormatPipe, FormsModule],
   templateUrl: './recipe-detail.html',
   styleUrl: './recipe-detail.css'
 })
@@ -24,6 +25,7 @@ export class RecipeDetailComponent implements OnInit {
   loading = true;
   error = false;
   userRating = 0;
+  newCommentContent: string = '';
 
   ngOnInit() {
     const id = Number(this.route.snapshot.paramMap.get('id'));
@@ -119,6 +121,34 @@ export class RecipeDetailComponent implements OnInit {
           this.router.navigate(['/login']);
         } else {
           console.error('Error al valorar:', err);
+        }
+      }
+    });
+  }
+
+  addComment() {
+    // Si el texto está vacío o solo tiene espacios, no hacemos nada
+    if (!this.newCommentContent.trim()) return;
+
+    this.recipeService.addComment(this.recipe.id, this.newCommentContent).subscribe({
+      next: (comment) => {
+        // El backend devuelve el comentario con el usuario cargado
+        // Lo añadimos al principio del array para que aparezca arriba de todo
+        if (!this.recipe.comments) {
+          this.recipe.comments = [];
+        }
+        this.recipe.comments.unshift(comment);
+
+        // Limpiamos el textarea y forzamos el repintado
+        this.newCommentContent = '';
+        this.cdr.detectChanges();
+      },
+      error: (err) => {
+        if (err.status === 401) {
+          // Si no está logueado, lo mandamos al login (como con las estrellas)
+          this.router.navigate(['/login']);
+        } else {
+          console.error('Error al publicar comentario', err);
         }
       }
     });

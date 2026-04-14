@@ -79,23 +79,50 @@
 
             <!-- Comentarios -->
             <div class="comments-section bg-light p-4 p-md-5 rounded-4 mt-5">
-                <div class="d-flex justify-content-between align-items-center mb-4" >
+                <div class="d-flex justify-content-between align-items-center mb-4">
                     <h2 class="fs-4 mb-0">
-                        <i class="fa-regular fa-comments me-2" style="color: #bdf2c3;" >
+                        <i class="fa-regular fa-comments me-2" style="color: #bdf2c3;"></i> 
+                        Comentarios de la comunidad
+                    </h2>
+                    </div>
 
-                    </i> Comentarios de la comunidad</h2>
-                    <button class="btn btn-green-outline rounded-pill btn-sm px-4 fw-bold">Añade tu comentario</button>
+                <div class="mb-5">
+                    <textarea 
+                        [(ngModel)]="newCommentContent" 
+                        class="form-control border-0 shadow-sm p-3 mb-2" 
+                        rows="3" 
+                        placeholder="¿Qué te ha parecido esta receta? Comparte tu experiencia..."
+                        style="border-radius: 15px;">
+                    </textarea>
+                    
+                    <div class="d-flex justify-content-end">
+                        <button 
+                            (click)="addComment()" 
+                            [disabled]="!newCommentContent.trim()"
+                            class="btn btn-green rounded-pill px-4 fw-bold">
+                            Publicar comentario
+                        </button>
+                    </div>
                 </div>
 
                 <div class="comments-list">
                     <div class="comment-card bg-white p-4 rounded-3 shadow-sm mb-3 border-0" *ngFor="let comment of recipe.comments">
                         <div class="d-flex justify-content-between align-items-center mb-2">
-                            <div class="fw-bold text-dark"><i class="fa-solid fa-circle-user text-muted me-2"></i> {{ comment.user?.name || 'Usuario' }}</div>
-                            <div class="text-muted small">{{ comment.created_at | date:'mediumDate' }}</div>
+                            <div class="fw-bold text-dark">
+                                <i class="fa-solid fa-circle-user text-muted me-2"></i> 
+                                {{ comment.user?.name || 'Usuario' }}
+                            </div>
+                            <div class="text-muted small">
+                                {{ comment.created_at | date:'mediumDate' }}
+                            </div>
                         </div>
-                        <p class="text-secondary mb-3">{{ comment.body }}</p>
+
+                        <p class="text-secondary mb-3">{{ comment.content }}</p>
+                        
                         <div>
-                            <button class="btn btn-sm btn-light rounded-pill px-3 shadow-sm text-muted hover-like"><i class="fa-regular fa-heart me-1"></i> Me gusta</button>
+                            <button class="btn btn-sm btn-light rounded-pill px-3 shadow-sm text-muted hover-like">
+                                <i class="fa-regular fa-heart me-1"></i> Me gusta
+                            </button>
                         </div>
                     </div>
 
