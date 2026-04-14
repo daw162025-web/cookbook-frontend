@@ -1,6 +1,6 @@
 import { Component, OnInit, inject, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterModule, ActivatedRoute } from '@angular/router';
+import { RouterModule, ActivatedRoute, Router } from '@angular/router';
 import { RecipeService } from '../../services/recipe.service';
 import { TimeFormatPipe } from '../../pipes/time-format-pipe';
 import { Recipe } from '../../models/recipe';
@@ -16,6 +16,7 @@ export class RecipeDetailComponent implements OnInit {
   private route = inject(ActivatedRoute);
   private recipeService = inject(RecipeService);
   private cdr = inject(ChangeDetectorRef);
+  private router = inject(Router); // Inyectamos el Router aquí
 
   recipe: any = null;
   images: string[] = [];
@@ -78,40 +79,48 @@ export class RecipeDetailComponent implements OnInit {
     this.recipeService.toggleFavorite(recipe.id).subscribe({
       next: (res) => {
         this.recipe.is_favorite = !!res.is_favorite;
-        this.cdr.detectChanges(); // Forzamos el repintado
-        console.log('Favorito actualizado en detalle', res);
+        this.cdr.detectChanges();
+        console.log('Favorito actualizado', res);
       },
-      error: (err) => console.error('Error al guardar favorito', err)
+      error: (err) => {
+        // También redirigimos al login si intenta guardar favoritos sin estar logueado
+        if (err.status === 401) {
+          this.router.navigate(['/login']);
+        }
+      }
     });
   }
+
   shareRecipe() {
-  const shareData = {
+    const shareData = {
       title: this.recipe.title,
       text: `¡Mira esta receta de ${this.recipe.title} en Cookbook!`,
       url: window.location.href
     };
 
-    // Comprobamos si el navegador soporta la Web Share API
     if (navigator.share) {
-      navigator.share(shareData)
-        .then(() => console.log('Receta compartida con éxito'))
-        .catch((error) => console.log('Error al compartir', error));
+      navigator.share(shareData).catch((error) => console.log('Error sharing', error));
     } else {
-      // Si no lo soporta (fallback), copiamos al portapapeles
       navigator.clipboard.writeText(window.location.href);
-      // Aquí podrías usar un Toast o un pequeño mensaje en lugar de un alert
-      alert('Menú de compartir no disponible. Enlace copiado al portapapeles.');
+      alert('Enlace copiado al portapapeles.');
     }
   }
 
   rate(stars: number) {
-  this.recipeService.rateRecipe(this.recipe.id, stars).subscribe({
-    next: (res) => {
-      this.recipe.avg_rating = res.avg_rating; // Actualizamos la media visualmente
-      this.userRating = stars; // Marcamos las estrellas que puso
-      this.cdr.detectChanges();
-    },
-    error: (err) => alert('Debes estar logueado para valorar')
-  });
-}
+    this.recipeService.rateRecipe(this.recipe.id, stars).subscribe({
+      next: (res) => {
+        this.recipe.avg_rating = res.avg_rating;
+        this.userRating = stars; 
+        this.cdr.detectChanges();
+      },
+      error: (err) => {
+        if (err.status === 401) {
+          // Redirección directa al login si no hay token
+          this.router.navigate(['/login']);
+        } else {
+          console.error('Error al valorar:', err);
+        }
+      }
+    });
+  }
 }
