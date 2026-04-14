@@ -27,6 +27,7 @@ export interface Recipe {
   created_at?: string;
   updated_at?: string;
   avg_rating?: number; // Promedio de las valoraciones
+  user_rating?: number;
   user?: {
     name: string; // Nombre del autor 
   };

@@ -31,7 +31,7 @@ export class RecipeDetailComponent implements OnInit {
       this.recipeService.getRecipe(id).subscribe({
         next: (data) => {
           this.recipe = data;
-
+          this.userRating = data.user_rating || 0;
           if (Array.isArray(data.image_url)) {
             this.images = data.image_url;
           } else if (typeof data.image_url === 'string') {
