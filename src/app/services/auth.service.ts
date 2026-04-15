@@ -56,7 +56,6 @@ export class AuthService {
   }
 
   logout(): Observable<any> {
-
     const token = localStorage.getItem('auth_token');
     
     return this.http.post(`${this.apiUrl}/logout`, {}, {
@@ -88,5 +87,10 @@ export class AuthService {
 
   getToken(): string | null {
     return localStorage.getItem('auth_token');
+  }
+
+  getUserRole(): string | null {
+    const user = JSON.parse(localStorage.getItem('user') || '{}');
+    return user.role || null;
   }
 }
