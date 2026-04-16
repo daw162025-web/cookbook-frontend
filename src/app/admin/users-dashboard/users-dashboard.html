@@ -1,0 +1,60 @@
+<div class="container-fluid">
+  <div class="d-flex justify-content-between align-items-center mb-4">
+    <h2 class="fw-bold mb-0">Gestión de Usuarios</h2>
+    <span class="badge bg-soft-success text-success p-2 px-3 rounded-pill">
+      {{ users.length }} usuarios registrados
+    </span>
+  </div>
+
+  <div class="card border-0 shadow-sm rounded-4 overflow-hidden">
+    <div class="table-responsive">
+      <table class="table table-hover align-middle mb-0">
+        <thead class="bg-light">
+          <tr>
+            <th class="ps-4 py-3">Usuario</th>
+            <th class="py-3">Email</th>
+            <th class="py-3">Rol Actual</th>
+            <th class="py-3">Fecha Registro</th>
+            <th class="py-3 text-end pe-4">Acciones</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let user of users">
+            <td class="ps-4">
+              <div class="d-flex align-items-center gap-3">
+                <img [src]="'https://ui-avatars.com/api/?name=' + user.name + '&background=bdf2c3&color=1a5928'" 
+                     class="rounded-circle" width="40" height="40">
+                <span class="fw-bold text-dark">{{ user.name }}</span>
+              </div>
+            </td>
+            <td class="text-secondary">{{ user.email }}</td>
+            <td>
+              <span class="badge rounded-pill px-3" 
+                    [ngClass]="user.role === 'admin' ? 'bg-soft-primary text-primary' : 'bg-soft-secondary text-secondary'">
+                {{ user.role | uppercase }}
+              </span>
+            </td>
+            <td class="text-muted small">{{ user.created_at | date:'mediumDate' }}</td>
+            <td class="text-end pe-4">
+              <button *ngIf="user.role === 'user'" 
+                      (click)="changeRole(user.id, 'admin')" 
+                      class="btn btn-sm btn-outline-primary rounded-pill px-3">
+                Hacer Admin
+              </button>
+              <button *ngIf="user.role === 'admin'" 
+                      (click)="changeRole(user.id, 'user')" 
+                      class="btn btn-sm btn-outline-secondary rounded-pill px-3">
+                Quitar Admin
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div *ngIf="loading" class="text-center py-5">
+    <div class="spinner-border text-success" role="status"></div>
+    <p class="mt-2 text-muted">Cargando comunidad...</p>
+  </div>
+</div>
