@@ -1,0 +1,42 @@
+.admin-dashboard {
+    background-color: #f8f9fa;
+    min-height: 100vh;
+}
+
+.stat-card {
+    transition: transform 0.3s ease;
+}
+
+.stat-card:hover {
+    transform: translateY(-5px);
+}
+
+/* Colores suaves para los fondos de los iconos */
+.bg-soft-primary { background-color: #e0e7ff; }
+.bg-soft-success { background-color: #dcfce7; }
+.bg-soft-warning { background-color: #fef9c3; }
+.bg-soft-danger  { background-color: #fee2e2; }
+.bg-soft-secondary { background-color: #f3f4f6; }
+
+/* Ajustes de tabla */
+.table thead th {
+    font-size: 0.8rem;
+    padding: 1rem;
+}
+
+.table tbody td {
+    padding: 1.2rem 1rem;
+    border-color: #f8f9fa;
+}
+
+.badge {
+    font-weight: 600;
+    padding: 0.5em 1em;
+}
+
+.btn-white {
+    background: white;
+    border: none;
+    font-size: 0.9rem;
+    font-weight: 600;
+}
