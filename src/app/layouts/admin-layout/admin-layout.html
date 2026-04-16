@@ -1,53 +1,56 @@
 <div class="admin-container">
-  <aside class="admin-sidebar shadow-sm">
-    <div class="sidebar-brand px-4 py-5 text-center">
-      <div class="d-flex align-items-center justify-content-center gap-2 mb-2">
+  <button class="btn btn-brand d-lg-none menu-toggle" (click)="isSidebarOpen = !isSidebarOpen">
+    <i class="fa-solid" [ngClass]="isSidebarOpen ? 'fa-xmark' : 'fa-bars'"></i>
+  </button>
+
+  <aside class="admin-sidebar shadow" [class.open]="isSidebarOpen">
+    <div class="sidebar-brand px-4 py-4 py-lg-5 text-center">
+      <div class="d-flex align-items-center justify-content-center gap-2">
         <svg style="width: 32px; height: 32px;" class="text-brand" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
           <path d="M6 13.87A4 4 0 0 1 7.41 6a5.11 5.11 0 0 1 1.05-1.54 5 5 0 0 1 7.08 0A5.11 5.11 0 0 1 16.59 6 4 4 0 0 1 18 13.87V21H6Z"></path>
           <line x1="6" y1="17" x2="18" y2="17"></line>
         </svg>
         <span class="fs-4 fw-bold text-brand">Admin</span>
       </div>
-      <p class="small text-muted mb-0">Gestión de Cookbook</p>
     </div>
 
     <nav class="sidebar-nav px-3">
-      <a routerLink="/admin/dashboard" routerLinkActive="active" class="admin-nav-link">
-        <i class="fa-solid fa-chart-simple me-3"></i> Resumen
+      <a routerLink="/admin/dashboard" routerLinkActive="active" (click)="isSidebarOpen = false" class="admin-nav-link">
+        <i class="fa-solid fa-chart-simple"></i> <span>Resumen</span>
       </a>
-      <a routerLink="/admin/users" routerLinkActive="active" class="admin-nav-link">
-        <i class="fa-solid fa-users me-3"></i> Usuarios
+      <a routerLink="/admin/users" routerLinkActive="active" (click)="isSidebarOpen = false" class="admin-nav-link">
+        <i class="fa-solid fa-users"></i> <span>Usuarios</span>
       </a>
-      <a routerLink="/admin/recipes" routerLinkActive="active" class="admin-nav-link">
-        <i class="fa-solid fa-utensils me-3"></i> Recetas
+      <a routerLink="/admin/recipes" routerLinkActive="active" (click)="isSidebarOpen = false" class="admin-nav-link">
+        <i class="fa-solid fa-utensils"></i> <span>Recetas</span>
       </a>
-      <a routerLink="/admin/comments" routerLinkActive="active" class="admin-nav-link">
-        <i class="fa-solid fa-comments me-3"></i> Comentarios
-      </a>
-      <a routerLink="/admin/ingredients" routerLinkActive="active" class="admin-nav-link">
-        <i class="fa-solid fa-leaf me-3"></i> Ingredientes
+      <a routerLink="/admin/comments" routerLinkActive="active" (click)="isSidebarOpen = false" class="admin-nav-link">
+        <i class="fa-solid fa-comments"></i> <span>Comentarios</span>
       </a>
 
-      <div class="mt-auto pb-4">
-        <div class="sidebar-divider mb-4"></div>
+      <div class="mt-auto pb-4 px-2">
         <a (click)="logout()" class="admin-nav-link text-danger logout-link">
-          <i class="fa-solid fa-arrow-right-from-bracket me-3"></i> Cerrar sesión
+          <i class="fa-solid fa-arrow-right-from-bracket"></i> <span>Cerrar sesión</span>
         </a>
       </div>
     </nav>
   </aside>
 
-  <main class="admin-content">
-    <header class="admin-topbar d-flex justify-content-between align-items-center px-4 py-3 bg-white border-bottom">
-      <div class="text-muted small fw-medium">
-        Bienvenida, <strong>Administradora</strong>
+  <div class="sidebar-overlay" *ngIf="isSidebarOpen" (click)="isSidebarOpen = false"></div>
+
+  <main class="admin-content" [class.shifted]="isSidebarOpen">
+    <header class="admin-topbar d-flex justify-content-between align-items-center px-4 py-3 bg-white border-bottom sticky-top">
+      <div class="text-muted small fw-medium d-none d-sm-block">
+        Panel de Gestión
       </div>
-      <a routerLink="/" class="btn btn-sm btn-outline-secondary rounded-pill px-3">
-        <i class="fa-solid fa-house me-1"></i> Ir a la web
-      </a>
+      <div class="ms-auto d-flex gap-2">
+        <a routerLink="/" class="btn btn-sm btn-light rounded-pill px-3 border">
+          <i class="fa-solid fa-house me-1"></i> Web
+        </a>
+      </div>
     </header>
 
-    <div class="p-4 p-lg-5">
+    <div class="p-3 p-md-4 p-lg-5">
       <router-outlet></router-outlet>
     </div>
   </main>

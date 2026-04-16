@@ -5,18 +5,20 @@
 }
 
 .admin-sidebar {
-    width: 280px;
+    width: 260px;
     background-color: #ffffff;
     display: flex;
     flex-direction: column;
     position: fixed;
     height: 100vh;
-    z-index: 1000;
+    z-index: 1050;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .admin-content {
     flex: 1;
     margin-left: 280px;
+    transition: all 0.3s ease;
 }
 
 .admin-nav-link {
@@ -33,8 +35,9 @@
 }
 
 .admin-nav-link i {
-    font-size: 1.1rem;
-    width: 24px;
+    width: 25px;
+    text-align: center;
+    margin-right: 12px;
 }
 
 /* El estilo de "botón verde" cuando está activo */
@@ -65,16 +68,53 @@
 }
 
 /* Para que sea responsive */
-@media (max-width: 992px) {
+@media (max-width: 991.98px) {
     .admin-sidebar {
-        width: 80px;
+        left: -260px; /* Escondido a la izquierda */
     }
-    .admin-sidebar .admin-nav-link span, 
-    .admin-sidebar p, 
-    .admin-sidebar .sidebar-brand span {
-        display: none;
+
+    .admin-sidebar.open {
+        left: 0; /* Aparece al pulsar el botón */
     }
+
     .admin-content {
-        margin-left: 80px;
+        margin-left: 0; /* Ocupa todo el ancho */
+    }
+
+    .sidebar-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        background: rgba(0,0,0,0.3);
+        backdrop-filter: blur(2px);
+        z-index: 1040;
+    }
+
+    .menu-toggle {
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        z-index: 1100;
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        background-color: #bdf2c3; /* Tu verde */
+        color: #1a5928;
+        border: none;
+    }
+}
+
+/* --- ESTILO DE LAS CARDS PARA QUE NO SE AMONTONEN --- */
+@media (max-width: 576px) {
+    .p-3 {
+        padding: 1rem !important;
+    }
+    
+    .table-responsive {
+        border-radius: 12px;
+        overflow: hidden;
     }
 }

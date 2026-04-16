@@ -13,7 +13,8 @@ import { AuthService } from '../../services/auth.service'; // Lo necesitarás pa
 export class AdminLayout {
   authService = inject(AuthService);
   router = inject(Router);
-
+  isSidebarOpen = false;
+  
   logout() {
     this.authService.logout(); // Tu método de cerrar sesión
     this.router.navigate(['/login']);
