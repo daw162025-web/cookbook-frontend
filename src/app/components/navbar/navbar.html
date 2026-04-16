@@ -67,7 +67,7 @@
                     </li>
                     <li><hr class="dropdown-divider"></li>
                     <ng-container *ngIf="(authService.currentUser$ | async)?.role === 'admin'">
-                        <li><a class="dropdown-item" routerLink="/admin" (click)="closeMenu()"><i class="fa-solid fa-shield-halved me-2"></i> Panel de Admin</a></li>
+                        <li><a class="dropdown-item" routerLink="/admin" (click)="closeMenu()" target="_blank"><i class="fa-solid fa-shield-halved me-2"></i> Panel de Admin</a></li>
                         <li><hr class="dropdown-divider"></li>
                     </ng-container>
                     <li><a class="dropdown-item" routerLink="/my-recipes" (click)="closeMenu()"><i class="fa-solid fa-list-check me-2"></i> Mis recetas</a></li>

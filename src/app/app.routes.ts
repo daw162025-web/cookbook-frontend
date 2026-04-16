@@ -10,21 +10,30 @@ import { MyRecipesComponent } from './pages/my-recipes/my-recipes';
 import { EditRecipeComponent } from './pages/edit-recipe/edit-recipe';
 import { Favorites } from './pages/favorites/favorites';
 import { adminGuard } from './guards/admin-guard';
+import {PublicLayout} from './layouts/public-layout/public-layout'
+import {AdminLayout} from './layouts/admin-layout/admin-layout'
 
 export const routes: Routes = [
-  { path: '', component: HomeComponent },
-  { path: 'categories', component: CategoriesComponent },
-  { path: 'search', component: SearchComponent },
-  { path: 'login', component: LoginComponent },
-  { path: 'register', component: RegisterComponent },
-  { path: 'recipe/:id', component: RecipeDetailComponent },
-  { path: 'create-recipe', component: CreateRecipeComponent },
-  { path: 'edit-recipe/:id', component: EditRecipeComponent },
-  { path: 'my-recipes', component: MyRecipesComponent },
-  { path: 'favorites', component: Favorites },
+  {
+    path: '',
+    component: PublicLayout,
+    children: [
+    { path: '', component: HomeComponent },
+    { path: 'categories', component: CategoriesComponent },
+    { path: 'search', component: SearchComponent },
+    { path: 'login', component: LoginComponent },
+    { path: 'register', component: RegisterComponent },
+    { path: 'recipe/:id', component: RecipeDetailComponent },
+    { path: 'create-recipe', component: CreateRecipeComponent },
+    { path: 'edit-recipe/:id', component: EditRecipeComponent },
+    { path: 'my-recipes', component: MyRecipesComponent },
+    { path: 'favorites', component: Favorites },
+  ]
+  },
 
   {
     path: 'admin',
+    component: AdminLayout,
     canActivate: [adminGuard], // Aquí aplicamos la protección
     children: [
       {
