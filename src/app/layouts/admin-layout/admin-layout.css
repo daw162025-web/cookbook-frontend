@@ -1,48 +1,80 @@
-.admin-wrapper {
+.admin-container {
     display: flex;
     min-height: 100vh;
+    background-color: #f8f9fa; /* Fondo suave igual que tus secciones */
 }
 
 .admin-sidebar {
-    width: 250px;
-    background: #1e293b; /* Color oscuro profesional */
-    color: white;
+    width: 280px;
+    background-color: #ffffff;
     display: flex;
     flex-direction: column;
     position: fixed;
     height: 100vh;
+    z-index: 1000;
 }
 
-.admin-main-area {
+.admin-content {
     flex: 1;
-    margin-left: 250px; /* Misma anchura que el sidebar */
-    background: #f8fafc;
+    margin-left: 280px;
 }
 
-.sidebar-brand {
-    padding: 2rem 1.5rem;
-    border-bottom: 1px solid rgba(255,255,255,0.1);
-}
-
-.sidebar-nav {
-    padding: 1rem;
+.admin-nav-link {
     display: flex;
-    flex-direction: column;
-    height: 100%;
-}
-
-.nav-admin-link {
-    color: #cbd5e1;
+    align-items: center;
+    padding: 14px 20px;
+    color: #5c5c5c;
     text-decoration: none;
-    padding: 0.8rem 1rem;
-    border-radius: 8px;
-    margin-bottom: 0.5rem;
-    transition: all 0.2s;
+    font-weight: 600;
+    border-radius: 16px; /* Bordes muy redondeados como tus botones */
+    margin-bottom: 8px;
+    transition: all 0.3s ease;
+    cursor: pointer;
 }
 
-.nav-admin-link:hover, .nav-admin-link.active {
-    background: rgba(189, 242, 195, 0.15);
-    color: #bdf2c3; /* Tu verde */
+.admin-nav-link i {
+    font-size: 1.1rem;
+    width: 24px;
 }
 
-.cursor-pointer { cursor: pointer; }
+/* El estilo de "botón verde" cuando está activo */
+.admin-nav-link.active {
+    background-color: #bdf2c3 !important;
+    color: #1a5928 !important;
+    box-shadow: 0 4px 12px rgba(189, 242, 195, 0.3);
+}
+
+.admin-nav-link:hover:not(.active) {
+    background-color: #f3f4f6;
+    color: #292929;
+}
+
+.sidebar-divider {
+    height: 1px;
+    background-color: #eee;
+    margin: 0 20px;
+}
+
+.logout-link:hover {
+    background-color: #fff5f5 !important;
+}
+
+.admin-topbar {
+    background: rgba(255, 255, 255, 0.8) !important;
+    backdrop-filter: blur(10px);
+}
+
+/* Para que sea responsive */
+@media (max-width: 992px) {
+    .admin-sidebar {
+        width: 80px;
+    }
+    .admin-sidebar .admin-nav-link span, 
+    .admin-sidebar p, 
+    .admin-sidebar .sidebar-brand span {
+        display: none;
+    }
+    .admin-content {
+        margin-left: 80px;
+    }
+}
