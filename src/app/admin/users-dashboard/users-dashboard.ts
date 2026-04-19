@@ -2,6 +2,7 @@ import { Component, OnInit, inject, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { AdminService } from '../../services/admin.service';
 import { FormsModule } from '@angular/forms';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-users-dashboard',
@@ -12,6 +13,7 @@ import { FormsModule } from '@angular/forms';
 })
 export class UsersDashboard implements OnInit {
   private adminService = inject(AdminService);
+  public authService = inject(AuthService);
   private cdr = inject(ChangeDetectorRef);
   
   users: any[] = [];
