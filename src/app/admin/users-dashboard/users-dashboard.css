@@ -30,3 +30,31 @@
   border-color: #bdf2c3;
   color: #1a5928;
 }
+
+.modal-backdrop {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100vw; height: 100vh;
+  background: rgba(0,0,0,0.4);
+  backdrop-filter: blur(4px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2000;
+}
+
+.modal-content {
+  background: white;
+  width: 100%;
+  max-width: 450px;
+}
+
+
+.btn-light {
+    background: #f8f9fa;
+    border: none;
+}
+
+.btn-light:hover {
+    background: #e9ecef;
+}

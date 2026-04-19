@@ -33,4 +33,12 @@ export class AdminService {
   deleteComment(commentId: number): Observable<any> {
     return this.http.delete(`${this.apiUrl}/comments/${commentId}`);
   }
+  
+  updateUser(userId: number, userData: any): Observable<any> {
+    return this.http.put(`${this.apiUrl}/users/${userId}`, userData);
+  }
+
+  deleteUser(userId: number): Observable<any> {
+    return this.http.delete(`${this.apiUrl}/users/${userId}`);
+  }
 }
