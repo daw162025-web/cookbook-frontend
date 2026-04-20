@@ -75,38 +75,73 @@
     <div class="spinner-border text-success" role="status"></div>
   </div>
 
-  <div class="modal-backdrop" *ngIf="selectedRecipe">
-    <div class="modal-content shadow rounded-4 p-4">
-      <div class="d-flex justify-content-between align-items-center mb-3">
-        <h4 class="fw-bold mb-0">Editar Receta</h4>
-        <button class="btn-close" (click)="selectedRecipe = null"></button>
-      </div>
-      
-      <div class="mb-3">
-        <label class="form-label small fw-bold text-muted">TÍTULO DE LA RECETA</label>
-        <input type="text" class="form-control rounded-3" [(ngModel)]="selectedRecipe.title">
-      </div>
+<div class="modal-backdrop" *ngIf="selectedRecipe">
+  <div class="modal-content shadow rounded-4 p-4" style="max-width: 800px; max-height: 90vh; overflow-y: auto;">
+    <div class="d-flex justify-content-between align-items-center mb-4 border-bottom pb-2">
+      <h3 class="fw-bold mb-0">Editor Integral de Receta</h3>
+      <button class="btn-close" (click)="selectedRecipe = null"></button>
+    </div>
 
-      <div class="mb-3">
-        <label class="form-label small fw-bold text-muted">CATEGORÍA</label>
-        <select class="form-select rounded-3" [(ngModel)]="selectedRecipe.category_id">
-          <option *ngFor="let cat of categories" [value]="cat.id">{{ cat.name }}</option>
+    <div class="row g-3 mb-4">
+      <div class="col-md-8">
+        <label class="form-label fw-bold">Título</label>
+        <input type="text" class="form-control" [(ngModel)]="selectedRecipe.title">
+      </div>
+      <div class="col-md-4">
+        <label class="form-label fw-bold">Dificultad</label>
+        <select class="form-select" [(ngModel)]="selectedRecipe.difficulty">
+          <option value="Fácil">Fácil</option>
+          <option value="Media">Media</option>
+          <option value="Difícil">Difícil</option>
         </select>
       </div>
+    </div>
 
-      <div class="mb-3">
-        <label class="form-label small fw-bold text-muted">DESCRIPCIÓN / PASOS</label>
-        <textarea class="form-control rounded-3" rows="6" [(ngModel)]="selectedRecipe.description"></textarea>
+    <div class="mb-4">
+      <label class="form-label fw-bold d-block">Categorías Asociadas (Mantén Ctrl para varias)</label>
+      <select class="form-select" multiple [(ngModel)]="selectedRecipe.category_ids" style="height: 100px;">
+        <option *ngFor="let cat of categories" [value]="cat.id">{{ cat.name }}</option>
+      </select>
+      <small class="text-muted">La receta aparecerá en todas las categorías seleccionadas.</small>
+    </div>
+
+    <div class="mb-4 bg-light p-3 rounded-3">
+      <div class="d-flex justify-content-between mb-2">
+        <label class="fw-bold">Ingredientes</label>
+        <button class="btn btn-sm btn-outline-success" (click)="addIngredient()">+ Añadir</button>
       </div>
-
-      <div class="d-flex gap-2 mt-4">
-        <button class="btn btn-success rounded-pill w-100 fw-bold py-2" (click)="saveRecipe()">
-          Actualizar Receta
-        </button>
-        <button class="btn btn-light rounded-pill w-100 py-2" (click)="selectedRecipe = null">
-          Cancelar
-        </button>
+      <div *ngFor="let ing of selectedRecipe.ingredients; let i = index" class="row g-2 mb-2">
+        <div class="col-6">
+          <input type="text" class="form-control form-control-sm" placeholder="Nombre" [(ngModel)]="ing.name">
+        </div>
+        <div class="col-3">
+          <input type="text" class="form-control form-control-sm" placeholder="Cant." [(ngModel)]="ing.pivot.quantity">
+        </div>
+        <div class="col-2">
+          <input type="text" class="form-control form-control-sm" placeholder="Ud." [(ngModel)]="ing.pivot.unit">
+        </div>
+        <div class="col-1">
+          <button class="btn btn-sm btn-link text-danger" (click)="removeIngredient(i)"><i class="fa-solid fa-trash"></i></button>
+        </div>
       </div>
     </div>
+
+    <div class="mb-4">
+      <div class="d-flex justify-content-between mb-2">
+        <label class="fw-bold">Pasos de preparación</label>
+        <button class="btn btn-sm btn-outline-success" (click)="addStep()">+ Paso</button>
+      </div>
+      <div *ngFor="let step of selectedRecipe.instructions; let i = index; trackBy: trackByFn" class="input-group mb-2">
+        <span class="input-group-text small">{{i + 1}}</span>
+        <textarea class="form-control" [(ngModel)]="selectedRecipe.instructions[i]"></textarea>
+        <button class="btn btn-outline-danger" (click)="removeStep(i)"><i class="fa-solid fa-xmark"></i></button>
+      </div>
+    </div>
+
+    <div class="d-flex gap-3 mt-5">
+      <button class="btn btn-success rounded-pill w-100 fw-bold py-2" (click)="saveRecipe()">GUARDAR TODO</button>
+      <button class="btn btn-light rounded-pill w-100 py-2" (click)="selectedRecipe = null">CANCELAR</button>
+    </div>
   </div>
+</div>
 </div>

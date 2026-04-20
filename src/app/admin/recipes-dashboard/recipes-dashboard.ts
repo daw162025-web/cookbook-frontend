@@ -30,10 +30,30 @@ export class RecipesDashboard implements OnInit {
   }
 
   openEditModal(recipe: any) {
-    this.selectedRecipe = { 
-      ...recipe, 
-      category_id: recipe.categories?.length > 0 ? recipe.categories[0].id : null 
-    };
+    // Creamos una copia profunda para no romper la tabla
+    this.selectedRecipe = JSON.parse(JSON.stringify(recipe));
+    
+    // Mapeamos los IDs de las categorías actuales para el multiselector
+    this.selectedRecipe.category_ids = recipe.categories.map((c: any) => c.id);
+    
+    // Aseguramos que los ingredientes tengan la estructura correcta
+    if (!this.selectedRecipe.ingredients) this.selectedRecipe.ingredients = [];
+  }
+
+  addIngredient() {
+    this.selectedRecipe.ingredients.push({ name: '', pivot: { quantity: '', unit: '' } });
+  }
+
+  removeIngredient(index: number) {
+    this.selectedRecipe.ingredients.splice(index, 1);
+  }
+
+  addStep() {
+    this.selectedRecipe.instructions.push('');
+  }
+
+  removeStep(index: number) {
+    this.selectedRecipe.instructions.splice(index, 1);
   }
 
   saveRecipe() {
@@ -68,5 +88,11 @@ export class RecipesDashboard implements OnInit {
         }
       });
     }
+  }
+
+  trackByFn(index: number, item: any): any {
+    // Si el item tiene ID (como un ingrediente de la BD), usamos el ID.
+    // Si no (como un paso nuevo), usamos el índice.
+    return item.id ? item.id : index;
   }
 }
