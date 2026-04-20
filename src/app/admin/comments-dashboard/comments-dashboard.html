@@ -120,15 +120,36 @@
           <button type="button" class="btn-close" (click)="selectedComment = null"></button>
         </div>
         <div class="modal-body">
-          <div class="mb-3">
-            <label class="form-label small text-muted text-uppercase fw-bold">Contenido del Comentario</label>
-            <textarea class="form-control rounded-3" rows="4" [(ngModel)]="selectedComment.content"></textarea>
-          </div>
-          <div class="form-check form-switch">
-            <input class="form-check-input" type="checkbox" id="modSwitch" [(ngModel)]="selectedComment.is_moderated">
-            <label class="form-check-label" for="modSwitch">Estado: Moderado/Aprobado</label>
-          </div>
-        </div>
+            <div class="mb-3">
+                <label class="form-label small text-muted text-uppercase fw-bold">Contenido del Comentario</label>
+                <textarea class="form-control rounded-3" rows="4" [(ngModel)]="selectedComment.content"></textarea>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label small text-muted text-uppercase fw-bold d-block mb-2">Estado del Comentario</label>
+                
+                <div class="form-check mb-2">
+                <input class="form-check-input" type="radio" name="status" id="statusApprove" [value]="1" [(ngModel)]="selectedComment.is_moderated">
+                <label class="form-check-label text-success fw-bold" for="statusApprove">
+                    <i class="fa-solid fa-check-circle me-1"></i> Aprobado (Público)
+                </label>
+                </div>
+
+                <div class="form-check mb-2">
+                <input class="form-check-input" type="radio" name="status" id="statusReject" [value]="2" [(ngModel)]="selectedComment.is_moderated">
+                <label class="form-check-label text-danger fw-bold" for="statusReject">
+                    <i class="fa-solid fa-times-circle me-1"></i> Rechazado (Oculto)
+                </label>
+                </div>
+
+                <div class="form-check">
+                <input class="form-check-input" type="radio" name="status" id="statusPending" [value]="0" [(ngModel)]="selectedComment.is_moderated">
+                <label class="form-check-label text-warning fw-bold" for="statusPending">
+                    <i class="fa-solid fa-clock me-1"></i> Pendiente (Volver a moderación)
+                </label>
+                </div>
+            </div>
+            </div>
         <div class="modal-footer border-0">
           <button type="button" class="btn btn-light rounded-pill px-4" (click)="selectedComment = null">Cancelar</button>
           <button type="button" class="btn btn-primary rounded-pill px-4" (click)="updateComment()">Guardar Cambios</button>

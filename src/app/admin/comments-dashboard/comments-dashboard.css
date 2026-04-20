@@ -20,3 +20,16 @@
 .text-danger {
     color: #842029 !important;
 }
+
+.form-check-input:checked[value="1"] {
+    background-color: #198754;
+    border-color: #198754;
+}
+.form-check-input:checked[value="2"] {
+    background-color: #dc3545;
+    border-color: #dc3545;
+}
+.form-check-input:checked[value="0"] {
+    background-color: #ffc107;
+    border-color: #ffc107;
+}
