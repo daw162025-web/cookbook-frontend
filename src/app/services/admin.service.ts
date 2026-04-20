@@ -43,19 +43,19 @@ export class AdminService {
   }
 
   getRecipes(): Observable<any[]> {
-    return this.http.get<any[]>(`${this.apiUrl}/admin/recipes`);
+    return this.http.get<any[]>(`${this.apiUrl}/recipes`);
   }
 
   deleteRecipe(id: number): Observable<any> {
-    return this.http.delete(`${this.apiUrl}/admin/recipes/${id}`);
+    return this.http.delete(`${this.apiUrl}/recipes/${id}`);
   }
 
   updateRecipe(id: number, data: any): Observable<any> {
-    return this.http.put(`${this.apiUrl}/admin/recipes/${id}`, data);
+    return this.http.put(`${this.apiUrl}/recipes/${id}`, data);
   }
 
   getCategories(): Observable<any[]> {
-    return this.http.get<any[]>(`${this.apiUrl}/admin/categories`);
+    return this.http.get<any[]>(`${this.apiUrl}/categories`);
   }
 
 }
