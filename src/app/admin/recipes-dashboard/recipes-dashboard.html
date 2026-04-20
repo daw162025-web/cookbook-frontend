@@ -89,11 +89,12 @@
       </div>
       <div class="col-md-4">
         <label class="form-label fw-bold">Dificultad</label>
-        <select class="form-select" [(ngModel)]="selectedRecipe.difficulty">
-            <option value="Fácil">Fácil</option>
-            <option value="Media">Media</option>
-            <option value="Difícil">Difícil</option>
-            </select>
+        <select class="form-select" [(ngModel)]="selectedRecipe.difficulty" name="difficulty">
+        <option [ngValue]="null" disabled>Selecciona dificultad</option>
+        <option value="Fácil">Fácil</option>
+        <option value="Media">Media</option>
+        <option value="Difícil">Difícil</option>
+        </select>
       </div>
     </div>
 
@@ -116,9 +117,6 @@
         </div>
         <div class="col-3">
             <input type="text" class="form-control form-control-sm" [(ngModel)]="ing.pivot.quantity">
-        </div>
-        <div class="col-2">
-            <input type="text" class="form-control form-control-sm" [(ngModel)]="ing.pivot.unit">
         </div>
         </div>
     </div>

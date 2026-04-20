@@ -33,8 +33,9 @@ export class RecipesDashboard implements OnInit {
   openEditModal(recipe: any) {
     // Creamos una copia profunda para no romper la tabla
     this.selectedRecipe = JSON.parse(JSON.stringify(recipe));
-    this.selectedRecipe.difficulty = recipe.difficulty;
-    // Mapeamos los IDs de las categorías actuales para el multiselector
+    console.log("Dificultad que llega de la BD:", `'${recipe.difficulty}'`);
+    const diff = recipe.difficulty ? recipe.difficulty.trim() : 'Media';
+    this.selectedRecipe.difficulty = diff;    // Mapeamos los IDs de las categorías actuales para el multiselector
     this.selectedRecipe.category_ids = recipe.categories.map((c: any) => c.id);
     
     if (recipe.ingredients) {
