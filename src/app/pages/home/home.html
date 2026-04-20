@@ -15,9 +15,9 @@
 
         <section class="container-fluid pt-4 pb-5" style="max-width: 1440px; margin: 0 auto;">
           <!-- Recetas mejor valoradas -->
-          <div *ngIf="topRatedRecipes.length > 0" class="mb-5">
+          <div *ngIf="topRatedRecipes.length > 0" class="mb-2">
               <div class="d-flex align-items-center justify-content-between mb-4">
-                  <h2 class="section-title mb-0">Las más valoradas</h2>
+                  <h2 class="section-title mb-0">Las mejores valoradas</h2>
               </div>
               <div class="row flex-nowrap overflow-auto hide-scrollbar pb-4 g-4" style="scroll-snap-type: x mandatory;">
                 @for (recipe of topRatedRecipes; track recipe.id) {
@@ -29,7 +29,7 @@
           </div>
 
           <!-- Platos Principales -->
-          <div *ngIf="mainCourses.length > 0" class="mb-5">
+          <div *ngIf="mainCourses.length > 0" class="mb-2">
               <div class="d-flex align-items-center justify-content-between mb-4">
                   <h2 class="section-title mb-0">Platos Principales</h2>
               </div>
@@ -43,7 +43,7 @@
           </div>
 
           <!-- Segundos Platos -->
-          <div *ngIf="secondCourses.length > 0" class="mb-5">
+          <div *ngIf="secondCourses.length > 0" class="mb-2">
               <div class="d-flex align-items-center justify-content-between mb-4">
                   <h2 class="section-title mb-0">Segundos Platos</h2>
               </div>
@@ -57,7 +57,7 @@
           </div>
 
           <!-- Postres -->
-          <div *ngIf="desserts.length > 0" class="mb-5">
+          <div *ngIf="desserts.length > 0" class="mb-2">
               <div class="d-flex align-items-center justify-content-between mb-4">
                   <h2 class="section-title mb-0">Dulces y Postres</h2>
               </div>
