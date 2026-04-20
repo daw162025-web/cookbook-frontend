@@ -1,0 +1,95 @@
+<div class="container my-5">
+    <div class="profile-header-box mb-4">
+        <h1 class="profile-main-title">Configuración de Perfil</h1>
+        <p class="profile-subtitle">Gestiona tu información personal y mantén tu cuenta segura.</p>
+    </div>
+
+    <div class="row">
+        <!-- Información Actual -->
+        <div class="col-lg-4 mb-4">
+            <div class="profile-info-card h-100">
+                <div class="profile-avatar-container">
+                    <div class="profile-avatar">
+                        {{ user?.name?.charAt(0).toUpperCase() }}
+                    </div>
+                </div>
+                <h3 class="text-center mt-3 fw-extrabold">{{ user?.name }}</h3>
+                <p class="text-center text-muted mb-4">{{ user?.email }}</p>
+                
+                <div class="profile-details-list">
+                    <div class="detail-item">
+                        <span class="detail-label">Rol:</span>
+                        <span class="detail-value text-capitalize">{{ user?.role }}</span>
+                    </div>
+                    <div class="detail-item">
+                        <span class="detail-label">Miembro desde:</span>
+                        <span class="detail-value">{{ user?.created_at | date:'mediumDate' }}</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Formulario de Edición -->
+        <div class="col-lg-8">
+            <div class="profile-form-card">
+                <h2 class="form-section-title mt-0">Editar Información</h2>
+                
+                <form [formGroup]="profileForm" (ngSubmit)="onSubmit()">
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label">Nombre Completo</label>
+                            <input type="text" class="form-control-custom" formControlName="name" placeholder="Tu nombre">
+                            <div class="text-danger small mt-1" *ngIf="profileForm.get('name')?.invalid && profileForm.get('name')?.touched">
+                                El nombre es obligatorio.
+                            </div>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label">Correo Electrónico</label>
+                            <input type="email" class="form-control-custom" formControlName="email" placeholder="email@ejemplo.com">
+                            <div class="text-danger small mt-1" *ngIf="profileForm.get('email')?.invalid && profileForm.get('email')?.touched">
+                                Introduce un correo válido.
+                            </div>
+                        </div>
+                    </div>
+
+                    <hr class="my-4 opacity-5">
+
+                    <h2 class="form-section-title">Cambiar Contraseña</h2>
+                    <p class="text-muted small mb-4">Deja estos campos vacíos si no deseas cambiar tu contraseña.</p>
+
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label">Nueva Contraseña</label>
+                            <input type="password" class="form-control-custom" formControlName="password" placeholder="Mínimo 8 caracteres">
+                            <div class="text-danger small mt-1" *ngIf="profileForm.get('password')?.invalid && profileForm.get('password')?.touched">
+                                Debe tener al menos 8 caracteres.
+                            </div>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label">Confirmar Nueva Contraseña</label>
+                            <input type="password" class="form-control-custom" formControlName="password_confirmation" placeholder="Repite la contraseña">
+                            <div class="text-danger small mt-1" *ngIf="profileForm.hasError('mismatch') && profileForm.get('password_confirmation')?.touched">
+                                Las contraseñas no coinciden.
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Mensajes de Feedback -->
+                    <div *ngIf="successMessage" class="alert alert-success mt-4 animate__animated animate__fadeIn">
+                        {{ successMessage }}
+                    </div>
+                    <div *ngIf="errorMessage" class="alert alert-danger mt-4 animate__animated animate__fadeIn">
+                        {{ errorMessage }}
+                    </div>
+
+                    <div class="form-actions mt-5">
+                        <button type="submit" class="btn-submit px-5" [disabled]="loading">
+                            <span *ngIf="!loading">Guardar Cambios</span>
+                            <span *ngIf="loading">Actualizando...</span>
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

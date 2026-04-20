@@ -9,6 +9,7 @@ import { CreateRecipeComponent } from './pages/create-recipe/create-recipe';
 import { MyRecipesComponent } from './pages/my-recipes/my-recipes';
 import { EditRecipeComponent } from './pages/edit-recipe/edit-recipe';
 import { Favorites } from './pages/favorites/favorites';
+import { ProfileComponent } from './pages/profile/profile';
 import { adminGuard } from './guards/admin-guard';
 import {PublicLayout} from './layouts/public-layout/public-layout'
 import {AdminLayout} from './layouts/admin-layout/admin-layout'
@@ -31,6 +32,7 @@ export const routes: Routes = [
     { path: 'edit-recipe/:id', component: EditRecipeComponent },
     { path: 'my-recipes', component: MyRecipesComponent },
     { path: 'favorites', component: Favorites },
+    { path: 'profile', component: ProfileComponent },
   ]
   },
 

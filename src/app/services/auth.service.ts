@@ -89,6 +89,22 @@ export class AuthService {
     return localStorage.getItem('auth_token');
   }
 
+  updateProfile(userData: any): Observable<any> {
+    const token = this.getToken();
+    return this.http.put(`${this.apiUrl}/profile`, userData, {
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    }).pipe(
+      tap((response: any) => {
+        if (response.user) {
+          localStorage.setItem('auth_user', JSON.stringify(response.user));
+          this.currentUserSubject.next(response.user);
+        }
+      })
+    );
+  }
+
   getUserRole(): string | null {
     const user = JSON.parse(localStorage.getItem('user') || '{}');
     return user.role || null;
