@@ -95,7 +95,7 @@
                         'bg-soft-warning text-warning': c.is_moderated == 0,
                         'bg-soft-danger text-danger': c.is_moderated == 2
                     }">
-                {{ c.is_moderated == 1 ? 'Público' : (c.is_moderated == 2 ? 'Rechazado' : 'Pendiente') }}
+                {{ c.is_moderated == 1 ? 'Aprobado' : (c.is_moderated == 0 ? 'Pendiente' : 'Rechazado') }}
                 </span>
             </td>
             <td class="text-end">

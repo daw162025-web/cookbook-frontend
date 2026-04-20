@@ -29,28 +29,31 @@ export class CommentsDashboard implements OnInit {
     this.loading = true;
     this.adminService.getPendingComments().subscribe({
       next: (data) => {
-        this.comments = data;
+        this.comments = data; // Estas son las cards
         this.loading = false;
         this.cdr.detectChanges();
-      },
-      error: () => this.loading = false
+      }
     });
   }
 
   loadAllComments() {
-    this.adminService.getAllComments().subscribe(data => {
-      this.allComments = data.map(comment => {
-        // Comprobamos si el comentario está en la lista de pendientes de arriba
-        const isPendingInCards = this.comments.some(pc => pc.id === comment.id);
-        return {
-          ...comment,
-          statusLabel: comment.is_moderated 
-            ? 'Aprobado' 
-            : (isPendingInCards ? 'Pendiente de Revisión' : 'Rechazado / Oculto')
-        };
-      });
-      this.cdr.detectChanges();
+    this.adminService.getAllComments().subscribe({
+      next: (data) => {
+        this.allComments = data; // Esta es la tabla
+        this.cdr.detectChanges();
+      }
     });
+  }
+
+  rejectComment(id: number) {
+    if (confirm('¿Rechazar este comentario?')) {
+      this.adminService.updateComment(id, { is_moderated: 2 }).subscribe({
+        next: () => {
+          this.loadComments();    // Al recargar, como ya no es 0, DESAPARECERÁ de arriba
+          this.loadAllComments(); // Al recargar, aparecerá como RECHAZADO abajo
+        }
+      });
+    }
   }
 
   approveComment(id: number) {
@@ -90,16 +93,5 @@ export class CommentsDashboard implements OnInit {
     });
   }
 
-  rejectComment(id: number) {
-    if (confirm('¿Quieres rechazar este comentario? No se mostrará en la receta.')) {
-      // Enviamos el valor 2 para diferenciarlo del 0 (nuevo)
-    this.adminService.updateComment(id, { is_moderated: 2 }).subscribe({
-      next: () => {
-        this.loadComments();
-        this.loadAllComments();
-        this.cdr.detectChanges();
-      }
-    });
-  }
-  }
+  
 }
