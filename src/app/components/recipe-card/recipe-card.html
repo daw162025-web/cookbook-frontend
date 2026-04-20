@@ -1,21 +1,33 @@
-<article class="recipe-card" [class.bg-light-variant]="true">
-  <img [src]="(recipe.image_url && recipe.image_url.length > 0) ? recipe.image_url[0] : 'assets/no-image.jpg'" 
-     class="img-fluid" 
-     alt="{{recipe.title}}">
-  <h3 class="recipe-title push-down">{{ recipe.title }}</h3>
-  
-  <div class="recipe-footer mt-auto">
-    <div class="d-flex align-items-center gap-3">
-      <span class="recipe-rating">
-        <i class="fa-solid fa-star"></i> {{ recipe.avg_rating || recipe.rating || '0.0' }}
+<article class="recipe-card card-premium shadow-sm">
+  <div class="recipe-img-container">
+    <img [src]="(recipe.image_url && recipe.image_url.length > 0) ? recipe.image_url[0] : 'assets/no-image.jpg'" 
+         class="recipe-img-top" 
+         alt="{{recipe.title}}">
+    <button class="btn-favorite-overlay" (click)="toggleFavorite($event, recipe)" [attr.aria-label]="recipe.is_favorite ? 'Quitar de favoritos' : 'Añadir a favoritos'">
+      <i [class]="!!recipe.is_favorite ? 'fa-solid fa-heart text-danger' : 'fa-regular fa-heart'"></i>
+    </button>
+  </div>
+
+  <div class="recipe-body-content flex-grow-1 d-flex flex-column p-3">
+    <div class="recipe-meta-top d-flex align-items-center justify-content-between mb-2">
+      <span class="recipe-rating-badge">
+        <i class="fa-solid fa-star me-1"></i>{{ recipe.avg_rating || recipe.rating || '0.0' }}
       </span>
-      <span class="recipe-author" *ngIf="recipe.user?.name">
-        Por: {{ recipe.user?.name }}
+      <span class="recipe-category-tag" *ngIf="recipe.categories && recipe.categories.length > 0">
+        {{ recipe.categories[0].name }}
       </span>
     </div>
-    <button class="btn btn-ver-mas mb-0 mt-0" [routerLink]="['/recipe', recipe.id]" *ngIf="recipe.id">Ver más</button>
-<button class="btn-favorite" (click)="toggleFavorite($event, recipe)">
-  <i [class]="!!recipe.is_favorite ? 'fa-solid fa-heart text-danger' : 'fa-regular fa-heart'"></i>
-</button>
+    
+    <h3 class="recipe-title-modern mb-2">{{ recipe.title }}</h3>
+    
+    <p class="recipe-author-sub mb-3" *ngIf="recipe.user?.name">
+      <span>por</span> {{ recipe.user?.name }}
+    </p>
+
+    <div class="recipe-card-footer mt-auto">
+      <button class="btn-premium-action w-100" [routerLink]="['/recipe', recipe.id]" *ngIf="recipe.id">
+        Ver receta <i class="fa-solid fa-chevron-right ms-2 fs-xs"></i>
+      </button>
+    </div>
   </div>
 </article>
