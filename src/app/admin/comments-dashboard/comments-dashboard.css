@@ -1,0 +1,16 @@
+.bg-soft-success {
+    background-color: #d1e7dd;
+}
+.text-success {
+    color: #0f5132 !important;
+}
+.bg-soft-warning {
+    background-color: #fff3cd;
+}
+.text-warning {
+    color: #664d03 !important;
+}
+.table-responsive {
+    max-height: 500px; /* Para que no se haga infinita la página */
+    overflow-y: auto;
+}
