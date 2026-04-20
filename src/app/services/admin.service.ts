@@ -51,6 +51,11 @@ export class AdminService {
   }
 
   updateRecipe(id: number, data: any): Observable<any> {
+    if (data instanceof FormData) {
+      data.append('_method', 'PUT');
+      return this.http.post(`${this.apiUrl}/recipes/${id}`, data);
+    }
+    
     return this.http.put(`${this.apiUrl}/recipes/${id}`, data);
   }
 
