@@ -40,11 +40,9 @@ export class AdminService {
   updateComment(id: number, commentData: any): Observable<any> {
     return this.http.post(`${this.apiUrl}/comments/${id}`, {
       ...commentData,
-      _method: 'PUT'
+      _method: 'PUT' 
     });
   }
-
-
 
   updateUser(userId: number, userData: any): Observable<any> {
     return this.http.put(`${this.apiUrl}/users/${userId}`, userData);
