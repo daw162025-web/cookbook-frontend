@@ -22,9 +22,8 @@
           <tr *ngFor="let recipe of recipes">
             <td class="ps-4">
               <div class="d-flex align-items-center gap-3">
-                <img [src]="recipe.image_url || 'assets/no-image.jpg'" 
-                     class="rounded-3 object-fit-cover" width="50" height="50"
-                     style="border: 1px solid #eee;">
+                <img [src]="(recipe.image_url && recipe.image_url.length > 0) ? recipe.image_url[0] : 'assets/no-image.jpg'" 
+                class="rounded-3 object-fit-cover" width="50" height="50">
                 <div>
                   <div class="fw-bold text-dark">{{ recipe.title }}</div>
                   <div class="text-muted small">ID: #{{ recipe.id }}</div>
