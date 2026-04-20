@@ -19,6 +19,7 @@ export class RecipesDashboard implements OnInit {
   categories: any[] = []; 
   selectedRecipe: any = null;
   loading = true;
+  selectedFile: File | null = null;
 
   ngOnInit() {
     this.loadRecipes();
@@ -56,13 +57,27 @@ export class RecipesDashboard implements OnInit {
     this.selectedRecipe.instructions.splice(index, 1);
   }
 
-  saveRecipe() {
-    this.adminService.updateRecipe(this.selectedRecipe.id, this.selectedRecipe).subscribe({
+ saveRecipe() {
+    const formData = new FormData();
+    
+    // Añadimos los datos básicos
+    formData.append('title', this.selectedRecipe.title);
+    formData.append('description', this.selectedRecipe.description);
+    formData.append('difficulty', this.selectedRecipe.difficulty);
+    formData.append('category_ids', JSON.stringify(this.selectedRecipe.category_ids));
+    formData.append('instructions', JSON.stringify(this.selectedRecipe.instructions));
+    
+    // Si hay una foto nueva, la adjuntamos
+    if (this.selectedFile) {
+      formData.append('image', this.selectedFile);
+    }
+
+    this.adminService.updateRecipe(this.selectedRecipe.id, formData).subscribe({
       next: (res) => {
-        const index = this.recipes.findIndex(r => r.id === this.selectedRecipe.id);
-        this.recipes[index] = res.recipe;
+        // Actualizamos la tabla y cerramos
+        this.loadRecipes(); 
         this.selectedRecipe = null;
-        this.cdr.detectChanges();
+        this.selectedFile = null;
       }
     });
   }
@@ -95,4 +110,19 @@ export class RecipesDashboard implements OnInit {
     // Si no (como un paso nuevo), usamos el índice.
     return item.id ? item.id : index;
   }
+
+  onFileSelected(event: any) {
+    const file = event.target.files[0];
+    if (file) {
+      this.selectedFile = file;
+      // Previsualización instantánea antes de subir
+      const reader = new FileReader();
+      reader.onload = (e: any) => {
+        this.selectedRecipe.image_url = e.target.result;
+      };
+      reader.readAsDataURL(file);
+    }
+  }
+
+  
 }

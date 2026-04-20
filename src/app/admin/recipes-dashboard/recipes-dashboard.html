@@ -138,6 +138,25 @@
       </div>
     </div>
 
+    <div class="mb-4 text-center bg-light p-3 rounded-4 border">
+        <label class="form-label fw-bold d-block mb-3">Imagen de la Receta</label>
+        
+        <div class="position-relative d-inline-block">
+            <img [src]="selectedRecipe.image_url || 'assets/no-image.jpg'" 
+                class="rounded-4 shadow-sm object-fit-cover" 
+                width="200" height="200" id="previewImg">
+            
+            <label for="fileInput" class="btn btn-brand btn-sm position-absolute bottom-0 end-0 m-2 rounded-circle shadow">
+            <i class="fa-solid fa-camera"></i>
+            </label>
+            <input type="file" id="fileInput" class="d-none" (change)="onFileSelected($event)" accept="image/*">
+        </div>
+        
+        <div class="mt-2 text-muted small">
+            Haz clic en la cámara para subir una nueva foto
+        </div>
+        </div>
+
     <div class="d-flex gap-3 mt-5">
       <button class="btn btn-success rounded-pill w-100 fw-bold py-2" (click)="saveRecipe()">GUARDAR TODO</button>
       <button class="btn btn-light rounded-pill w-100 py-2" (click)="selectedRecipe = null">CANCELAR</button>
