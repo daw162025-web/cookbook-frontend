@@ -14,6 +14,7 @@ import {PublicLayout} from './layouts/public-layout/public-layout'
 import {AdminLayout} from './layouts/admin-layout/admin-layout'
 import { UsersDashboard } from './admin/users-dashboard/users-dashboard';
 import { RecipesDashboard } from './admin/recipes-dashboard/recipes-dashboard';
+import { CommentsDashboard } from './admin/comments-dashboard/comments-dashboard';
 
 export const routes: Routes = [
   {
@@ -44,6 +45,7 @@ export const routes: Routes = [
       },
       { path: 'users', component: UsersDashboard },
       { path: 'recipes', component: RecipesDashboard }, 
+      { path: 'admin/comments', component: CommentsDashboard },
       {
         path: '', redirectTo: 'dashboard', pathMatch: 'full'
       }

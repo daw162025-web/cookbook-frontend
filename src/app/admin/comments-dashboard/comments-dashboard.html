@@ -1,0 +1,69 @@
+<div class="container-fluid p-4">
+  <div class="d-flex justify-content-between align-items-center mb-4">
+    <div>
+      <h2 class="fw-bold mb-0">Moderación de Comentarios</h2>
+      <p class="text-muted">Revisa y gestiona lo que los usuarios dicen en tus recetas.</p>
+    </div>
+    <span class="badge bg-primary px-3 py-2 rounded-pill">
+      {{ comments.length }} Pendientes
+    </span>
+  </div>
+
+  <div *ngIf="loading" class="text-center py-5">
+    <div class="spinner-border text-primary" role="status"></div>
+  </div>
+
+  <div class="row g-3" *ngIf="!loading">
+    <div class="col-12" *ngFor="let comment of comments">
+      <div class="card border-0 shadow-sm rounded-4 overflow-hidden mb-2">
+        <div class="card-body p-0">
+          <div class="d-flex flex-column flex-md-row">
+            <div class="bg-light p-4 border-end" style="min-width: 250px;">
+              <div class="d-flex align-items-center gap-3 mb-3">
+                <div class="bg-primary text-white rounded-circle d-flex align-items-center justify-content-center fw-bold" style="width: 45px; height: 45px;">
+                  {{ comment.user?.name?.charAt(0) || 'U' }}
+                </div>
+                <div>
+                  <h6 class="mb-0 fw-bold">{{ comment.user?.name }}</h6>
+                  <small class="text-muted">{{ comment.created_at | date:'dd/MM/yyyy HH:mm' }}</small>
+                </div>
+              </div>
+              <div class="small">
+                <span class="text-muted d-block mb-1">En la receta:</span>
+                <a [routerLink]="['/recipe', comment.recipe?.id]" class="text-decoration-none fw-bold text-dark">
+                  <i class="fa-solid fa-utensils me-1"></i> {{ comment.recipe?.title }}
+                </a>
+              </div>
+            </div>
+
+            <div class="p-4 flex-grow-1 d-flex flex-column justify-content-between">
+              <div>
+                <i class="fa-solid fa-quote-left text-light fs-2 mb-2"></i>
+                <p class="text-secondary fs-5" style="font-style: italic;">
+                  {{ comment.content }}
+                </p>
+              </div>
+
+              <div class="d-flex gap-2 mt-3 justify-content-end">
+                <button (click)="approveComment(comment.id)" class="btn btn-success rounded-pill px-4 fw-bold">
+                  <i class="fa-solid fa-check me-2"></i>Aprobar
+                </button>
+                <button (click)="deleteComment(comment.id)" class="btn btn-outline-danger rounded-pill px-4 fw-bold">
+                  <i class="fa-solid fa-trash-can me-2"></i>Eliminar
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div *ngIf="comments.length === 0" class="text-center py-5">
+      <div class="mb-3">
+        <i class="fa-solid fa-face-smile-beam fs-1 text-muted"></i>
+      </div>
+      <h4 class="text-muted">¡Todo al día!</h4>
+      <p class="text-muted">No hay comentarios pendientes de moderar.</p>
+    </div>
+  </div>
+</div>
