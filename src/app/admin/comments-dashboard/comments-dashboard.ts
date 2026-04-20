@@ -82,4 +82,19 @@ export class CommentsDashboard implements OnInit {
       }
     });
   }
+
+  rejectComment(id: number) {
+    if (confirm('¿Quieres rechazar este comentario? No se mostrará en la receta.')) {
+      // Usamos el mismo método de update pero forzando is_moderated a 0 o un estado específico
+      this.adminService.updateComment(id, { is_moderated: 0 }).subscribe({
+        next: () => {
+          // Lo quitamos de la lista de pendientes (Cards)
+          this.comments = this.comments.filter(c => c.id !== id);
+          // Refrescamos la tabla de abajo para que se vea como "Pendiente/Rechazado"
+          this.loadAllComments();
+          this.cdr.detectChanges();
+        }
+      });
+    }
+  }
 }
