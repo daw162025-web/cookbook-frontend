@@ -40,7 +40,7 @@ export class UsersDashboard implements OnInit {
   }
 
   openEditModal(user: any) {
-    this.selectedUser = { ...user };
+    this.selectedUser = { ...user, password: '' };
   }
 
   saveUser() {

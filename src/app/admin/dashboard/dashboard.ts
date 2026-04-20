@@ -12,14 +12,25 @@ export class DashboardComponent implements OnInit {
   private adminService = inject(AdminService);
   private cdr = inject(ChangeDetectorRef); 
   stats: any = null;
+  isRefreshing = false; 
 
-  ngOnInit() {
+ ngOnInit() {
+    this.loadStats();
+  }
+
+  loadStats() {
+    this.isRefreshing = true;
     this.adminService.getStats().subscribe({
       next: (data) => {
         this.stats = data;
-        this.cdr.detectChanges(); 
+        this.isRefreshing = false;
+        this.cdr.detectChanges();
       },
-      error: (err) => console.error('Error al cargar stats', err)
+      error: (err) => {
+        console.error('Error al cargar stats', err);
+        this.isRefreshing = false;
+        this.cdr.detectChanges();
+      }
     });
   }
 }

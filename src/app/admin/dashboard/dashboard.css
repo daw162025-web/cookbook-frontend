@@ -40,3 +40,18 @@
     font-size: 0.9rem;
     font-weight: 600;
 }
+
+/* Animación de rotación infinita para el icono */
+.fa-spin {
+    animation: fa-spin 1s infinite linear;
+}
+
+@keyframes fa-spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+.btn-white:disabled {
+    background-color: #f8f9fa;
+    cursor: not-allowed;
+}

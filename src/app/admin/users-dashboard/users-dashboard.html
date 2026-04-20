@@ -40,11 +40,11 @@
                 <i class="fa-solid fa-pen-to-square text-primary"></i>
               </button>
               <button *ngIf="user.id !== (authService.currentUser$ | async)?.id" 
-        class="btn btn-sm btn-light rounded-circle" 
-        (click)="deleteUser(user.id)" 
-        title="Eliminar">
-  <i class="fa-solid fa-trash text-danger"></i>
-</button>
+                      class="btn btn-sm btn-light rounded-circle" 
+                      (click)="deleteUser(user.id)" 
+                      title="Eliminar">
+                <i class="fa-solid fa-trash text-danger"></i>
+              </button>
             </td>
           </tr>
         </tbody>
@@ -65,7 +65,18 @@
             <label class="form-label small fw-bold">Email</label>
             <input type="email" class="form-control rounded-3" [(ngModel)]="selectedUser.email">
         </div>
-
+        <div class="mb-3">
+          <label class="form-label small fw-bold">Nueva Contraseña</label>
+          <div class="input-group">
+            <input type="password" 
+                  class="form-control rounded-3" 
+                  [(ngModel)]="selectedUser.password" 
+                  placeholder="Dejar en blanco para no cambiar">
+          </div>
+          <div class="form-text small" style="font-size: 0.7rem;">
+            Mínimo 8 caracteres.
+          </div>
+        </div>
       <div class="mb-4">
         <label class="form-label small fw-bold">Rol</label>
         <select class="form-select rounded-3" 
