@@ -31,7 +31,9 @@ export class AdminService {
   }
 
   deleteComment(commentId: number): Observable<any> {
-    return this.http.delete(`${this.apiUrl}/comments/${commentId}`);
+    const formData = new FormData();
+    formData.append('_method', 'DELETE');
+    return this.http.post(`${this.apiUrl}/comments/${commentId}`, formData);
   }
   
   updateUser(userId: number, userData: any): Observable<any> {
