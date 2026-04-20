@@ -19,8 +19,8 @@ export class RecipesDashboard implements OnInit {
   categories: any[] = []; 
   selectedRecipe: any = null;
   loading = true;
-  selectedFile: File | null = null;
-
+  selectedFiles: File[] = []; // Guardamos los archivos nuevos para subir
+  
   ngOnInit() {
     this.loadRecipes();
     this.loadCategories();
@@ -37,7 +37,11 @@ export class RecipesDashboard implements OnInit {
     const diff = recipe.difficulty ? recipe.difficulty.trim() : 'Media';
     this.selectedRecipe.difficulty = diff;    // Mapeamos los IDs de las categorías actuales para el multiselector
     this.selectedRecipe.category_ids = recipe.categories.map((c: any) => c.id);
-    
+    this.selectedRecipe.all_images = Array.isArray(recipe.image_url) 
+      ? recipe.image_url 
+      : (recipe.image_url ? [recipe.image_url] : []);
+      
+    this.selectedFiles = [];
     if (recipe.ingredients) {
       this.selectedRecipe.ingredients = recipe.ingredients.map((ing: any) => ({
         id: ing.id,
@@ -78,17 +82,16 @@ export class RecipesDashboard implements OnInit {
     formData.append('category_ids', JSON.stringify(this.selectedRecipe.category_ids));
     formData.append('instructions', JSON.stringify(this.selectedRecipe.instructions));
     
-    // Si hay una foto nueva, la adjuntamos
-    if (this.selectedFile) {
-      formData.append('image', this.selectedFile);
-    }
+    formData.append('existing_images', JSON.stringify(this.selectedRecipe.all_images.filter((img: string) => img.startsWith('http'))));
 
+    // Añadimos los archivos NUEVOS
+    this.selectedFiles.forEach((file, index) => {
+      formData.append(`images[${index}]`, file);
+    });
     this.adminService.updateRecipe(this.selectedRecipe.id, formData).subscribe({
-      next: (res) => {
-        // Actualizamos la tabla y cerramos
-        this.loadRecipes(); 
+      next: () => {
+        this.loadRecipes();
         this.selectedRecipe = null;
-        this.selectedFile = null;
       }
     });
   }
@@ -122,17 +125,25 @@ export class RecipesDashboard implements OnInit {
     return item.id ? item.id : index;
   }
 
-  onFileSelected(event: any) {
-    const file = event.target.files[0];
-    if (file) {
-      this.selectedFile = file;
-      // Previsualización instantánea antes de subir
-      const reader = new FileReader();
-      reader.onload = (e: any) => {
-        this.selectedRecipe.image_url = e.target.result;
-      };
-      reader.readAsDataURL(file);
+  onFilesSelected(event: any) {
+    const files: FileList = event.target.files;
+    if (files) {
+      for (let i = 0; i < files.length; i++) {
+        this.selectedFiles.push(files[i]);
+        
+        // Previsualización de las nuevas fotos
+        const reader = new FileReader();
+        reader.onload = (e: any) => {
+          this.selectedRecipe.all_images.push(e.target.result);
+        };
+        reader.readAsDataURL(files[i]);
+      }
     }
+  }
+
+  removeImage(index: number) {
+    this.selectedRecipe.all_images.splice(index, 1);
+    // Aquí deberías sincronizar también con selectedFiles si es una foto recién añadida
   }
 
   
