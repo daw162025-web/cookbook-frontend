@@ -89,10 +89,14 @@
             <td><span class="text-muted small">{{ c.recipe?.title }}</span></td>
             <td class="text-truncate" style="max-width: 250px;">{{ c.content }}</td>
             <td>
-              <span class="badge rounded-pill" 
-                    [ngClass]="c.is_moderated ? 'bg-soft-success text-success' : 'bg-soft-warning text-warning'">
-                {{ c.is_moderated ? 'Aprobado' : 'Pendiente' }}
-              </span>
+                <span class="badge rounded-pill" 
+                    [ngClass]="{
+                        'bg-soft-success text-success': c.is_moderated == 1,
+                        'bg-soft-warning text-warning': c.is_moderated == 0 && c.statusLabel === 'Pendiente de Revisión',
+                        'bg-soft-danger text-danger': c.is_moderated == 0 && c.statusLabel !== 'Pendiente de Revisión'
+                    }">
+                {{ c.statusLabel }}
+                </span>
             </td>
             <td class="text-end">
               <button class="btn btn-sm btn-light me-1" (click)="openEditModal(c)" title="Editar">

@@ -38,11 +38,18 @@ export class CommentsDashboard implements OnInit {
   }
 
   loadAllComments() {
-    this.adminService.getAllComments().subscribe({
-      next: (data) => {
-        this.allComments = data;
-        this.cdr.detectChanges();
-      }
+    this.adminService.getAllComments().subscribe(data => {
+      this.allComments = data.map(comment => {
+        // Comprobamos si el comentario está en la lista de pendientes de arriba
+        const isPendingInCards = this.comments.some(pc => pc.id === comment.id);
+        return {
+          ...comment,
+          statusLabel: comment.is_moderated 
+            ? 'Aprobado' 
+            : (isPendingInCards ? 'Pendiente de Revisión' : 'Rechazado / Oculto')
+        };
+      });
+      this.cdr.detectChanges();
     });
   }
 
