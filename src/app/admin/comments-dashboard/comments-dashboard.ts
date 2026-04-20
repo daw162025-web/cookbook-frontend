@@ -15,12 +15,14 @@ export class CommentsDashboard implements OnInit {
   private adminService = inject(AdminService);
   private cdr = inject(ChangeDetectorRef);
 
-  comments: any[] = [];
+  comments: any[] = [];      
+  allComments: any[] = [];   
   loading = true;
-  filterStatus = 'all'; // Para filtrar por pendientes o aprobados
+  selectedComment: any = null;
 
   ngOnInit() {
-    this.loadComments();
+    this.loadComments();    
+    this.loadAllComments(); 
   }
 
   loadComments() {
@@ -35,10 +37,20 @@ export class CommentsDashboard implements OnInit {
     });
   }
 
+  loadAllComments() {
+    this.adminService.getAllComments().subscribe({
+      next: (data) => {
+        this.allComments = data;
+        this.cdr.detectChanges();
+      }
+    });
+  }
+
   approveComment(id: number) {
     this.adminService.approveComment(id).subscribe({
       next: () => {
         this.comments = this.comments.filter(c => c.id !== id);
+        this.loadAllComments(); // Refrescamos la tabla para ver el badge verde
         this.cdr.detectChanges();
       }
     });
@@ -49,9 +61,25 @@ export class CommentsDashboard implements OnInit {
       this.adminService.deleteComment(id).subscribe({
         next: () => {
           this.comments = this.comments.filter(c => c.id !== id);
+          this.allComments = this.allComments.filter(c => c.id !== id);
           this.cdr.detectChanges();
         }
       });
     }
+  }
+
+  openEditModal(comment: any) {
+    this.selectedComment = { ...comment };
+  }
+
+  updateComment() {
+    this.adminService.updateComment(this.selectedComment.id, this.selectedComment).subscribe({
+      next: () => {
+        this.loadComments();
+        this.loadAllComments();
+        this.selectedComment = null;
+        this.cdr.detectChanges();
+      }
+    });
   }
 }

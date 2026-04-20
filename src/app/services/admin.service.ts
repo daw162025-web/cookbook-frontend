@@ -33,6 +33,18 @@ export class AdminService {
   deleteComment(commentId: number): Observable<any> {
     return this.http.delete(`${this.apiUrl}/comments/${commentId}`);
   }
+  getAllComments(): Observable<any[]> {
+    return this.http.get<any[]>(`${this.apiUrl}/comments/all`);
+  }
+
+  updateComment(id: number, commentData: any): Observable<any> {
+    return this.http.post(`${this.apiUrl}/comments/${id}`, {
+      ...commentData,
+      _method: 'PUT'
+    });
+  }
+
+
 
   updateUser(userId: number, userData: any): Observable<any> {
     return this.http.put(`${this.apiUrl}/users/${userId}`, userData);
