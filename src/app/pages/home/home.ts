@@ -16,6 +16,7 @@ export class HomeComponent implements OnInit {
   mainCourses: Recipe[] = [];
   secondCourses: Recipe[] = [];
   desserts: Recipe[] = [];
+  topRatedRecipes: Recipe[] = [];
 
   // Guardamos todas por si las necesitamos
   recipes: Recipe[] = [];
@@ -53,6 +54,14 @@ export class HomeComponent implements OnInit {
     this.mainCourses = [];
     this.secondCourses = [];
     this.desserts = [];
+    this.topRatedRecipes = [];
+
+    // Recetas más valoradas: Ordenamos por avg_rating descendente
+    // Filtramos las que no tienen puntuación (0 o undefined)
+    this.topRatedRecipes = [...this.recipes]
+      .filter(r => (r.avg_rating || 0) > 0)
+      .sort((a, b) => (b.avg_rating || 0) - (a.avg_rating || 0))
+      .slice(0, 12); // Mostramos las 12 mejores por ejemplo
 
     this.recipes.forEach(recipe => {
       let isMain = false;

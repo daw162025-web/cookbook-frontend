@@ -14,6 +14,20 @@
         </section>
 
         <section class="container-fluid pt-4 pb-5" style="max-width: 1440px; margin: 0 auto;">
+          <!-- Recetas mejor valoradas -->
+          <div *ngIf="topRatedRecipes.length > 0" class="mb-5">
+              <div class="d-flex align-items-center justify-content-between mb-4">
+                  <h2 class="section-title mb-0">Las más valoradas</h2>
+              </div>
+              <div class="row flex-nowrap overflow-auto hide-scrollbar pb-4 g-4" style="scroll-snap-type: x mandatory;">
+                @for (recipe of topRatedRecipes; track recipe.id) {
+                  <div class="col-11 col-md-6 col-lg-4 col-xl-3" style="scroll-snap-align: start;">
+                    <app-recipe-card [recipe]="recipe"></app-recipe-card>
+                  </div>
+                }
+              </div>
+          </div>
+
           <!-- Platos Principales -->
           <div *ngIf="mainCourses.length > 0" class="mb-5">
               <div class="d-flex align-items-center justify-content-between mb-4">
@@ -57,7 +71,7 @@
           </div>
           
           <!-- Mensaje vacío si no hay absolutamente ninguna receta -->
-          <div *ngIf="mainCourses.length === 0 && secondCourses.length === 0 && desserts.length === 0" class="text-center py-5">
+          <div *ngIf="mainCourses.length === 0 && secondCourses.length === 0 && desserts.length === 0 && topRatedRecipes.length === 0" class="text-center py-5">
              <i class="fa-solid fa-utensils fs-1 text-muted mb-3"></i>
              <h4 class="text-muted">Aún no hay recetas clasificadas.</h4>
              <p class="text-muted">¡Sé el primero en crear una y asignarle una categoría!</p>
