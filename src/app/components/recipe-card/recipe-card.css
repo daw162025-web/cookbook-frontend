@@ -1,7 +1,3 @@
-.recipe-card {
-  position: relative; /* Para que el botón se posicione respecto a la card */
-}
-
 .btn-favorite {
   position: absolute;
   top: 15px;
@@ -42,4 +38,35 @@
 .fa-regular.fa-heart {
     color: #ccc !important;
     display: inline-block !important;
+}
+
+/* Para que todas las tarjetas midan lo mismo en la fila */
+.recipe-card {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+/* El título que no sea demasiado largo para no romper la card */
+.recipe-title {
+  font-size: 1.1rem;
+  font-weight: bold;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* El botón Ver más que se adapte bien */
+.btn-ver-mas {
+  padding: 8px 15px;
+  border-radius: 8px;
+  font-size: 0.9rem;
+}
+
+/* El botón de favorito sin bordes feos */
+.btn-favorite:focus {
+  outline: none;
+  box-shadow: none;
 }
