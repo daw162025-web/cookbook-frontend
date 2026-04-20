@@ -1,0 +1,109 @@
+<div class="container-fluid">
+  <div class="d-flex justify-content-between align-items-center mb-4">
+    <h2 class="fw-bold mb-0">Gestión de Recetas</h2>
+    <span class="badge bg-soft-success text-success p-2 px-3 rounded-pill fw-bold">
+      {{ recipes.length }} Recetas publicadas
+    </span>
+  </div>
+
+  <div class="card border-0 shadow-sm rounded-4 overflow-hidden">
+    <div class="table-responsive">
+      <table class="table table-hover align-middle mb-0">
+        <thead class="bg-light text-muted small fw-bold">
+          <tr>
+            <th class="ps-4 py-3">RECETA</th>
+            <th class="py-3">AUTOR</th>
+            <th class="py-3">CATEGORÍA</th>
+            <th class="py-3 text-center">COMENTARIOS</th>
+            <th class="py-3 text-end pe-4">ACCIONES</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let recipe of recipes">
+            <td class="ps-4">
+              <div class="d-flex align-items-center gap-3">
+                <img [src]="recipe.image_url || 'assets/no-image.jpg'" 
+                     class="rounded-3 object-fit-cover" width="50" height="50"
+                     style="border: 1px solid #eee;">
+                <div>
+                  <div class="fw-bold text-dark">{{ recipe.title }}</div>
+                  <div class="text-muted small">ID: #{{ recipe.id }}</div>
+                </div>
+              </div>
+            </td>
+            <td>
+              <span class="text-secondary small">{{ recipe.user?.name || 'Anónimo' }}</span>
+            </td>
+            <td>
+              <span class="badge bg-light text-dark rounded-pill border px-2 fw-normal">
+                {{ recipe.category?.name || 'Sin categoría' }}
+              </span>
+            </td>
+            <td class="text-center">
+              <span class="text-muted small">
+                <i class="fa-regular fa-comment me-1"></i> {{ recipe.comments_count || 0 }}
+              </span>
+            </td>
+            <td class="text-end pe-4">
+              <div class="d-flex justify-content-end gap-2">
+                <a [routerLink]="['/recipe', recipe.id]" target="_blank" class="btn btn-sm btn-light rounded-circle" title="Ver en web">
+                  <i class="fa-solid fa-eye text-success"></i>
+                </a>
+                <button class="btn btn-sm btn-light rounded-circle" (click)="openEditModal(recipe)" title="Editar">
+                  <i class="fa-solid fa-pen text-primary"></i>
+                </button>
+                <button (click)="deleteRecipe(recipe.id)" class="btn btn-sm btn-light rounded-circle" title="Borrar">
+                  <i class="fa-solid fa-trash text-danger"></i>
+                </button>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div *ngIf="!loading && recipes.length === 0" class="text-center py-5">
+      <i class="fa-solid fa-utensils fs-1 text-light mb-3"></i>
+      <p class="text-muted">No se han encontrado recetas todavía.</p>
+    </div>
+  </div>
+
+  <div *ngIf="loading" class="text-center py-5">
+    <div class="spinner-border text-success" role="status"></div>
+  </div>
+
+  <div class="modal-backdrop" *ngIf="selectedRecipe">
+    <div class="modal-content shadow rounded-4 p-4">
+      <div class="d-flex justify-content-between align-items-center mb-3">
+        <h4 class="fw-bold mb-0">Editar Receta</h4>
+        <button class="btn-close" (click)="selectedRecipe = null"></button>
+      </div>
+      
+      <div class="mb-3">
+        <label class="form-label small fw-bold text-muted">TÍTULO DE LA RECETA</label>
+        <input type="text" class="form-control rounded-3" [(ngModel)]="selectedRecipe.title">
+      </div>
+
+      <div class="mb-3">
+        <label class="form-label small fw-bold text-muted">CATEGORÍA</label>
+        <select class="form-select rounded-3" [(ngModel)]="selectedRecipe.category_id">
+          <option *ngFor="let cat of categories" [value]="cat.id">{{ cat.name }}</option>
+        </select>
+      </div>
+
+      <div class="mb-3">
+        <label class="form-label small fw-bold text-muted">DESCRIPCIÓN / PASOS</label>
+        <textarea class="form-control rounded-3" rows="6" [(ngModel)]="selectedRecipe.description"></textarea>
+      </div>
+
+      <div class="d-flex gap-2 mt-4">
+        <button class="btn btn-success rounded-pill w-100 fw-bold py-2" (click)="saveRecipe()">
+          Actualizar Receta
+        </button>
+        <button class="btn btn-light rounded-pill w-100 py-2" (click)="selectedRecipe = null">
+          Cancelar
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
