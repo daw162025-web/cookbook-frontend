@@ -13,6 +13,7 @@ import { adminGuard } from './guards/admin-guard';
 import {PublicLayout} from './layouts/public-layout/public-layout'
 import {AdminLayout} from './layouts/admin-layout/admin-layout'
 import { UsersDashboard } from './admin/users-dashboard/users-dashboard';
+import { RecipesDashboard } from './admin/recipes-dashboard/recipes-dashboard';
 
 export const routes: Routes = [
   {
@@ -42,6 +43,7 @@ export const routes: Routes = [
         loadComponent: () => import('./admin/dashboard/dashboard').then(m => m.DashboardComponent)
       },
       { path: 'users', component: UsersDashboard },
+      { path: 'recipes', component: RecipesDashboard }, 
       {
         path: '', redirectTo: 'dashboard', pathMatch: 'full'
       }
