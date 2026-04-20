@@ -92,6 +92,8 @@ export class RecipesDashboard implements OnInit {
       next: () => {
         this.loadRecipes();
         this.selectedRecipe = null;
+        this.cdr.detectChanges();
+
       }
     });
   }
@@ -131,10 +133,12 @@ export class RecipesDashboard implements OnInit {
       for (let i = 0; i < files.length; i++) {
         this.selectedFiles.push(files[i]);
         
-        // Previsualización de las nuevas fotos
         const reader = new FileReader();
         reader.onload = (e: any) => {
+          // La imagen entra al array
           this.selectedRecipe.all_images.push(e.target.result);
+          
+          this.cdr.detectChanges(); 
         };
         reader.readAsDataURL(files[i]);
       }
@@ -143,7 +147,8 @@ export class RecipesDashboard implements OnInit {
 
   removeImage(index: number) {
     this.selectedRecipe.all_images.splice(index, 1);
-    // Aquí deberías sincronizar también con selectedFiles si es una foto recién añadida
+    this.cdr.detectChanges();
+
   }
 
   
