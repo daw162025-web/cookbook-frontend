@@ -92,10 +92,10 @@
                 <span class="badge rounded-pill" 
                     [ngClass]="{
                         'bg-soft-success text-success': c.is_moderated == 1,
-                        'bg-soft-warning text-warning': c.is_moderated == 0 && c.statusLabel === 'Pendiente de Revisión',
-                        'bg-soft-danger text-danger': c.is_moderated == 0 && c.statusLabel !== 'Pendiente de Revisión'
+                        'bg-soft-warning text-warning': c.is_moderated == 0,
+                        'bg-soft-danger text-danger': c.is_moderated == 2
                     }">
-                {{ c.statusLabel }}
+                {{ c.is_moderated == 1 ? 'Público' : (c.is_moderated == 2 ? 'Rechazado' : 'Pendiente') }}
                 </span>
             </td>
             <td class="text-end">
