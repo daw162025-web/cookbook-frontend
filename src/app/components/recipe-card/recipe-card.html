@@ -1,30 +1,21 @@
-<article class="recipe-card d-flex flex-column h-100" [class.bg-light-variant]="true">
+<article class="recipe-card" [class.bg-light-variant]="true">
   <img [src]="(recipe.image_url && recipe.image_url.length > 0) ? recipe.image_url[0] : 'assets/no-image.jpg'" 
-       class="img-fluid" 
-       style="height: 180px; object-fit: cover; width: 100%;" 
-       alt="{{recipe.title}}">
+     class="img-fluid" 
+     alt="{{recipe.title}}">
+  <h3 class="recipe-title push-down">{{ recipe.title }}</h3>
   
-  <div class="p-3 d-flex flex-column flex-grow-1">
-    <h3 class="recipe-title mb-3">{{ recipe.title }}</h3>
-    
-    <div class="recipe-footer mt-auto">
-      <div class="d-flex align-items-center justify-content-between mb-2">
-        <span class="recipe-rating">
-          <i class="fa-solid fa-star text-warning"></i> {{ recipe.avg_rating || recipe.rating || '0.0' }}
-        </span>
-        <span class="recipe-author text-muted small" *ngIf="recipe.user?.name">
-          Por: {{ recipe.user?.name }}
-        </span>
-      </div>
-
-      <div class="d-flex align-items-center gap-2">
-        <button class="btn btn-ver-mas flex-grow-1" [routerLink]="['/recipe', recipe.id]" *ngIf="recipe.id">
-          Ver más
-        </button>
-        <button class="btn-favorite border-0 bg-transparent p-2" (click)="toggleFavorite($event, recipe)">
-          <i [class]="!!recipe.is_favorite ? 'fa-solid fa-heart text-danger fs-4' : 'fa-regular fa-heart fs-4'"></i>
-        </button>
-      </div>
+  <div class="recipe-footer mt-auto">
+    <div class="d-flex align-items-center gap-3">
+      <span class="recipe-rating">
+        <i class="fa-solid fa-star"></i> {{ recipe.avg_rating || recipe.rating || '0.0' }}
+      </span>
+      <span class="recipe-author" *ngIf="recipe.user?.name">
+        Por: {{ recipe.user?.name }}
+      </span>
     </div>
+    <button class="btn btn-ver-mas mb-0 mt-0" [routerLink]="['/recipe', recipe.id]" *ngIf="recipe.id">Ver más</button>
+<button class="btn-favorite" (click)="toggleFavorite($event, recipe)">
+  <i [class]="!!recipe.is_favorite ? 'fa-solid fa-heart text-danger' : 'fa-regular fa-heart'"></i>
+</button>
   </div>
 </article>
