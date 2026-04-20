@@ -35,9 +35,12 @@
               <span class="text-secondary small">{{ recipe.user?.name || 'Anónimo' }}</span>
             </td>
             <td>
-              <span class="badge bg-light text-dark rounded-pill border px-2 fw-normal">
-                {{ recipe.category?.name || 'Sin categoría' }}
-              </span>
+                <span *ngFor="let cat of recipe.categories" class="badge bg-light text-dark rounded-pill border px-2 fw-normal me-1">
+                {{ cat.name }}
+                </span>
+                <span *ngIf="!recipe.categories || recipe.categories.length === 0" class="text-muted small">
+                Sin categoría
+                </span>
             </td>
             <td class="text-center">
               <span class="text-muted small">

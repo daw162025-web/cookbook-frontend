@@ -30,7 +30,10 @@ export class RecipesDashboard implements OnInit {
   }
 
   openEditModal(recipe: any) {
-    this.selectedRecipe = { ...recipe }; // Copia para no editar en vivo la tabla
+    this.selectedRecipe = { 
+      ...recipe, 
+      category_id: recipe.categories?.length > 0 ? recipe.categories[0].id : null 
+    };
   }
 
   saveRecipe() {
