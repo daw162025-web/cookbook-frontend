@@ -22,6 +22,9 @@ export class ProfileComponent implements OnInit {
   successMessage = '';
   errorMessage = '';
 
+  selectedFile: File | null = null;
+  imagePreview: string | null = null;
+
   constructor() {
     this.profileForm = this.fb.group({
       name: ['', [Validators.required]],
@@ -39,10 +42,26 @@ export class ProfileComponent implements OnInit {
           name: user.name,
           email: user.email
         });
+        if (user.profile_image_url) {
+          this.imagePreview = user.profile_image_url;
+        }
       } else {
         this.router.navigate(['/login']);
       }
     });
+  }
+
+  onFileSelected(event: any): void {
+    const file = event.target.files[0];
+    if (file) {
+      this.selectedFile = file;
+      // Previsualización
+      const reader = new FileReader();
+      reader.onload = () => {
+        this.imagePreview = reader.result as string;
+      };
+      reader.readAsDataURL(file);
+    }
   }
 
   passwordMatchValidator(g: FormGroup) {
@@ -60,10 +79,18 @@ export class ProfileComponent implements OnInit {
     this.successMessage = '';
     this.errorMessage = '';
 
-    const formData = { ...this.profileForm.value };
-    if (!formData.password) {
-      delete formData.password;
-      delete formData.password_confirmation;
+    const formData = new FormData();
+    formData.append('name', this.profileForm.get('name')?.value);
+    formData.append('email', this.profileForm.get('email')?.value);
+    
+    const password = this.profileForm.get('password')?.value;
+    if (password) {
+      formData.append('password', password);
+      formData.append('password_confirmation', this.profileForm.get('password_confirmation')?.value);
+    }
+
+    if (this.selectedFile) {
+      formData.append('avatar', this.selectedFile);
     }
 
     this.authService.updateProfile(formData).subscribe({
@@ -72,6 +99,7 @@ export class ProfileComponent implements OnInit {
         this.successMessage = '¡Perfil actualizado con éxito!';
         this.profileForm.get('password')?.reset();
         this.profileForm.get('password_confirmation')?.reset();
+        this.selectedFile = null;
       },
       error: (err) => {
         this.loading = false;

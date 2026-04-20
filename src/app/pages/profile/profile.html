@@ -9,9 +9,16 @@
         <div class="col-lg-4 mb-4">
             <div class="profile-info-card h-100">
                 <div class="profile-avatar-container">
-                    <div class="profile-avatar">
-                        {{ user?.name?.charAt(0).toUpperCase() }}
+                    <div class="profile-avatar-wrapper">
+                        <img *ngIf="imagePreview" [src]="imagePreview" alt="Avatar" class="profile-img-preview">
+                        <div *ngIf="!imagePreview" class="profile-avatar">
+                            {{ user?.name?.charAt(0).toUpperCase() }}
+                        </div>
+                        <button class="btn-avatar-edit" (click)="fileInput.click()">
+                            <i class="fa-solid fa-camera"></i>
+                        </button>
                     </div>
+                    <input type="file" #fileInput (change)="onFileSelected($event)" accept="image/*" hidden>
                 </div>
                 <h3 class="text-center mt-3 fw-extrabold">{{ user?.name }}</h3>
                 <p class="text-center text-muted mb-4">{{ user?.email }}</p>

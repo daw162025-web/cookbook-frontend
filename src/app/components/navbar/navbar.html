@@ -55,8 +55,12 @@
             <div class="dropdown d-flex justify-content-center mt-2 mt-xl-0 ms-xl-2 position-relative">
                 <a href="javascript:void(0)" class="d-flex align-items-center text-decoration-none text-muted gap-2"
                     (click)="toggleUserDropdown($event)">
-                    <img [src]="'https://ui-avatars.com/api/?name=' + ((authService.currentUser$ | async)?.name || 'U') + '&background=00bcd4&color=fff'" alt="Avatar" width="38"
-                        height="38" class="rounded-circle shadow-sm">
+                    <img *ngIf="(authService.currentUser$ | async)?.profile_image_url; else defaultAvatar" 
+                         [src]="(authService.currentUser$ | async)?.profile_image_url" alt="Avatar" width="38" height="38" class="rounded-circle shadow-sm object-fit-cover">
+                    <ng-template #defaultAvatar>
+                        <img [src]="'https://ui-avatars.com/api/?name=' + ((authService.currentUser$ | async)?.name || 'U') + '&background=00bcd4&color=fff'" alt="Avatar" width="38"
+                            height="38" class="rounded-circle shadow-sm">
+                    </ng-template>
                     <i class="fa-solid fa-chevron-down small"></i>
                 </a>
                 

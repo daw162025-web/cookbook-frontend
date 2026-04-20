@@ -91,7 +91,8 @@ export class AuthService {
 
   updateProfile(userData: any): Observable<any> {
     const token = this.getToken();
-    return this.http.put(`${this.apiUrl}/profile`, userData, {
+    // Usamos POST para que Laravel maneje bien el multipart/form-data (archivos)
+    return this.http.post(`${this.apiUrl}/profile`, userData, {
       headers: {
         Authorization: `Bearer ${token}`
       }
