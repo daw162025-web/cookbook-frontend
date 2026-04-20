@@ -8,8 +8,8 @@
     </button>
   </div>
 
-  <div class="recipe-body-content flex-grow-1 d-flex flex-column p-3">
-    <div class="recipe-meta-top d-flex align-items-center justify-content-between mb-2">
+  <div class="recipe-body-content flex-grow-1 d-flex flex-column p-2">
+    <div class="recipe-meta-top d-flex align-items-center justify-content-between mb-1">
       <span class="recipe-rating-badge">
         <i class="fa-solid fa-star me-1"></i>{{ recipe.avg_rating || recipe.rating || '0.0' }}
       </span>
@@ -18,9 +18,9 @@
       </span>
     </div>
     
-    <h3 class="recipe-title-modern mb-2">{{ recipe.title }}</h3>
+    <h3 class="recipe-title-modern mb-1">{{ recipe.title }}</h3>
     
-    <p class="recipe-author-sub mb-3" *ngIf="recipe.user?.name">
+    <p class="recipe-author-sub mb-2" *ngIf="recipe.user?.name">
       <span>por</span> {{ recipe.user?.name }}
     </p>
 
