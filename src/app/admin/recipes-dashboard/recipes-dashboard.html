@@ -90,10 +90,10 @@
       <div class="col-md-4">
         <label class="form-label fw-bold">Dificultad</label>
         <select class="form-select" [(ngModel)]="selectedRecipe.difficulty">
-          <option value="Fácil">Fácil</option>
-          <option value="Media">Media</option>
-          <option value="Difícil">Difícil</option>
-        </select>
+            <option value="Fácil">Fácil</option>
+            <option value="Media">Media</option>
+            <option value="Difícil">Difícil</option>
+            </select>
       </div>
     </div>
 
@@ -112,18 +112,15 @@
       </div>
       <div *ngFor="let ing of selectedRecipe.ingredients; let i = index" class="row g-2 mb-2">
         <div class="col-6">
-          <input type="text" class="form-control form-control-sm" placeholder="Nombre" [(ngModel)]="ing.name">
+            <input type="text" class="form-control form-control-sm" [(ngModel)]="ing.name">
         </div>
         <div class="col-3">
-          <input type="text" class="form-control form-control-sm" placeholder="Cant." [(ngModel)]="ing.pivot.quantity">
+            <input type="text" class="form-control form-control-sm" [(ngModel)]="ing.pivot.quantity">
         </div>
         <div class="col-2">
-          <input type="text" class="form-control form-control-sm" placeholder="Ud." [(ngModel)]="ing.pivot.unit">
+            <input type="text" class="form-control form-control-sm" [(ngModel)]="ing.pivot.unit">
         </div>
-        <div class="col-1">
-          <button class="btn btn-sm btn-link text-danger" (click)="removeIngredient(i)"><i class="fa-solid fa-trash"></i></button>
         </div>
-      </div>
     </div>
 
     <div class="mb-4">

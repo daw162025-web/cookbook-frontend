@@ -33,12 +33,22 @@ export class RecipesDashboard implements OnInit {
   openEditModal(recipe: any) {
     // Creamos una copia profunda para no romper la tabla
     this.selectedRecipe = JSON.parse(JSON.stringify(recipe));
-    
+    this.selectedRecipe.difficulty = recipe.difficulty;
     // Mapeamos los IDs de las categorías actuales para el multiselector
     this.selectedRecipe.category_ids = recipe.categories.map((c: any) => c.id);
     
-    // Aseguramos que los ingredientes tengan la estructura correcta
-    if (!this.selectedRecipe.ingredients) this.selectedRecipe.ingredients = [];
+    if (recipe.ingredients) {
+      this.selectedRecipe.ingredients = recipe.ingredients.map((ing: any) => ({
+        id: ing.id,
+        name: ing.name,
+        pivot: {
+          quantity: ing.pivot?.quantity || '',
+          unit: ing.pivot?.unit || ''
+        }
+      }));
+    } else {
+      this.selectedRecipe.ingredients = [];
+    }
   }
 
   addIngredient() {
