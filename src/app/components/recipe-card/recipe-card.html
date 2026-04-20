@@ -13,9 +13,7 @@
       <span class="recipe-rating-badge">
         <i class="fa-solid fa-star me-1"></i>{{ recipe.avg_rating || recipe.rating || '0.0' }}
       </span>
-      <span class="recipe-category-tag" *ngIf="recipe.categories && recipe.categories.length > 0">
-        {{ recipe.categories[0].name }}
-      </span>
+      
     </div>
     
     <h3 class="recipe-title-modern mb-1">{{ recipe.title }}</h3>
