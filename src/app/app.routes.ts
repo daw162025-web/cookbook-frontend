@@ -45,7 +45,7 @@ export const routes: Routes = [
       },
       { path: 'users', component: UsersDashboard },
       { path: 'recipes', component: RecipesDashboard }, 
-      { path: 'admin/comments', component: CommentsDashboard },
+      { path: 'comments', component: CommentsDashboard },
       {
         path: '', redirectTo: 'dashboard', pathMatch: 'full'
       }
