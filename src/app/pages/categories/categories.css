@@ -1,0 +1,69 @@
+/* Transición para el icono de flecha */
+.toggle-icon {
+    font-size: 0.8rem;
+    transition: transform 0.3s ease;
+    color: #888;
+}
+
+.cat-item.active .toggle-icon {
+    color: white;
+}
+
+.rotated {
+    transform: rotate(180deg);
+}
+
+/* Contenedor de subcategorías con animación de altura */
+.child-items {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.4s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.3s ease;
+    opacity: 0;
+    margin-left: 1rem;
+}
+
+.child-items.show {
+    max-height: 500px; /* Suficientemente grande para las subcategorías */
+    opacity: 1;
+    margin-bottom: 0.5rem;
+}
+
+/* Estilo específico para items hijos */
+.child-item {
+    padding-left: 1.5rem !important;
+    font-size: 14px !important;
+    opacity: 0.9;
+}
+
+/* Ajustes para el sidebar scroll en escritorio */
+@media (min-width: 992px) {
+    .sidebar-scroll {
+        max-height: 70vh;
+        overflow-y: auto;
+        padding-right: 5px;
+    }
+
+    .sidebar-scroll::-webkit-scrollbar {
+        width: 4px;
+    }
+
+    .sidebar-scroll::-webkit-scrollbar-track {
+        background: transparent;
+    }
+
+    .sidebar-scroll::-webkit-scrollbar-thumb {
+        background: #ddd;
+        border-radius: 10px;
+    }
+}
+
+/* En móvil, queremos que se vea bien el scroll horizontal si es necesario, 
+   pero la estructura colapsable suele ser mejor en vertical. 
+   El CSS global ya tiene un media query que cambia flex-direction a row.
+   Voy a forzar que en la página de categorías se mantenga vertical si queremos el colapsable funcional,
+   o al menos que no rompa.
+*/
+
+.category-group {
+    width: 100%;
+}
