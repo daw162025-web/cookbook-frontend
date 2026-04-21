@@ -1,4 +1,4 @@
-import { Component, OnInit, inject } from '@angular/core';
+import { Component, OnInit, inject, ChangeDetectorRef } from '@angular/core'; 
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from '../../services/auth.service';
@@ -15,6 +15,7 @@ export class ProfileComponent implements OnInit {
   private fb = inject(FormBuilder);
   private authService = inject(AuthService);
   private router = inject(Router);
+  private cdr = inject(ChangeDetectorRef); 
 
   profileForm: FormGroup;
   user: any;
@@ -45,6 +46,7 @@ export class ProfileComponent implements OnInit {
         if (user.profile_image_url) {
           this.imagePreview = user.profile_image_url;
         }
+        this.cdr.detectChanges(); 
       } else {
         this.router.navigate(['/login']);
       }
@@ -55,10 +57,10 @@ export class ProfileComponent implements OnInit {
     const file = event.target.files[0];
     if (file) {
       this.selectedFile = file;
-      // Previsualización
       const reader = new FileReader();
       reader.onload = () => {
         this.imagePreview = reader.result as string;
+        this.cdr.detectChanges(); 
       };
       reader.readAsDataURL(file);
     }
@@ -100,10 +102,12 @@ export class ProfileComponent implements OnInit {
         this.profileForm.get('password')?.reset();
         this.profileForm.get('password_confirmation')?.reset();
         this.selectedFile = null;
+        this.cdr.detectChanges(); 
       },
       error: (err) => {
         this.loading = false;
         this.errorMessage = err.error.message || 'Error al actualizar el perfil';
+        this.cdr.detectChanges(); 
       }
     });
   }
