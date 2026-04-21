@@ -27,15 +27,20 @@ export class CategoriesComponent implements OnInit {
         console.log('Categories recibidas:', data);
         this.categories = Array.isArray(data) ? data : (data.categories || data.data || []);
         
-        // Que cargue por defecto cuando entre
         if (this.categories.length > 0) {
-          const firstCat = this.categories[0];
-          // Expandimos la primera categoría si tiene hijos
-          if (firstCat.children && firstCat.children.length > 0) {
-            this.expandedCategories.add(firstCat.id);
-            this.selectCategory(firstCat.children[0].id);
+          // Buscamos específicamente la categoría con ID 1
+          const categoryId1 = this.categories.find(c => c.id === 1);
+
+          if (categoryId1) {
+            // Si la encontramos, la seleccionamos
+            // Si quieres que se expanda si tiene hijos:
+            if (categoryId1.children && categoryId1.children.length > 0) {
+              this.expandedCategories.add(categoryId1.id);
+            }
+            this.selectCategory(1);
           } else {
-            this.selectCategory(firstCat.id);
+            // Fallback: Si por algún motivo el ID 1 no existe, carga la primera disponible
+            this.selectCategory(this.categories[0].id);
           }
         }
         this.cdr.detectChanges();
