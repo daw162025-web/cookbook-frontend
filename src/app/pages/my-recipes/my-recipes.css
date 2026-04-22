@@ -2,7 +2,6 @@
     background-color: var(--bg-light);
     border-radius: 20px;
     padding: 2.5rem;
-    text-align: left;
     border: 1px solid var(--border-color);
 }
 
@@ -11,6 +10,10 @@
     font-weight: 800;
     color: var(--text-dark);
     margin-bottom: 0.5rem;
+}
+
+.text-muted{
+      text-align: center;
 }
 
 .recipe-manage-card {
