@@ -63,7 +63,7 @@
                         <i class="fa-regular fa-clock text-brand"></i>
                         <div>
                             <span class="d-block small text-muted lh-1">Tiempo</span>
-                            <span class="fw-bold">{{ recipe.preparation_time || '30' }} min</span>
+                            <span class="fw-bold">{{ recipe.duration || '30' }} min</span>
                         </div>
                     </div>
 
@@ -72,14 +72,6 @@
                         <div>
                             <span class="d-block small text-muted lh-1">Dificultad</span>
                             <span class="fw-bold text-capitalize">{{ recipe.difficulty || 'Media' }}</span>
-                        </div>
-                    </div>
-
-                    <div class="meta-item d-flex align-items-center gap-2 px-3 py-2 rounded-3 bg-white border">
-                        <i class="fa-solid fa-fire-burner text-brand"></i>
-                        <div>
-                            <span class="d-block small text-muted lh-1">Cocción</span>
-                            <span class="fw-bold">{{ recipe.cooking_time || '15' }} min</span>
                         </div>
                     </div>
 
