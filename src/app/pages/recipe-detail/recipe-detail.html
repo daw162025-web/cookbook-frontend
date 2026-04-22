@@ -57,6 +57,40 @@
                 <p class="recipe-desc-box fs-5 text-muted mb-4" style="line-height: 1.6;">
                     {{ recipe.description }}
                 </p>
+                <div class="recipe-meta-badges d-flex flex-wrap gap-3 mb-5">
+    
+                    <div class="meta-item d-flex align-items-center gap-2 px-3 py-2 rounded-3 bg-white border">
+                        <i class="fa-regular fa-clock text-brand"></i>
+                        <div>
+                            <span class="d-block small text-muted lh-1">Tiempo</span>
+                            <span class="fw-bold">{{ recipe.preparation_time || '30' }} min</span>
+                        </div>
+                    </div>
+
+                    <div class="meta-item d-flex align-items-center gap-2 px-3 py-2 rounded-3 bg-white border">
+                        <i class="fa-solid fa-layer-group text-brand"></i>
+                        <div>
+                            <span class="d-block small text-muted lh-1">Dificultad</span>
+                            <span class="fw-bold text-capitalize">{{ recipe.difficulty || 'Media' }}</span>
+                        </div>
+                    </div>
+
+                    <div class="meta-item d-flex align-items-center gap-2 px-3 py-2 rounded-3 bg-white border">
+                        <i class="fa-solid fa-fire-burner text-brand"></i>
+                        <div>
+                            <span class="d-block small text-muted lh-1">Cocción</span>
+                            <span class="fw-bold">{{ recipe.cooking_time || '15' }} min</span>
+                        </div>
+                    </div>
+
+                    <div *ngIf="recipe.servings" class="meta-item d-flex align-items-center gap-2 px-3 py-2 rounded-3 bg-white border">
+                        <i class="fa-solid fa-users text-brand"></i>
+                        <div>
+                            <span class="d-block small text-muted lh-1">Raciones</span>
+                            <span class="fw-bold">{{ recipe.servings }} pers.</span>
+                        </div>
+                    </div>
+                </div>
             </div>
 
             <!-- Bloque Pasos -->
