@@ -48,15 +48,35 @@ export class RecipeCardComponent {
 
       // Caso 1: Es un Array (como debería ser)
       if (Array.isArray(recipe.image_url)) {
-          url = recipe.image_url[0];
+          let first = recipe.image_url[0];
+          
+          // Si el primer elemento es un string que parece JSON, lo decodificamos (doble encoding legacy)
+          if (typeof first === 'string' && first.startsWith('[')) {
+              try {
+                  const decoded = JSON.parse(first);
+                  url = Array.isArray(decoded) ? decoded[0] : first;
+              } catch (e) {
+                  url = first;
+              }
+          } else {
+              url = first;
+          }
       } 
       // Caso 2: Es un string (porque se guardó mal o viene de un seeder antiguo)
       else if (typeof recipe.image_url === 'string') {
-          // Limpiamos corchetes, comillas y barras que pone a veces el seeder o el JSON
-          url = recipe.image_url.replace(/[\[\]"\\ ]/g, '').split(',')[0];
+          if (recipe.image_url.startsWith('[')) {
+              try {
+                  const decoded = JSON.parse(recipe.image_url);
+                  url = Array.isArray(decoded) ? decoded[0] : recipe.image_url;
+              } catch (e) {
+                  url = recipe.image_url.replace(/[\[\]"\\ ]/g, '').split(',')[0];
+              }
+          } else {
+              url = recipe.image_url;
+          }
       }
 
       // Si después de limpiar no hay nada, ponemos el placeholder
-      return url && url.startsWith('http') ? url : fallback;
+      return url && typeof url === 'string' && url.startsWith('http') ? url : fallback;
   }
 }
