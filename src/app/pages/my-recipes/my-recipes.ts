@@ -4,11 +4,12 @@ import { RouterModule } from '@angular/router';
 import { RecipeService } from '../../services/recipe.service';
 import { Recipe } from '../../models/recipe';
 import { DifficultyPipe } from '../../pipes/difficulty-pipe';
+import { ImageUrlPipe } from '../../pipes/image-url.pipe';
 
 @Component({
   selector: 'app-my-recipes',
   standalone: true,
-  imports: [CommonModule, RouterModule, DifficultyPipe],
+  imports: [CommonModule, RouterModule, DifficultyPipe, ImageUrlPipe],
   templateUrl: './my-recipes.html',
   styleUrl: './my-recipes.css'
 })

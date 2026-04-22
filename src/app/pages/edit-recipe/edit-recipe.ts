@@ -88,18 +88,29 @@ export class EditRecipeComponent implements OnInit {
         this.recipeForm.controls['category_ids'].setValue(catsIds);
 
         // Guardar array de imagenes antiguas de forma segura
-        if (recipe.image_url) {
-          if (Array.isArray(recipe.image_url)) {
-            this.originalImages = [...recipe.image_url];
-          } else {
-            try {
-              const decoded = JSON.parse(recipe.image_url);
-              this.originalImages = Array.isArray(decoded) ? decoded : [recipe.image_url];
-            } catch (e) {
-              this.originalImages = [recipe.image_url];
+        // Función para limpiar URLs de forma robusta
+        const cleanUrlArray = (val: any): string[] => {
+          if (!val) return [];
+          let current = val;
+          const maxAttempts = 3;
+          let attempts = 0;
+          while (attempts < maxAttempts) {
+            if (Array.isArray(current)) {
+              if (current.length === 1 && typeof current[0] === 'string' && current[0].startsWith('[')) {
+                try { current = JSON.parse(current[0]); continue; } catch { break; }
+              }
+              return current.map(item => typeof item === 'string' ? item.replace(/[\[\]"\\ ]/g, '') : item);
             }
+            if (typeof current === 'string' && current.startsWith('[')) {
+              try { current = JSON.parse(current); continue; } catch { return [current.replace(/[\[\]"\\ ]/g, '')]; }
+            }
+            break;
+            attempts++;
           }
-        }
+          return Array.isArray(current) ? current : [String(current).replace(/[\[\]"\\ ]/g, '')];
+        };
+
+        this.originalImages = cleanUrlArray(recipe.image_url);
 
         // Rellenar ingredientes
         this.ingredients.clear();

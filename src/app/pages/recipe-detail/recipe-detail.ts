@@ -34,19 +34,39 @@ export class RecipeDetailComponent implements OnInit {
         next: (data) => {
           this.recipe = data;
           this.userRating = data.user_rating || 0;
-          if (Array.isArray(data.image_url)) {
-            this.images = data.image_url;
-          } else if (typeof data.image_url === 'string') {
-            try {
-              const parsed = JSON.parse(data.image_url);
-              this.images = Array.isArray(parsed) ? parsed : [parsed];
-            } catch {
-              this.images = data.image_url ? [data.image_url] : [];
-            }
-          } else {
-            this.images = [];
-          }
+          // Función para limpiar URLs de forma robusta
+          const cleanUrl = (val: any): string[] => {
+            if (!val) return [];
+            let current = val;
+            const maxAttempts = 3;
+            let attempts = 0;
 
+            while (attempts < maxAttempts) {
+              if (Array.isArray(current)) {
+                // Si es un array de un solo elemento que parece JSON, bajamos
+                if (current.length === 1 && typeof current[0] === 'string' && current[0].startsWith('[')) {
+                  try {
+                    current = JSON.parse(current[0]);
+                    continue;
+                  } catch { break; }
+                }
+                return current.map(item => typeof item === 'string' ? item.replace(/[\[\]"\\ ]/g, '') : item);
+              }
+              if (typeof current === 'string' && current.startsWith('[')) {
+                try {
+                  current = JSON.parse(current);
+                  continue;
+                } catch {
+                  return [current.replace(/[\[\]"\\ ]/g, '')];
+                }
+              }
+              break;
+              attempts++;
+            }
+            return Array.isArray(current) ? current : [String(current).replace(/[\[\]"\\ ]/g, '')];
+          };
+
+          this.images = cleanUrl(data.image_url);
           this.loading = false;
           this.cdr.detectChanges();
         },

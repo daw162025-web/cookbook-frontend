@@ -44,39 +44,50 @@ export class RecipeCardComponent {
       const fallback = 'assets/placeholder.jpg';
       if (!recipe || !recipe.image_url) return fallback;
 
-      let url = '';
+      let url: any = '';
 
-      // Caso 1: Es un Array (como debería ser)
+      // 1. Extraer la primera URL si es un array
       if (Array.isArray(recipe.image_url)) {
-          let first = recipe.image_url[0];
-          
-          // Si el primer elemento es un string que parece JSON, lo decodificamos (doble encoding legacy)
-          if (typeof first === 'string' && first.startsWith('[')) {
+          url = recipe.image_url[0];
+      } else {
+          url = recipe.image_url;
+      }
+
+      // 2. Limpieza recursiva de strings que parecen JSON o arrays anidados
+      const maxAttempts = 3;
+      let attempts = 0;
+
+      while (attempts < maxAttempts) {
+          // Si es un array, seguir bajando
+          if (Array.isArray(url)) {
+              url = url[0];
+          } 
+          // Si es un string que parece JSON, intentar parsear
+          else if (typeof url === 'string' && (url.startsWith('[') || url.startsWith('"'))) {
               try {
-                  const decoded = JSON.parse(first);
-                  url = Array.isArray(decoded) ? decoded[0] : first;
+                  url = JSON.parse(url);
+                  continue; // Volver a evaluar el resultado
               } catch (e) {
-                  url = first;
+                  // Si falla el parseo pero tiene corchetes, limpiar a mano
+                  url = url.replace(/[\[\]"\\ ]/g, '');
+                  break;
               }
           } else {
-              url = first;
+              break;
           }
-      } 
-      // Caso 2: Es un string (porque se guardó mal o viene de un seeder antiguo)
-      else if (typeof recipe.image_url === 'string') {
-          if (recipe.image_url.startsWith('[')) {
-              try {
-                  const decoded = JSON.parse(recipe.image_url);
-                  url = Array.isArray(decoded) ? decoded[0] : recipe.image_url;
-              } catch (e) {
-                  url = recipe.image_url.replace(/[\[\]"\\ ]/g, '').split(',')[0];
-              }
-          } else {
-              url = recipe.image_url;
+          attempts++;
+      }
+
+      // 3. Limpieza final de caracteres residuales (como escapes de slashes \/)
+      if (typeof url === 'string') {
+          url = url.replace(/[\[\]"\\ ]/g, '');
+          // Asegurar que empiece por http (a veces el replace puede quitar demasiado si no se tiene cuidado, 
+          // pero Cloudinary siempre usa http)
+          if (!url.startsWith('http') && url.includes('http')) {
+              url = url.substring(url.indexOf('http'));
           }
       }
 
-      // Si después de limpiar no hay nada, ponemos el placeholder
-      return url && typeof url === 'string' && url.startsWith('http') ? url : fallback;
+      return (typeof url === 'string' && url.startsWith('http')) ? url : fallback;
   }
 }
