@@ -39,4 +39,24 @@ export class RecipeCardComponent {
       }
     });
   }
+  
+  cleanImageUrl(recipe: any): string {
+      const fallback = 'assets/placeholder.jpg';
+      if (!recipe || !recipe.image_url) return fallback;
+
+      let url = '';
+
+      // Caso 1: Es un Array (como debería ser)
+      if (Array.isArray(recipe.image_url)) {
+          url = recipe.image_url[0];
+      } 
+      // Caso 2: Es un string (porque se guardó mal o viene de un seeder antiguo)
+      else if (typeof recipe.image_url === 'string') {
+          // Limpiamos corchetes, comillas y barras que pone a veces el seeder o el JSON
+          url = recipe.image_url.replace(/[\[\]"\\ ]/g, '').split(',')[0];
+      }
+
+      // Si después de limpiar no hay nada, ponemos el placeholder
+      return url && url.startsWith('http') ? url : fallback;
+  }
 }

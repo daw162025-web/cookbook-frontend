@@ -1,6 +1,6 @@
 <article class="recipe-card card-premium shadow-sm">
   <div class="recipe-img-container">
-    <img [src]="(recipe.image_url && recipe.image_url.length > 0) ? recipe.image_url[0] : 'assets/no-image.jpg'" 
+    <img [src]="cleanImageUrl(recipe)"
          class="recipe-img-top" 
          alt="{{recipe.title}}">
     <button class="btn-favorite-overlay" (click)="toggleFavorite($event, recipe)" [attr.aria-label]="recipe.is_favorite ? 'Quitar de favoritos' : 'Añadir a favoritos'">

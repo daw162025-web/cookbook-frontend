@@ -79,11 +79,24 @@ export class CreateRecipeComponent implements OnInit {
   }
 
   removeImage(index: number) {
-    if (this.images.length > 1) {
-      this.images.removeAt(index);
-      delete this.selectedFiles[index];
-    }
+  if (this.images.length > 1) {
+    this.images.removeAt(index);
+    
+    // Reajustar el objeto selectedFiles para que coincida con los nuevos índices del FormArray
+    const newFiles: { [key: number]: File } = {};
+    let newIdx = 0;
+    // Esto es una forma rápida de reindexar
+    Object.keys(this.selectedFiles).forEach(key => {
+        const k = parseInt(key);
+        if (k !== index) {
+            // Si el archivo estaba después del borrado, le bajamos un índice
+            const targetIdx = k > index ? k - 1 : k;
+            newFiles[targetIdx] = this.selectedFiles[k];
+        }
+    });
+    this.selectedFiles = newFiles;
   }
+}
 
   onFileChange(event: any, index: number) {
     if (event.target.files && event.target.files.length > 0) {
@@ -174,10 +187,15 @@ export class CreateRecipeComponent implements OnInit {
       formData.append('steps', JSON.stringify(formValue.steps));
 
       // añadir los files
-      Object.keys(this.selectedFiles).forEach((indexStr) => {
-        const i = parseInt(indexStr, 10);
-        formData.append('images[]', this.selectedFiles[i]);
-      });
+      const fileKeys = Object.keys(this.selectedFiles);
+      if (fileKeys.length > 0) {
+          fileKeys.forEach((key) => {
+              const file = this.selectedFiles[+key];
+              if (file) {
+                  formData.append('images[]', file);
+              }
+          });
+      }
 
       // llamar a laravel
       this.recipeService.createRecipe(formData).subscribe({
