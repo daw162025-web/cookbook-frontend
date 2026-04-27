@@ -156,6 +156,20 @@
     font-size: 12px;
 }
 
+.history-item:hover .btn-delete-history {
+    color: #dc3545 !important; 
+}
+
+.search-input {
+    padding-right: 35px; 
+}
+
+/* Efecto suave para los botones */
+.btn-delete-history:hover {
+    transform: scale(1.1);
+    transition: 0.2s;
+}
+
 /* Responsive */
 @media (max-width: 900px) {
   /* Hacemos visible el botón hamburguesa */

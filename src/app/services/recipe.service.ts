@@ -58,4 +58,7 @@ export class RecipeService {
   getSearchHistory() {
     return this.http.get<any[]>(`${this.apiUrl}/search-history`);
   }
+  deleteSearchHistory(id: number): Observable<any> {
+    return this.http.delete(`${this.apiUrl}/search-history/${id}`);
+  }
 }

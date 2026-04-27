@@ -44,21 +44,35 @@
         <div class="d-flex flex-column flex-xl-row align-items-xl-center gap-3 gap-xl-4 mt-3 mt-xl-0 ms-xl-auto">
           <div class="search-container w-100 position-relative">
             <i class="fa-solid fa-magnifying-glass search-icon"></i>
+            
             <input type="text" class="form-control search-input py-2" 
                   placeholder="Buscar recetas"
                   [formControl]="searchControl" 
                   (keyup.enter)="onSearch()"
                   (focus)="onFocusSearch()">
 
+            <button *ngIf="searchControl.value" 
+                    (click)="clearSearch()"
+                    class="position-absolute end-0 top-50 translate-middle-y border-0 bg-transparent me-2 text-muted">
+              <i class="fa-solid fa-xmark"></i>
+            </button>
+
             <div *ngIf="showHistory && searchHistory.length > 0" 
-                class="search-history-dropdown shadow-sm border rounded-3 position-absolute w-100 bg-white z-3 mt-1">
-              <div class="p-2 small text-muted fw-bold border-bottom">Búsquedas recientes</div>
+                class="search-history-dropdown shadow border rounded-3 position-absolute w-100 bg-white z-3 mt-1">
+              <div class="p-2 small text-muted fw-bold border-bottom d-flex justify-content-between">
+                <span>Búsquedas recientes</span>
+              </div>
               <ul class="list-unstyled mb-0">
                 <li *ngFor="let item of searchHistory" 
-                    (click)="selectHistory(item.search_term)"
-                    class="p-2 history-item d-flex align-items-center gap-2 cursor-pointer">
-                  <i class="fa-regular fa-clock text-muted"></i>
-                  <span>{{ item.search_term }}</span>
+                    class="p-2 history-item d-flex align-items-center justify-content-between cursor-pointer">
+                  <div class="d-flex align-items-center gap-2 w-100" (click)="selectHistory(item.search_term)">
+                    <i class="fa-regular fa-clock text-muted"></i>
+                    <span>{{ item.search_term }}</span>
+                  </div>
+                  <button (click)="deleteHistoryItem($event, item.id)" 
+                          class="btn-delete-history border-0 bg-transparent text-muted px-2">
+                    <i class="fa-solid fa-trash-can small"></i>
+                  </button>
                 </li>
               </ul>
             </div>

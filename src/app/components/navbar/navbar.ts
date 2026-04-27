@@ -26,13 +26,6 @@ export class Navbar implements OnInit {
   public authService = inject(AuthService);
   private recipeService = inject(RecipeService);
 
-  @HostListener('document:click', ['$event'])
-  onDocumentClick(event: Event) {
-    // Si se hace click en otro sitio, cerramos el dropdown
-    this.isUserDropdownOpen = false;
-    this.showHistory = false;
-  }
-
   ngOnInit() {
     this.loadSearchHistory();
 
@@ -119,6 +112,28 @@ export class Navbar implements OnInit {
           this.closeMenu();
         }
       });
+    }
+  }
+
+  deleteHistoryItem(event: Event, id: number) {
+    event.stopPropagation(); 
+    this.recipeService.deleteSearchHistory(id).subscribe(() => {
+      this.loadSearchHistory(); 
+    });
+  }
+
+  // Limpiar el input con la X
+  clearSearch() {
+    this.searchControl.setValue('');
+    this.showHistory = true; 
+  }
+
+  @HostListener('document:click', ['$event'])
+  onDocumentClick(event: Event) {
+    const target = event.target as HTMLElement;
+    if (!target.closest('.search-container')) {
+      this.showHistory = false;
+      this.isUserDropdownOpen = false;
     }
   }
 }
