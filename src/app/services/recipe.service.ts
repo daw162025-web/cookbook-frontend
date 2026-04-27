@@ -52,4 +52,7 @@ export class RecipeService {
   addComment(recipeId: number, content: string): Observable<any> {
     return this.http.post(`${this.apiUrl}/recipes/${recipeId}/comments`, { content });
   }
+  saveHistory(query: string) {
+    return this.http.post(`${this.apiUrl}/recipes/search-history`, { query });
+  }
 }

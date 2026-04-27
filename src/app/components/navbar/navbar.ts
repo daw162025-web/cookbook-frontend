@@ -4,6 +4,8 @@ import { RouterModule, Router } from '@angular/router';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
 import { AuthService } from '../../services/auth.service';
+import { RecipeService } from '../../services/recipe.service';
+import { take } from 'rxjs/operators';
 
 @Component({
   selector: 'app-navbar',
@@ -18,6 +20,7 @@ export class Navbar implements OnInit {
   searchControl = new FormControl('');
   private router = inject(Router);
   public authService = inject(AuthService);
+  private recipeService = inject(RecipeService);
 
   @HostListener('document:click', ['$event'])
   onDocumentClick(event: Event) {
@@ -56,10 +59,21 @@ export class Navbar implements OnInit {
   }
 
   onSearch() {
-    const query = this.searchControl.value;
-    if (query && query.trim() !== '') {
-      this.router.navigate(['/search'], { queryParams: { q: query.trim() } });
+    const query = this.searchControl.value?.trim();
+    
+    if (query && query !== '') {
+      this.router.navigate(['/search'], { queryParams: { q: query } });
       this.closeMenu();
+
+      // Solo guarda si hay un usuario logueado
+      this.authService.isLoggedIn$.pipe(take(1)).subscribe(isLoggedIn => {
+        if (isLoggedIn) {
+          this.recipeService.saveHistory(query).subscribe({
+            next: () => console.log('Historial guardado'),
+            error: (err) => console.error('Error al guardar historial', err)
+          });
+        }
+      });
     }
   }
 
