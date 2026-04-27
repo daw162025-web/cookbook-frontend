@@ -27,7 +27,14 @@ export class Navbar implements OnInit {
   private recipeService = inject(RecipeService);
 
   ngOnInit() {
-    this.loadSearchHistory();
+    // Escuchamos cambios en el login para cargar el historial específico del usuario
+    this.authService.isLoggedIn$.subscribe(isLoggedIn => {
+      if (isLoggedIn) {
+        this.loadSearchHistory(); 
+      } else {
+        this.searchHistory = []; // Limpiamos si no hay nadie logueado
+      }
+    });
 
     this.searchControl.valueChanges.pipe(
       debounceTime(400),
@@ -35,18 +42,19 @@ export class Navbar implements OnInit {
     ).subscribe(search_term => {
       if (search_term && search_term.trim() !== '') {
         this.router.navigate(['/search'], { queryParams: { q: search_term.trim() } });
-        this.showHistory = false; // Ocultamos historial mientras escribe
+        this.showHistory = false;
       }
     });
   }
 
   loadSearchHistory() {
-    this.authService.isLoggedIn$.pipe(take(1)).subscribe(isLoggedIn => {
-      if (isLoggedIn) {
-        this.recipeService.getSearchHistory().subscribe({
-          next: (history) => this.searchHistory = history,
-          error: (err) => console.error('Error cargando historial', err)
-        });
+    this.recipeService.getSearchHistory().subscribe({
+      next: (history) => {
+        this.searchHistory = history;
+      },
+      error: (err) => {
+        // Si da error 401 (no logueado), limpiamos el historial localmente
+        if (err.status === 401) this.searchHistory = [];
       }
     });
   }
@@ -85,14 +93,12 @@ export class Navbar implements OnInit {
     this.closeMenu();
     this.showHistory = false;
 
+    // Verificamos el estado antes de llamar al servicio
     this.authService.isLoggedIn$.pipe(take(1)).subscribe(isLoggedIn => {
       if (isLoggedIn) {
         this.recipeService.saveHistory(search_term).subscribe({
-          next: () => {
-            console.log('Historial guardado');
-            this.loadSearchHistory(); // Recargamos para que aparezca la nueva búsqueda
-          },
-          error: (err) => console.error('Error al guardar historial', err)
+          next: () => this.loadSearchHistory(), // Recarga el historial del usuario actual
+          error: (err) => console.error('Error al guardar', err)
         });
       }
     });
@@ -131,7 +137,7 @@ export class Navbar implements OnInit {
       error: (err) => console.error('Error al borrar', err)
     });
   }
-  
+
   // Limpiar el input con la X
   clearSearch() {
     this.searchControl.setValue('');
