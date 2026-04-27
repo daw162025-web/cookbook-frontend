@@ -77,7 +77,6 @@ export class Navbar implements OnInit {
   // Función para cerrar el menú al hacer clic en un enlace en móvil
   closeMenu() {
     this.isMenuOpen = false;
-    this.isUserDropdownOpen = false;
   }
 
   toggleUserDropdown(event: Event) {
