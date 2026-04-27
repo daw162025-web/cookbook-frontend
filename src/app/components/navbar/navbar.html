@@ -63,14 +63,12 @@
                 <span>Búsquedas recientes</span>
               </div>
               <ul class="list-unstyled mb-0">
-                <li *ngFor="let item of searchHistory" 
-                    class="p-2 history-item d-flex align-items-center justify-content-between cursor-pointer">
-                  <div class="d-flex align-items-center gap-2 w-100" (click)="selectHistory(item.search_term)">
-                    <i class="fa-regular fa-clock text-muted"></i>
+                <li *ngFor="let item of searchHistory" class="p-2 history-item ...">
+                  <div (click)="selectHistory(item.search_term)">
                     <span>{{ item.search_term }}</span>
                   </div>
-                  <button (click)="deleteHistoryItem($event, item.id)" 
-                          class="btn-delete-history border-0 bg-transparent text-muted px-2">
+                  
+                  <button (click)="deleteHistoryItem($event, item.id)" class="...">
                     <i class="fa-solid fa-trash-can small"></i>
                   </button>
                 </li>
