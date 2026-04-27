@@ -135,6 +135,27 @@
 }
 
 
+.search-history-dropdown {
+    top: 100%;
+    left: 0;
+}
+
+.history-item {
+    transition: background-color 0.2s;
+    cursor: pointer;
+    font-size: 14px;
+    color: #444;
+}
+
+.history-item:hover {
+    background-color: #f8f9fa;
+    color: var(--brand-color);
+}
+
+.history-item i {
+    font-size: 12px;
+}
+
 /* Responsive */
 @media (max-width: 900px) {
   /* Hacemos visible el botón hamburguesa */

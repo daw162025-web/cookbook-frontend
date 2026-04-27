@@ -55,4 +55,7 @@ export class RecipeService {
   saveHistory(query: string) {
     return this.http.post(`${this.apiUrl}/recipes/search-history`, { query });
   }
+  getSearchHistory() {
+    return this.http.get<any[]>(`${this.apiUrl}/recipes/search-history`);
+  }
 }

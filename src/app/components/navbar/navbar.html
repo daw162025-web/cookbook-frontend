@@ -42,10 +42,26 @@
         </ul>
 
         <div class="d-flex flex-column flex-xl-row align-items-xl-center gap-3 gap-xl-4 mt-3 mt-xl-0 ms-xl-auto">
-          <div class="search-container w-100">
+          <div class="search-container w-100 position-relative">
             <i class="fa-solid fa-magnifying-glass search-icon"></i>
-            <input type="text" class="form-control search-input py-2" placeholder="Buscar recetas"
-                   [formControl]="searchControl" (keyup.enter)="onSearch()">
+            <input type="text" class="form-control search-input py-2" 
+                  placeholder="Buscar recetas"
+                  [formControl]="searchControl" 
+                  (keyup.enter)="onSearch()"
+                  (focus)="onFocusSearch()">
+
+            <div *ngIf="showHistory && searchHistory.length > 0" 
+                class="search-history-dropdown shadow-sm border rounded-3 position-absolute w-100 bg-white z-3 mt-1">
+              <div class="p-2 small text-muted fw-bold border-bottom">Búsquedas recientes</div>
+              <ul class="list-unstyled mb-0">
+                <li *ngFor="let item of searchHistory" 
+                    (click)="selectHistory(item.query)"
+                    class="p-2 history-item d-flex align-items-center gap-2 cursor-pointer">
+                  <i class="fa-regular fa-clock text-muted"></i>
+                  <span>{{ item.query }}</span>
+                </li>
+              </ul>
+            </div>
           </div>
 
           <ng-container *ngIf="authService.isLoggedIn$ | async; else guestLinks">

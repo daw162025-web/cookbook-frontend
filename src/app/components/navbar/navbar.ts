@@ -17,6 +17,10 @@ import { take } from 'rxjs/operators';
 export class Navbar implements OnInit {
   isMenuOpen = false;
   isUserDropdownOpen = false;
+
+  searchHistory: any[] = []; 
+  showHistory = false;
+
   searchControl = new FormControl('');
   private router = inject(Router);
   public authService = inject(AuthService);
@@ -26,21 +30,44 @@ export class Navbar implements OnInit {
   onDocumentClick(event: Event) {
     // Si se hace click en otro sitio, cerramos el dropdown
     this.isUserDropdownOpen = false;
+    this.showHistory = false;
   }
 
   ngOnInit() {
+    this.loadSearchHistory();
+
     this.searchControl.valueChanges.pipe(
       debounceTime(400),
       distinctUntilChanged()
     ).subscribe(query => {
-      if (query !== null) {
-        if (query.trim() !== '') {
-          this.router.navigate(['/search'], { queryParams: { q: query.trim() } });
-        } else if (this.router.url.startsWith('/search')) {
-          this.router.navigate(['/search'], { queryParams: { q: '' } });
-        }
+      if (query && query.trim() !== '') {
+        this.router.navigate(['/search'], { queryParams: { q: query.trim() } });
+        this.showHistory = false; // Ocultamos historial mientras escribe
       }
     });
+  }
+
+  loadSearchHistory() {
+    this.authService.isLoggedIn$.pipe(take(1)).subscribe(isLoggedIn => {
+      if (isLoggedIn) {
+        this.recipeService.getSearchHistory().subscribe({
+          next: (history) => this.searchHistory = history,
+          error: (err) => console.error('Error cargando historial', err)
+        });
+      }
+    });
+  }
+
+  onFocusSearch() {
+    if (this.searchHistory.length > 0) {
+      this.showHistory = true;
+    }
+  }
+
+  selectHistory(query: string) {
+    this.searchControl.setValue(query);
+    this.onSearch();
+    this.showHistory = false;
   }
 
   toggleMenu() {
@@ -60,21 +87,23 @@ export class Navbar implements OnInit {
 
   onSearch() {
     const query = this.searchControl.value?.trim();
-    
-    if (query && query !== '') {
-      this.router.navigate(['/search'], { queryParams: { q: query } });
-      this.closeMenu();
+    if (!query) return;
 
-      // Solo guarda si hay un usuario logueado
-      this.authService.isLoggedIn$.pipe(take(1)).subscribe(isLoggedIn => {
-        if (isLoggedIn) {
-          this.recipeService.saveHistory(query).subscribe({
-            next: () => console.log('Historial guardado'),
-            error: (err) => console.error('Error al guardar historial', err)
-          });
-        }
-      });
-    }
+    this.router.navigate(['/search'], { queryParams: { q: query } });
+    this.closeMenu();
+    this.showHistory = false;
+
+    this.authService.isLoggedIn$.pipe(take(1)).subscribe(isLoggedIn => {
+      if (isLoggedIn) {
+        this.recipeService.saveHistory(query).subscribe({
+          next: () => {
+            console.log('Historial guardado');
+            this.loadSearchHistory(); // Recargamos para que aparezca la nueva búsqueda
+          },
+          error: (err) => console.error('Error al guardar historial', err)
+        });
+      }
+    });
   }
 
   logout() {
