@@ -53,9 +53,9 @@ export class RecipeService {
     return this.http.post(`${this.apiUrl}/recipes/${recipeId}/comments`, { content });
   }
   saveHistory(search_term: string) {
-    return this.http.post(`${this.apiUrl}/recipes/search-history`, { search_term });
+    return this.http.post(`${this.apiUrl}/search-history`, { search_term });
   }
   getSearchHistory() {
-    return this.http.get<any[]>(`${this.apiUrl}/recipes/search-history`);
+    return this.http.get<any[]>(`${this.apiUrl}/search-history`);
   }
 }
