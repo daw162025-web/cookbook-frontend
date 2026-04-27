@@ -39,9 +39,9 @@ export class Navbar implements OnInit {
     this.searchControl.valueChanges.pipe(
       debounceTime(400),
       distinctUntilChanged()
-    ).subscribe(query => {
-      if (query && query.trim() !== '') {
-        this.router.navigate(['/search'], { queryParams: { q: query.trim() } });
+    ).subscribe(search_term => {
+      if (search_term && search_term.trim() !== '') {
+        this.router.navigate(['/search'], { queryParams: { q: search_term.trim() } });
         this.showHistory = false; // Ocultamos historial mientras escribe
       }
     });
@@ -64,8 +64,8 @@ export class Navbar implements OnInit {
     }
   }
 
-  selectHistory(query: string) {
-    this.searchControl.setValue(query);
+  selectHistory(search_term: string) {
+    this.searchControl.setValue(search_term);
     this.onSearch();
     this.showHistory = false;
   }
@@ -86,16 +86,16 @@ export class Navbar implements OnInit {
   }
 
   onSearch() {
-    const query = this.searchControl.value?.trim();
-    if (!query) return;
+    const search_term = this.searchControl.value?.trim();
+    if (!search_term) return;
 
-    this.router.navigate(['/search'], { queryParams: { q: query } });
+    this.router.navigate(['/search'], { queryParams: { q: search_term } });
     this.closeMenu();
     this.showHistory = false;
 
     this.authService.isLoggedIn$.pipe(take(1)).subscribe(isLoggedIn => {
       if (isLoggedIn) {
-        this.recipeService.saveHistory(query).subscribe({
+        this.recipeService.saveHistory(search_term).subscribe({
           next: () => {
             console.log('Historial guardado');
             this.loadSearchHistory(); // Recargamos para que aparezca la nueva búsqueda
