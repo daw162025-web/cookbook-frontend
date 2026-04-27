@@ -124,15 +124,18 @@ export class Navbar implements OnInit {
   deleteHistoryItem(event: Event, id: number) {
     event.stopPropagation();
     
-    if (!id) {
-      console.error('No se puede borrar: ID no definido');
-      return;
-    }
+    if (!id) return;
 
     this.recipeService.deleteSearchHistory(id).subscribe({
       next: () => {
-        console.log('Borrado con éxito');
-        this.loadSearchHistory();
+        // Al borrar con éxito, actualizamos la lista local
+        this.recipeService.getSearchHistory().subscribe(history => {
+          this.searchHistory = history;
+          // Si ya no quedan búsquedas, cerramos el desplegable
+          if (this.searchHistory.length === 0) {
+            this.showHistory = false;
+          }
+        });
       },
       error: (err) => console.error('Error al borrar', err)
     });
@@ -140,8 +143,9 @@ export class Navbar implements OnInit {
 
   // Limpiar el input con la X
   clearSearch() {
-    this.searchControl.setValue('');
-    this.showHistory = true; 
+    this.searchControl.setValue(''); 
+    this.showHistory = true;         
+    this.router.navigate(['/']); 
   }
 
   @HostListener('document:click', ['$event'])
