@@ -268,3 +268,44 @@
     background: #e0e0e0;
     border-radius: 10px;
 }
+
+/* Asegura que el contenedor no corte el contenido que sobresale */
+.search-container {
+    position: relative;
+    z-index: 1060; 
+    overflow: visible !important; /* Crucial para que el dropdown no se corte */
+}
+
+.search-history-dropdown {
+    position: absolute;
+    top: 100%; 
+    left: 0;
+    right: 0;
+    background-color: white;
+    border: 1px solid #dee2e6;
+    border-radius: 12px;
+    margin-top: 8px;
+    box-shadow: 0 8px 30px rgba(0,0,0,0.15) !important;
+    
+    /* Prioridad máxima de capa */
+    z-index: 9999 !important; 
+    
+    /* Límite de altura y scroll */
+    max-height: 250px; 
+    overflow-y: auto;  
+    overflow-x: hidden;
+}
+
+/* Evita que los padres del buscador corten el dropdown */
+.navbar-collapse, .navbar-nav, .custom-navbar {
+    overflow: visible !important;
+}
+
+/* Mejora visual del scroll para que no parezca tosco */
+.search-history-dropdown::-webkit-scrollbar {
+    width: 6px;
+}
+.search-history-dropdown::-webkit-scrollbar-thumb {
+    background: #d1d1d1;
+    border-radius: 10px;
+}

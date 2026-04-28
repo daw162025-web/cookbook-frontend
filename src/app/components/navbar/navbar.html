@@ -53,8 +53,7 @@
 
             <button *ngIf="searchControl.value" 
                     (click)="clearSearch()"
-                    class="position-absolute end-0 top-50 translate-middle-y border-0 bg-transparent me-2 text-muted">
-              <i class="fa-solid fa-xmark"></i>
+                    class="clear-btn"> <i class="fa-solid fa-xmark"></i>
             </button>
 
             <div *ngIf="showHistory && searchHistory.length > 0" 
