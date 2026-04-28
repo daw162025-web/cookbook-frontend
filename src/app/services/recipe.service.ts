@@ -52,4 +52,13 @@ export class RecipeService {
   addComment(recipeId: number, content: string): Observable<any> {
     return this.http.post(`${this.apiUrl}/recipes/${recipeId}/comments`, { content });
   }
+  saveHistory(search_term: string) {
+    return this.http.post(`${this.apiUrl}/search-history`, { search_term });
+  }
+  getSearchHistory() {
+    return this.http.get<any[]>(`${this.apiUrl}/search-history`);
+  }
+  deleteSearchHistory(id: number): Observable<any> {
+    return this.http.delete(`${this.apiUrl}/search-history/${id}`);
+  }
 }

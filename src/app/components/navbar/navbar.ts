@@ -4,6 +4,8 @@ import { RouterModule, Router } from '@angular/router';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
 import { AuthService } from '../../services/auth.service';
+import { RecipeService } from '../../services/recipe.service';
+import { take } from 'rxjs/operators';
 
 @Component({
   selector: 'app-navbar',
@@ -15,29 +17,58 @@ import { AuthService } from '../../services/auth.service';
 export class Navbar implements OnInit {
   isMenuOpen = false;
   isUserDropdownOpen = false;
+
+  searchHistory: any[] = []; 
+  showHistory = false;
+
   searchControl = new FormControl('');
   private router = inject(Router);
   public authService = inject(AuthService);
-
-  @HostListener('document:click', ['$event'])
-  onDocumentClick(event: Event) {
-    // Si se hace click en otro sitio, cerramos el dropdown
-    this.isUserDropdownOpen = false;
-  }
+  private recipeService = inject(RecipeService);
 
   ngOnInit() {
+    // Escuchamos cambios en el login para cargar el historial específico del usuario
+    this.authService.isLoggedIn$.subscribe(isLoggedIn => {
+      if (isLoggedIn) {
+        this.loadSearchHistory(); 
+      } else {
+        this.searchHistory = []; // Limpiamos si no hay nadie logueado
+      }
+    });
+
     this.searchControl.valueChanges.pipe(
       debounceTime(400),
       distinctUntilChanged()
-    ).subscribe(query => {
-      if (query !== null) {
-        if (query.trim() !== '') {
-          this.router.navigate(['/search'], { queryParams: { q: query.trim() } });
-        } else if (this.router.url.startsWith('/search')) {
-          this.router.navigate(['/search'], { queryParams: { q: '' } });
-        }
+    ).subscribe(search_term => {
+      if (search_term && search_term.trim() !== '') {
+        this.router.navigate(['/search'], { queryParams: { q: search_term.trim() } });
+        this.showHistory = false;
       }
     });
+  }
+
+  loadSearchHistory() {
+    this.recipeService.getSearchHistory().subscribe({
+      next: (history) => {
+        this.searchHistory = history;
+      },
+      error: (err) => {
+        // Si da error 401 (no logueado), limpiamos el historial localmente
+        if (err.status === 401) this.searchHistory = [];
+      }
+    });
+  }
+
+  onFocusSearch() {
+    if (this.searchHistory.length > 0) {
+      this.showHistory = true;
+    }
+  }
+
+  selectHistory(search_term: string) {
+    this.searchControl.setValue(search_term);
+    this.onSearch();
+    this.showHistory = false;
   }
 
   toggleMenu() {
@@ -47,7 +78,6 @@ export class Navbar implements OnInit {
   // Función para cerrar el menú al hacer clic en un enlace en móvil
   closeMenu() {
     this.isMenuOpen = false;
-    this.isUserDropdownOpen = false;
   }
 
   toggleUserDropdown(event: Event) {
@@ -56,11 +86,22 @@ export class Navbar implements OnInit {
   }
 
   onSearch() {
-    const query = this.searchControl.value;
-    if (query && query.trim() !== '') {
-      this.router.navigate(['/search'], { queryParams: { q: query.trim() } });
-      this.closeMenu();
-    }
+    const search_term = this.searchControl.value?.trim();
+    if (!search_term) return;
+
+    this.router.navigate(['/search'], { queryParams: { q: search_term } });
+    this.closeMenu();
+    this.showHistory = false;
+
+    // Verificamos el estado antes de llamar al servicio
+    this.authService.isLoggedIn$.pipe(take(1)).subscribe(isLoggedIn => {
+      if (isLoggedIn) {
+        this.recipeService.saveHistory(search_term).subscribe({
+          next: () => this.loadSearchHistory(), // Recarga el historial del usuario actual
+          error: (err) => console.error('Error al guardar', err)
+        });
+      }
+    });
   }
 
   logout() {
@@ -77,6 +118,42 @@ export class Navbar implements OnInit {
           this.closeMenu();
         }
       });
+    }
+  }
+
+  deleteHistoryItem(event: Event, id: number) {
+    event.stopPropagation();
+    
+    if (!id) return;
+
+    this.recipeService.deleteSearchHistory(id).subscribe({
+      next: () => {
+        // Al borrar con éxito, actualizamos la lista local
+        this.recipeService.getSearchHistory().subscribe(history => {
+          this.searchHistory = history;
+          // Si ya no quedan búsquedas, cerramos el desplegable
+          if (this.searchHistory.length === 0) {
+            this.showHistory = false;
+          }
+        });
+      },
+      error: (err) => console.error('Error al borrar', err)
+    });
+  }
+
+  // Limpiar el input con la X
+  clearSearch() {
+    this.searchControl.setValue(''); 
+    this.showHistory = true;         
+    this.router.navigate(['/']); 
+  }
+
+  @HostListener('document:click', ['$event'])
+  onDocumentClick(event: Event) {
+    const target = event.target as HTMLElement;
+    if (!target.closest('.search-container')) {
+      this.showHistory = false;
+      this.isUserDropdownOpen = false;
     }
   }
 }
